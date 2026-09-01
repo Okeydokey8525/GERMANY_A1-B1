@@ -903,6 +903,23 @@
   </div>
 
   <!-- ========================================================= -->
+  <!-- MASTERY EVIDENCE BREAKDOWN MODAL (Why XX%?)               -->
+  <!-- ========================================================= -->
+  <div id="mastery-evidence-modal" class="hidden fixed inset-0 z-50 bg-black/70 backdrop-blur-xs flex items-center justify-center p-4 overflow-y-auto">
+    <div class="bg-white dark:bg-gray-800 w-full max-w-md rounded-3xl shadow-2xl border-2 border-blue-500 p-6 space-y-4 animate-gentle-pulse">
+      <div class="flex items-center justify-between border-b border-gray-100 dark:border-gray-700 pb-3">
+        <div class="flex items-center gap-2">
+          <span class="text-xl">📊</span>
+          <h3 id="evidence-modal-title" class="font-extrabold text-sm sm:text-base text-gray-900 dark:text-white">Bằng Chứng Năng Lực (Mastery Evidence)</h3>
+        </div>
+        <button id="btn-close-evidence-modal" class="p-1.5 rounded-xl text-gray-400 hover:text-gray-900 text-sm">✕</button>
+      </div>
+
+      <div id="evidence-modal-content" class="space-y-3 max-h-[65vh] overflow-y-auto pr-1"></div>
+    </div>
+  </div>
+
+  <!-- ========================================================= -->
   <!-- DAILY SESSION SUMMARY MODAL                               -->
   <!-- ========================================================= -->
   <div id="daily-summary-modal" class="hidden fixed inset-0 z-50 bg-black/70 backdrop-blur-xs flex items-center justify-center p-4 overflow-y-auto">

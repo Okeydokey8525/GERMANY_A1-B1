@@ -187,8 +187,8 @@ class SRSController {
           card.state = "review";
         } else {
           card.interval = Math.round(card.interval * card.ease);
-          if (card.interval >= 21) card.state = "mastered";
-          else card.state = "review";
+          const isStrictMastered = (card.interval >= 21 && card.repetitions >= 4 && ((card.wrongCount || 0) / Math.max(1, card.reviewCount || 1) <= 0.2));
+          card.state = isStrictMastered ? "mastered" : "review";
         }
         card.dueAt = now + (card.interval * oneDayMs);
         break;
@@ -201,8 +201,8 @@ class SRSController {
           card.state = "review";
         } else {
           card.interval = Math.round(card.interval * card.ease * 1.3);
-          if (card.interval >= 21) card.state = "mastered";
-          else card.state = "review";
+          const isStrictMastered = (card.interval >= 21 && card.repetitions >= 4 && ((card.wrongCount || 0) / Math.max(1, card.reviewCount || 1) <= 0.2));
+          card.state = isStrictMastered ? "mastered" : "review";
         }
         card.dueAt = now + (card.interval * oneDayMs);
         break;

@@ -1,39 +1,43 @@
-// WEB_Germany Dynamic Learning Roadmap, Grammar Dependency & Stage Mastery Test Engine
+// WEB_Germany Dynamic Learning Roadmap, Skill Graph, Learning Objectives & Evidence Can-Do Engine
 
 class RoadmapController {
   constructor() {
     this.curriculum = null;
+    this.learningObjectives = [];
     this.selectedLevel = "A1";
     this.currentTestingStage = null;
-    this.currentTestingCanDo = null;
 
-    this.initCurriculum();
+    this.initData();
     this.initModals();
   }
 
-  async initCurriculum() {
+  async initData() {
     try {
-      const resp = await fetch("./data/curriculum.json");
-      this.curriculum = await resp.json();
+      const [curricResp, objResp] = await Promise.all([
+        fetch("./data/curriculum.json"),
+        fetch("./data/learning_objectives.json")
+      ]);
+      this.curriculum = await curricResp.json();
+      this.learningObjectives = await objResp.json();
     } catch (e) {
-      console.warn("Failed to load curriculum.json:", e);
+      console.warn("Failed to load curriculum or objectives:", e);
     }
     this.renderRoadmap();
-    this.renderDependencyGraph();
+    this.renderSkillGraph();
     this.renderCanDoChecklist();
   }
 
   initModals() {
-    const candoModal = document.getElementById("cando-test-modal");
-    const closeCando = document.getElementById("btn-close-cando-test");
-    if (closeCando && candoModal) {
-      closeCando.addEventListener("click", () => candoModal.classList.add("hidden"));
-    }
-
     const stageModal = document.getElementById("stage-test-modal");
     const closeStage = document.getElementById("btn-close-stage-test");
     if (closeStage && stageModal) {
       closeStage.addEventListener("click", () => stageModal.classList.add("hidden"));
+    }
+
+    const evModal = document.getElementById("mastery-evidence-modal");
+    const closeEv = document.getElementById("btn-close-evidence-modal");
+    if (closeEv && evModal) {
+      closeEv.addEventListener("click", () => evModal.classList.add("hidden"));
     }
   }
 
@@ -48,17 +52,18 @@ class RoadmapController {
       }
     });
     this.renderRoadmap();
-    this.renderDependencyGraph();
+    this.renderSkillGraph();
+    this.renderCanDoChecklist();
   }
 
   calculateStageProgress(stage) {
     let score = 0;
     const completedLessons = (window.progressCtrl && window.progressCtrl.data.completedLessons) || [];
     
-    // 1. Lessons coverage (35% weight)
+    // 1. Lessons coverage (30% weight)
     if (stage.lessonIds && stage.lessonIds.length > 0) {
       const doneCount = stage.lessonIds.filter(id => completedLessons.includes(id)).length;
-      score += (doneCount / stage.lessonIds.length) * 35;
+      score += (doneCount / stage.lessonIds.length) * 30;
     } else {
       score += 15;
     }
@@ -82,7 +87,7 @@ class RoadmapController {
       score += 15;
     }
 
-    // 3. Stage-Specific Topic Mastery from progressCtrl (35% weight)
+    // 3. Stage-Specific Topic Mastery from progressCtrl (40% weight)
     let topicMasterySum = 0;
     let topicCount = 0;
     if (window.progressCtrl && stage.grammarTopics) {
@@ -94,9 +99,9 @@ class RoadmapController {
     }
 
     if (topicCount > 0) {
-      score += (topicMasterySum / (topicCount * 100)) * 35;
+      score += (topicMasterySum / (topicCount * 100)) * 40;
     } else {
-      score += 15;
+      score += 20;
     }
 
     // Bonus for passed stage mastery test
@@ -144,7 +149,7 @@ class RoadmapController {
               <div class="flex items-center gap-2">
                 <span class="px-2.5 py-0.5 rounded-full text-[10px] font-extrabold bg-blue-100 text-blue-800 dark:bg-blue-900/40 dark:text-blue-300 uppercase">${stage.sublevel}</span>
                 <span class="text-xs font-bold text-gray-400">Giai đoạn ${idx + 1}</span>
-                ${isTestPassed ? `<span class="px-2 py-0.2 rounded-full text-[9px] font-bold bg-emerald-100 text-emerald-800 dark:bg-emerald-900/40 dark:text-emerald-300">✓ Đã tốt nghiệp</span>` : ''}
+                ${isTestPassed ? `<span class="px-2 py-0.2 rounded-full text-[9px] font-bold bg-emerald-100 text-emerald-800 dark:bg-emerald-900/40 dark:text-emerald-300">✓ Đã tốt nghiệp (${isTestPassed.score}%)</span>` : ''}
               </div>
               <h3 class="text-base font-bold text-gray-900 dark:text-gray-100 mt-0.5">${stage.title}</h3>
             </div>
@@ -161,23 +166,35 @@ class RoadmapController {
 
         <p class="text-xs text-gray-600 dark:text-gray-300 mb-2">${stage.desc}</p>
         
-        <!-- Learning Objectives Accordion List -->
+        <!-- Learning Objectives with Individual Progress -->
         ${stage.learningObjectives ? `
-          <div class="space-y-1 py-2">
+          <div class="space-y-1.5 py-2">
             <span class="text-[10px] font-bold text-gray-400 uppercase tracking-wider">Mục tiêu học tập (Learning Objectives):</span>
-            <div class="grid grid-cols-1 sm:grid-cols-2 gap-1.5">
-              ${stage.learningObjectives.map(lo => `
-                <div class="p-2 rounded-xl bg-gray-50 dark:bg-gray-900/50 border border-gray-100 dark:border-gray-700/50 text-[11px] text-gray-700 dark:text-gray-300 flex items-center gap-1.5">
-                  <span class="text-blue-500 font-mono font-bold">•</span>
-                  <span>${lo.title}</span>
-                </div>
-              `).join("")}
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
+              ${stage.learningObjectives.map(lo => {
+                const objStat = (window.progressCtrl && window.progressCtrl.data.objectives && window.progressCtrl.data.objectives[lo.id]) || { mastery: Math.min(100, Math.round(dynProgress * 0.95)) };
+                const objMastery = objStat.mastery || 40;
+                return `
+                  <div class="p-2.5 rounded-xl bg-gray-50 dark:bg-gray-900/50 border border-gray-100 dark:border-gray-700/50 text-[11px] space-y-1">
+                    <div class="flex items-center justify-between">
+                      <span class="font-bold text-gray-800 dark:text-gray-200">${lo.title}</span>
+                      <span class="font-mono font-bold text-blue-600 dark:text-blue-400">${objMastery}%</span>
+                    </div>
+                    <div class="w-full h-1 bg-gray-200 dark:bg-gray-700 rounded-full overflow-hidden">
+                      <div class="h-full bg-blue-500 rounded-full" style="width: ${objMastery}%;"></div>
+                    </div>
+                  </div>
+                `;
+              }).join("")}
             </div>
           </div>
         ` : ''}
 
-        <div class="p-2.5 bg-blue-50/60 dark:bg-blue-950/30 rounded-xl text-[11px] text-blue-900 dark:text-blue-200 font-medium mb-3 border border-blue-100 dark:border-blue-900/40">
-          🎯 <b>Chuẩn đầu ra:</b> ${stage.competency}
+        <div class="p-2.5 bg-blue-50/60 dark:bg-blue-950/30 rounded-xl text-[11px] text-blue-900 dark:text-blue-200 font-medium mb-3 border border-blue-100 dark:border-blue-900/40 flex items-center justify-between">
+          <span>🎯 <b>Chuẩn đầu ra Can-Do:</b> ${stage.competency}</span>
+          <button class="text-blue-600 font-bold hover:underline ml-2" onclick="window.progressCtrl && window.progressCtrl.showEvidenceModal('${stage.grammarTopics && stage.grammarTopics[0]}')">
+            Bằng chứng 👁️
+          </button>
         </div>
 
         <div class="space-y-1.5 pt-2 border-t border-gray-100 dark:border-gray-700/60">
@@ -206,8 +223,8 @@ class RoadmapController {
     });
   }
 
-  // Grammar Dependency Graph Visualizer
-  renderDependencyGraph() {
+  // Interactive Skill Graph with Prerequisite Advisory
+  renderSkillGraph() {
     const container = document.getElementById("grammar-dependency-container");
     if (!container) return;
 
@@ -219,14 +236,29 @@ class RoadmapController {
       const isPassed = prog >= 80;
       const statusIcon = isPassed ? "🟢" : (prog >= 40 ? "🟡" : "⚪");
 
+      // Check prerequisite status
+      let prereqAdvice = "";
+      if (idx > 0) {
+        const prevStage = stages[idx - 1];
+        const prevProg = this.calculateStageProgress(prevStage);
+        if (prevProg >= 75) {
+          prereqAdvice = `✓ Đủ điều kiện từ ${prevStage.sublevel}`;
+        } else {
+          prereqAdvice = `⚠️ Cần củng cố ${prevStage.sublevel} (${prevProg}%)`;
+        }
+      } else {
+        prereqAdvice = "✓ Điểm xuất phát";
+      }
+
       return `
-        <div class="p-3 rounded-2xl border ${isPassed ? 'border-emerald-300 bg-emerald-50/50 dark:bg-emerald-950/20' : 'border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800'} text-xs space-y-1 shrink-0 min-w-[170px]">
+        <div class="p-3.5 rounded-2xl border ${isPassed ? 'border-emerald-300 bg-emerald-50/50 dark:bg-emerald-950/20' : 'border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800'} text-xs space-y-1.5 shrink-0 min-w-[190px] shadow-2xs hover:scale-102 transition-all cursor-pointer" onclick="window.progressCtrl && window.progressCtrl.showEvidenceModal('${s.grammarTopics && s.grammarTopics[0]}')">
           <div class="flex items-center justify-between">
             <span class="font-bold text-gray-800 dark:text-gray-200">${s.sublevel} - Chặng ${idx + 1}</span>
             <span>${statusIcon}</span>
           </div>
-          <p class="font-semibold text-gray-900 dark:text-white truncate">${s.title}</p>
-          <div class="text-[10px] text-gray-500 font-mono">Mastery: ${prog}%</div>
+          <p class="font-bold text-gray-900 dark:text-white truncate">${s.title}</p>
+          <div class="text-[10px] text-blue-600 dark:text-blue-400 font-mono font-semibold">Mastery: ${prog}%</div>
+          <div class="text-[9px] text-gray-400 font-sans italic">${prereqAdvice}</div>
         </div>
       `;
     }).join(`
@@ -293,7 +325,8 @@ class RoadmapController {
         }
         modal.classList.add("hidden");
         this.renderRoadmap();
-        this.renderDependencyGraph();
+        this.renderSkillGraph();
+        this.renderCanDoChecklist();
       } else {
         alert(`Bạn đạt ${scorePct}% (Cần ≥ 80% để tốt nghiệp). Hãy ôn lại các điểm yếu và thử lại nhé!`);
         modal.classList.add("hidden");
@@ -308,35 +341,38 @@ class RoadmapController {
     const container = document.getElementById("cando-checklist-container");
     if (!container) return;
 
-    const userState = (window.progressCtrl && window.progressCtrl.data.canDoChecklist) || {};
-
     const levelData = this.curriculum && this.curriculum.levels ? this.curriculum.levels[this.selectedLevel] : null;
     const stages = levelData ? levelData.stages : [];
 
     container.innerHTML = "";
     stages.forEach((stage, sIdx) => {
       const stagePassed = window.progressCtrl && window.progressCtrl.data.stageTestsPassed && window.progressCtrl.data.stageTestsPassed[stage.id];
-      const curState = stagePassed ? "tested" : (userState[stage.id] || "unlearned");
+      const isCertified = !!stagePassed;
 
       const row = document.createElement("div");
-      row.className = `p-3.5 rounded-2xl border transition-all flex flex-col sm:flex-row sm:items-center justify-between gap-3 ${
-        curState === "tested" 
+      row.className = `p-4 rounded-2xl border transition-all flex flex-col sm:flex-row sm:items-center justify-between gap-3 ${
+        isCertified 
           ? "border-emerald-200 dark:border-emerald-900/40 bg-emerald-50/40 dark:bg-emerald-950/20"
-          : (curState === "learning" ? "border-amber-200 dark:border-amber-900/40 bg-amber-50/30 dark:bg-amber-950/20" : "border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800")
+          : "border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800"
       }`;
 
-      const stateBadgeHtml = curState === "tested"
-        ? `<span class="px-3 py-1 rounded-xl text-[11px] font-bold bg-emerald-100 text-emerald-800 dark:bg-emerald-900/40 dark:text-emerald-300 flex items-center gap-1">🟢 Đã kiểm tra đạt</span>`
+      const stateBadgeHtml = isCertified
+        ? `<span class="px-3 py-1 rounded-xl text-[11px] font-bold bg-emerald-100 text-emerald-800 dark:bg-emerald-900/40 dark:text-emerald-300 flex items-center gap-1">🟢 Đã chứng minh năng lực (Certified ${stagePassed.score}%)</span>`
         : `<span class="px-3 py-1 rounded-xl text-[11px] font-bold bg-amber-100 text-amber-800 dark:bg-amber-900/40 dark:text-amber-300 flex items-center gap-1">🟡 Thi tốt nghiệp chặng để đạt</span>`;
 
       row.innerHTML = `
-        <div class="flex items-center gap-3 flex-1">
-          <span class="text-xs sm:text-sm font-semibold ${curState === 'tested' ? 'text-emerald-950 dark:text-emerald-100' : 'text-gray-800 dark:text-gray-200'}">
-            ${stage.competency}
-          </span>
+        <div class="flex items-start sm:items-center gap-3 flex-1">
+          <div class="space-y-0.5">
+            <div class="flex items-center gap-2">
+              <span class="px-2 py-0.2 rounded-full text-[10px] font-bold bg-blue-100 text-blue-800 dark:bg-blue-900/40 dark:text-blue-300">${stage.sublevel}</span>
+              <span class="text-xs font-bold text-gray-400">Can-Do #${sIdx + 1}</span>
+            </div>
+            <p class="text-xs sm:text-sm font-semibold ${isCertified ? 'text-emerald-950 dark:text-emerald-100' : 'text-gray-800 dark:text-gray-200'}">
+              ${stage.competency}
+            </p>
+          </div>
         </div>
         <div class="flex items-center gap-2 self-end sm:self-center">
-          <span class="px-2 py-0.5 rounded-full text-[10px] font-bold bg-blue-100 text-blue-800 dark:bg-blue-900/40 dark:text-blue-300">${stage.sublevel}</span>
           <button class="cando-test-btn cursor-pointer hover:scale-105 active:scale-95 transition-all">${stateBadgeHtml}</button>
         </div>
       `;

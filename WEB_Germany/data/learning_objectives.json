@@ -1,0 +1,150 @@
+[
+  {
+    "topicId": "artikel",
+    "topicName": "Artikel & Nomen (Mạo từ & Danh từ)",
+    "level": "A1",
+    "prerequisites": [],
+    "leadsTo": ["nominativ", "akkusativ"],
+    "objectives": [
+      { "id": "LO_ART_01", "title": "Nhận biết 3 giống danh từ: der (đực), die (cái), das (trung)", "weight": 25 },
+      { "id": "LO_ART_02", "title": "Sử dụng mạo từ không xác định ein / eine", "weight": 25 },
+      { "id": "LO_ART_03", "title": "Sử dụng mạo từ phủ định kein / keine", "weight": 25 },
+      { "id": "LO_ART_04", "title": "Nhận biết quy tắc tạo số nhiều (Plural) thông dụng", "weight": 25 }
+    ]
+  },
+  {
+    "topicId": "praesens",
+    "topicName": "Präsens & Verben (Hiện tại & Động từ)",
+    "level": "A1",
+    "prerequisites": [],
+    "leadsTo": ["w_fragen", "modalverben", "akkusativ"],
+    "objectives": [
+      { "id": "LO_PRAE_01", "title": "Chia đuôi động từ thường theo ngôi (-e, -st, -t, -en, -t, -en)", "weight": 35 },
+      { "id": "LO_PRAE_02", "title": "Chia 2 động từ bất quy tắc cốt lõi 'sein' và 'haben'", "weight": 35 },
+      { "id": "LO_PRAE_03", "title": "Đổi nguyên âm gốc ở ngôi du/er/sie/es (e->i/ie, a->ä)", "weight": 30 }
+    ]
+  },
+  {
+    "topicId": "w_fragen",
+    "topicName": "W-Fragen & Satzbau (Từ để hỏi & Trật tự câu V2)",
+    "level": "A1",
+    "prerequisites": ["praesens"],
+    "leadsTo": ["akkusativ", "dativ"],
+    "objectives": [
+      { "id": "LO_W_01", "title": "Sử dụng đúng từ để hỏi W-Fragen (Wie, Wo, Woher, Wohin, Was, Wer)", "weight": 35 },
+      { "id": "LO_W_02", "title": "Áp dụng quy tắc V2: Động từ chia luôn đứng ở vị trí số 2", "weight": 40 },
+      { "id": "LO_W_03", "title": "Đặt câu hỏi đảo Ja/Nein-Frage (động từ đứng vị trí 1)", "weight": 25 }
+    ]
+  },
+  {
+    "topicId": "akkusativ",
+    "topicName": "Akkusativ (Đối cách - Cách 4)",
+    "level": "A1",
+    "prerequisites": ["artikel", "praesens"],
+    "leadsTo": ["dativ", "wechselpraepositionen"],
+    "objectives": [
+      { "id": "LO_AKK_01", "title": "Nhận biết vai trò tân ngữ trực tiếp (Wen? / Was?)", "weight": 20 },
+      { "id": "LO_AKK_02", "title": "Biến đổi mạo từ giống đực: der -> den", "weight": 25 },
+      { "id": "LO_AKK_03", "title": "Biến đổi mạo từ không xác định: ein -> einen", "weight": 20 },
+      { "id": "LO_AKK_04", "title": "Biến đổi mạo từ phủ định: kein -> keinen", "weight": 15 },
+      { "id": "LO_AKK_05", "title": "Sử dụng Akkusativ sau các giới từ: für, ohne, durch, gegen, um", "weight": 20 }
+    ]
+  },
+  {
+    "topicId": "modalverben",
+    "topicName": "Modalverben & Trennbare Verben (Động từ khuyết thiếu & Động từ tách)",
+    "level": "A1",
+    "prerequisites": ["praesens", "w_fragen"],
+    "leadsTo": ["perfekt", "nebensaetze"],
+    "objectives": [
+      { "id": "LO_MOD_01", "title": "Chia 6 động từ khuyết thiếu (können, müssen, wollen, dürfen, sollen, möchten)", "weight": 30 },
+      { "id": "LO_MOD_02", "title": "Cấu trúc khung câu Satzklammer: Modalverb ở V2, Infinitiv ở cuối câu", "weight": 40 },
+      { "id": "LO_MOD_03", "title": "Quy tắc tách tiền tố của động từ tách ở thì hiện tại (aufstehen -> steht auf)", "weight": 30 }
+    ]
+  },
+  {
+    "topicId": "dativ",
+    "topicName": "Dativ (Tặng cách - Cách 3)",
+    "level": "A1",
+    "prerequisites": ["artikel", "akkusativ"],
+    "leadsTo": ["wechselpraepositionen", "adjektivdeklination"],
+    "objectives": [
+      { "id": "LO_DAT_01", "title": "Nhận biết tân ngữ gián tiếp (Wem?) và vị trí đứng yên (Wo?)", "weight": 20 },
+      { "id": "LO_DAT_02", "title": "Biến đổi mạo từ: dem (đực/trung), der (cái), den (+n) (số nhiều)", "weight": 30 },
+      { "id": "LO_DAT_03", "title": "Đại từ nhân xưng ở Dativ (mir, dir, ihm, ihr, uns, euch, ihnen/Ihnen)", "weight": 25 },
+      { "id": "LO_DAT_04", "title": "Các giới từ bắt buộc đi với Dativ: aus, bei, mit, nach, seit, von, zu, ab", "weight": 25 }
+    ]
+  },
+  {
+    "topicId": "perfekt",
+    "topicName": "Das Perfekt (Thì quá khứ hoàn thành)",
+    "level": "A1",
+    "prerequisites": ["praesens", "modalverben"],
+    "leadsTo": ["nebensaetze", "passiv"],
+    "objectives": [
+      { "id": "LO_PERF_01", "title": "Cấu trúc câu Perfekt: haben/sein ở V2 + Partizip II ở cuối câu", "weight": 30 },
+      { "id": "LO_PERF_02", "title": "Phân biệt trợ động từ haben (hành động) vs sein (di chuyển/đổi trạng thái)", "weight": 40 },
+      { "id": "LO_PERF_03", "title": "Quy tắc tạo Partizip II có quy tắc (ge-...-t) và bất quy tắc (ge-...-en)", "weight": 30 }
+    ]
+  },
+  {
+    "topicId": "wechselpraepositionen",
+    "topicName": "Wechselpräpositionen (Giới từ 2 chiều)",
+    "level": "A2",
+    "prerequisites": ["akkusativ", "dativ"],
+    "leadsTo": ["adjektivdeklination", "relativsaetze"],
+    "objectives": [
+      { "id": "LO_WECH_01", "title": "Nhận diện 9 giới từ 2 chiều: an, auf, hinter, in, neben, über, unter, vor, zwischen", "weight": 25 },
+      { "id": "LO_WECH_02", "title": "Xác định câu hỏi Wo? (vị trí đứng yên) -> Dativ", "weight": 35 },
+      { "id": "LO_WECH_03", "title": "Xác định câu hỏi Wohin? (phương hướng di chuyển) -> Akkusativ", "weight": 40 }
+    ]
+  },
+  {
+    "topicId": "adjektivdeklination",
+    "topicName": "Adjektivdeklination (Chia đuôi tính từ)",
+    "level": "A2",
+    "prerequisites": ["artikel", "akkusativ", "dativ"],
+    "leadsTo": ["nebensaetze", "b1_grammar"],
+    "objectives": [
+      { "id": "LO_ADJ_01", "title": "Chia đuôi tính từ sau mạo từ xác định der/die/das (-e, -en)", "weight": 35 },
+      { "id": "LO_ADJ_02", "title": "Chia đuôi tính từ sau mạo từ không xác định ein/eine (-er, -e, -es, -en)", "weight": 35 },
+      { "id": "LO_ADJ_03", "title": "Chia đuôi tính từ ở các cách Nominativ, Akkusativ và Dativ", "weight": 30 }
+    ]
+  },
+  {
+    "topicId": "nebensaetze",
+    "topicName": "Nebensätze (Mệnh đề phụ với weil, dass, wenn, obwohl)",
+    "level": "A2",
+    "prerequisites": ["praesens", "w_fragen", "modalverben"],
+    "leadsTo": ["passiv", "konjunktiv2", "relativsaetze"],
+    "objectives": [
+      { "id": "LO_NEB_01", "title": "Quy tắc trật tự từ: Liên từ phụ thuộc đẩy động từ chia về cuối mệnh đề", "weight": 40 },
+      { "id": "LO_NEB_02", "title": "Sử dụng liên từ nguyên nhân 'weil' và điều kiện 'wenn'", "weight": 30 },
+      { "id": "LO_NEB_03", "title": "Sử dụng liên từ nội dung 'dass' và nhượng bộ 'obwohl'", "weight": 30 }
+    ]
+  },
+  {
+    "topicId": "passiv",
+    "topicName": "Das Passiv (Thể bị động)",
+    "level": "B1",
+    "prerequisites": ["praesens", "perfekt"],
+    "leadsTo": ["b1_exam"],
+    "objectives": [
+      { "id": "LO_PAS_01", "title": "Cấu trúc bị động hiện tại: werden (chia) + Partizip II", "weight": 40 },
+      { "id": "LO_PAS_02", "title": "Cấu trúc bị động quá khứ: wurden (chia) + Partizip II", "weight": 35 },
+      { "id": "LO_PAS_03", "title": "Sử dụng giới từ 'von + Dativ' để chỉ tác nhân thực hiện", "weight": 25 }
+    ]
+  },
+  {
+    "topicId": "konjunktiv2",
+    "topicName": "Konjunktiv II (Thể giả định)",
+    "level": "B1",
+    "prerequisites": ["praesens", "modalverben", "nebensaetze"],
+    "leadsTo": ["b1_exam"],
+    "objectives": [
+      { "id": "LO_KONJ_01", "title": "Sử dụng giả định ước muốn không có thực với 'wäre' và 'hätte'", "weight": 35 },
+      { "id": "LO_KONJ_02", "title": "Cấu trúc yêu cầu lịch sự trang trọng 'würde + Infinitiv'", "weight": 35 },
+      { "id": "LO_KONJ_03", "title": "Sử dụng thể giả định với Modalverben 'könnte' và 'müsste'", "weight": 30 }
+    ]
+  }
+]

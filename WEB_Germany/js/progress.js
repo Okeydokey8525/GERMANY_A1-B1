@@ -1,20 +1,31 @@
-// WEB_Germany Unified Learning Progress, Topic Mastery & Adaptive Learning Engine (v4.3)
+// WEB_Germany Unified Learning Progress, Topic Mastery, Learning Objectives & Evidence Engine (v4.4)
 
 class ProgressController {
   constructor() {
     this.storageKey = "deutschmaster_user_progress_v4";
     this.data = this.getDefaultData();
     this.timerInterval = null;
-    
+    this.learningObjectivesData = [];
+
     this.loadProgress();
     this.checkDayRollOver();
     this.initStudyTimer();
+    this.loadLearningObjectives();
+  }
+
+  async loadLearningObjectives() {
+    try {
+      const resp = await fetch("./data/learning_objectives.json");
+      this.learningObjectivesData = await resp.json();
+    } catch (e) {
+      console.warn("Failed to load learning_objectives.json:", e);
+    }
   }
 
   getDefaultData() {
     const today = this.getLocalDateString();
     return {
-      version: 4,
+      version: 4.4,
       userName: "Học viên DeutschMaster",
       currentLevel: "A1",
       targetGoal: "allgemein", // 'travel', 'study', 'goethe', 'telc', 'allgemein'
@@ -46,21 +57,23 @@ class ProgressController {
         speaking: { skillProgress: 15, correct: 0, total: 0 },
         writing: { skillProgress: 15, correct: 0, total: 0 }
       },
-      // Topic-level granular mastery tracking with evidence details
+      // Normalized topicId-based Mastery Records
       topics: {
-        "Artikel": { topicId: "artikel", mastery: 30, confidence: 20, correct: 0, total: 0, recent: [], lastPracticed: 0, evidence: {} },
-        "Akkusativ": { topicId: "akkusativ", mastery: 25, confidence: 20, correct: 0, total: 0, recent: [], lastPracticed: 0, evidence: {} },
-        "Dativ": { topicId: "dativ", mastery: 20, confidence: 20, correct: 0, total: 0, recent: [], lastPracticed: 0, evidence: {} },
-        "Modalverben": { topicId: "modalverben", mastery: 25, confidence: 20, correct: 0, total: 0, recent: [], lastPracticed: 0, evidence: {} },
-        "Perfekt": { topicId: "perfekt", mastery: 20, confidence: 20, correct: 0, total: 0, recent: [], lastPracticed: 0, evidence: {} },
-        "Präsens": { topicId: "praesens", mastery: 35, confidence: 25, correct: 0, total: 0, recent: [], lastPracticed: 0, evidence: {} },
-        "W-Fragen": { topicId: "w_fragen", mastery: 40, confidence: 25, correct: 0, total: 0, recent: [], lastPracticed: 0, evidence: {} },
-        "Wechselpräpositionen": { topicId: "wechselpraepositionen", mastery: 15, confidence: 15, correct: 0, total: 0, recent: [], lastPracticed: 0, evidence: {} },
-        "Adjektivdeklination": { topicId: "adjektivdeklination", mastery: 15, confidence: 15, correct: 0, total: 0, recent: [], lastPracticed: 0, evidence: {} },
-        "Nebensätze": { topicId: "nebensaetze", mastery: 15, confidence: 15, correct: 0, total: 0, recent: [], lastPracticed: 0, evidence: {} },
-        "Passiv": { topicId: "passiv", mastery: 10, confidence: 10, correct: 0, total: 0, recent: [], lastPracticed: 0, evidence: {} },
-        "Konjunktiv II": { topicId: "konjunktiv2", mastery: 10, confidence: 10, correct: 0, total: 0, recent: [], lastPracticed: 0, evidence: {} }
+        "artikel": { name: "Artikel & Nomen", mastery: 30, confidence: 20, correct: 0, total: 0, recent: [], lastPracticed: 0, evidence: {} },
+        "akkusativ": { name: "Akkusativ", mastery: 25, confidence: 20, correct: 0, total: 0, recent: [], lastPracticed: 0, evidence: {} },
+        "dativ": { name: "Dativ", mastery: 20, confidence: 20, correct: 0, total: 0, recent: [], lastPracticed: 0, evidence: {} },
+        "modalverben": { name: "Modalverben & Satzklammer", mastery: 25, confidence: 20, correct: 0, total: 0, recent: [], lastPracticed: 0, evidence: {} },
+        "perfekt": { name: "Das Perfekt", mastery: 20, confidence: 20, correct: 0, total: 0, recent: [], lastPracticed: 0, evidence: {} },
+        "praesens": { name: "Präsens & Verben", mastery: 35, confidence: 25, correct: 0, total: 0, recent: [], lastPracticed: 0, evidence: {} },
+        "w_fragen": { name: "W-Fragen & Satzbau V2", mastery: 40, confidence: 25, correct: 0, total: 0, recent: [], lastPracticed: 0, evidence: {} },
+        "wechselpraepositionen": { name: "Wechselpräpositionen", mastery: 15, confidence: 15, correct: 0, total: 0, recent: [], lastPracticed: 0, evidence: {} },
+        "adjektivdeklination": { name: "Adjektivdeklination", mastery: 15, confidence: 15, correct: 0, total: 0, recent: [], lastPracticed: 0, evidence: {} },
+        "nebensaetze": { name: "Nebensätze", mastery: 15, confidence: 15, correct: 0, total: 0, recent: [], lastPracticed: 0, evidence: {} },
+        "passiv": { name: "Das Passiv", mastery: 10, confidence: 10, correct: 0, total: 0, recent: [], lastPracticed: 0, evidence: {} },
+        "konjunktiv2": { name: "Konjunktiv II", mastery: 10, confidence: 10, correct: 0, total: 0, recent: [], lastPracticed: 0, evidence: {} }
       },
+      // Granular Learning Objective Mastery records
+      objectives: {}, // { 'LO_AKK_01': { correct: 5, total: 6, mastery: 83 } }
       stageTestsPassed: {}, // { 'a1_stage_01': { score: 100, date: '...' } }
       completedLessons: [], // ['A1-01', 'A1-02']
       lastActivity: {
@@ -88,28 +101,54 @@ class ProgressController {
     return `${year}-${month}-${day}`;
   }
 
+  normalizeTopicId(rawName) {
+    if (!rawName) return "artikel";
+    const clean = rawName.toLowerCase().replace(/[^a-z0-9_]/g, '_');
+    
+    // Exact mapping or alias lookup
+    if (clean.includes("akkusativ")) return "akkusativ";
+    if (clean.includes("dativ")) return "dativ";
+    if (clean.includes("modalverb")) return "modalverben";
+    if (clean.includes("perfekt")) return "perfekt";
+    if (clean.includes("praesen") || clean.includes("prasens")) return "praesens";
+    if (clean.includes("w_frage") || clean.includes("satzbau")) return "w_fragen";
+    if (clean.includes("wechsel")) return "wechselpraepositionen";
+    if (clean.includes("adjektiv")) return "adjektivdeklination";
+    if (clean.includes("neben")) return "nebensaetze";
+    if (clean.includes("passiv")) return "passiv";
+    if (clean.includes("konjunktiv")) return "konjunktiv2";
+    if (clean.includes("artikel") || clean.includes("nomen")) return "artikel";
+
+    return Object.keys(this.data.topics).includes(clean) ? clean : "artikel";
+  }
+
   migrateData(rawParsed) {
     if (!rawParsed || typeof rawParsed !== "object") return this.getDefaultData();
     let data = Object.assign(this.getDefaultData(), rawParsed);
     
-    if (!data.topics) {
-      data.topics = this.getDefaultData().topics;
+    if (!data.topics || Object.keys(data.topics).some(k => k.includes(" "))) {
+      const defaultTopics = this.getDefaultData().topics;
+      // migrate any old non-normalized keys
+      for (const [oldKey, oldVal] of Object.entries(data.topics || {})) {
+        const normKey = this.normalizeTopicId(oldKey);
+        if (defaultTopics[normKey]) {
+          defaultTopics[normKey] = Object.assign(defaultTopics[normKey], oldVal);
+        }
+      }
+      data.topics = defaultTopics;
     }
-    if (!data.stageTestsPassed) {
-      data.stageTestsPassed = {};
-    }
-    if (data.today.newCardsReviewed === undefined) {
-      data.today.newCardsReviewed = 0;
-    }
+
+    if (!data.objectives) data.objectives = {};
+    if (!data.stageTestsPassed) data.stageTestsPassed = {};
+    if (data.today.newCardsReviewed === undefined) data.today.newCardsReviewed = 0;
     
-    // Ensure skillProgress naming compatibility
     for (const sk of Object.keys(data.skills)) {
       if (data.skills[sk].score !== undefined && data.skills[sk].skillProgress === undefined) {
         data.skills[sk].skillProgress = data.skills[sk].score;
       }
     }
 
-    data.version = 4;
+    data.version = 4.4;
     return data;
   }
 
@@ -119,12 +158,6 @@ class ProgressController {
       if (raw) {
         const parsed = JSON.parse(raw);
         this.data = this.migrateData(parsed);
-      } else {
-        const v3 = localStorage.getItem("deutschmaster_user_progress_v3");
-        if (v3) {
-          this.data = this.migrateData(JSON.parse(v3));
-          this.saveProgress();
-        }
       }
     } catch (e) {
       console.warn("Failed to load progress, using defaults:", e);
@@ -226,7 +259,7 @@ class ProgressController {
     }
   }
 
-  recordActivity(type, isCorrect = true, topic = "Allgemein") {
+  recordActivity(type, isCorrect = true, rawTopic = "Allgemein", objectiveId = null) {
     this.checkDayRollOver();
     const today = this.data.today;
     today.totalAttempted = (today.totalAttempted || 0) + 1;
@@ -250,24 +283,16 @@ class ProgressController {
       this.updateSkillProgress("writing", isCorrect);
     }
 
-    this.recordTopicAttempt(topic, isCorrect);
+    const topicId = this.normalizeTopicId(rawTopic);
+    this.recordTopicAttempt(topicId, isCorrect, objectiveId);
     this.checkDailyGoalCompletion();
     this.saveProgress();
   }
 
-  recordTopicAttempt(topicName, isCorrect) {
-    if (!topicName || topicName === "Allgemein" || topicName === "Chung") return;
-    
-    let key = topicName;
-    for (const k of Object.keys(this.data.topics)) {
-      if (topicName.toLowerCase().includes(k.toLowerCase())) {
-        key = k;
-        break;
-      }
-    }
-
+  recordTopicAttempt(topicId, isCorrect, objectiveId = null) {
+    const key = this.normalizeTopicId(topicId);
     if (!this.data.topics[key]) {
-      this.data.topics[key] = { mastery: 20, confidence: 15, correct: 0, total: 0, recent: [], lastPracticed: 0, evidence: {} };
+      this.data.topics[key] = { name: topicId, mastery: 20, confidence: 15, correct: 0, total: 0, recent: [], lastPracticed: 0, evidence: {} };
     }
 
     const t = this.data.topics[key];
@@ -277,11 +302,25 @@ class ProgressController {
     if (t.recent.length > 15) t.recent.shift();
     t.lastPracticed = Date.now();
 
+    // Record Granular Learning Objective if provided
+    if (objectiveId) {
+      if (!this.data.objectives[objectiveId]) {
+        this.data.objectives[objectiveId] = { correct: 0, total: 0, mastery: 20 };
+      }
+      const obj = this.data.objectives[objectiveId];
+      obj.total += 1;
+      if (isCorrect) obj.correct += 1;
+      obj.mastery = Math.round((obj.correct / obj.total) * 100);
+    }
+
     // SRS Retention calculation for this topic
     let srsRetention = 0.5;
     let relatedCardsCount = 0;
     if (window.srsCtrl) {
-      const relatedCards = Object.values(window.srsCtrl.cards).filter(c => (c.topic || "").includes(key));
+      const relatedCards = Object.values(window.srsCtrl.cards).filter(c => {
+        const cTopic = (c.topic || "").toLowerCase();
+        return cTopic.includes(key) || cTopic.includes(t.name.toLowerCase());
+      });
       relatedCardsCount = relatedCards.length;
       if (relatedCardsCount > 0) {
         const masteredOrGood = relatedCards.filter(c => c.state === "mastered" || c.interval >= 3).length;
@@ -289,10 +328,10 @@ class ProgressController {
       }
     }
 
-    // Strict 4-Component Mastery Formula: 30% Recent + 20% Overall + 30% SRS Retention + 20% Coverage
+    // 4-Component Mastery Formula: 30% Recent + 20% Overall + 30% SRS Retention + 20% Coverage
     const recentAcc = t.recent.length > 0 ? (t.recent.reduce((a, b) => a + b, 0) / t.recent.length) : 0.5;
     const overallAcc = t.total > 0 ? (t.correct / t.total) : 0.5;
-    const coverageFactor = Math.min(1.0, t.total / 12);
+    const coverageFactor = Math.min(1.0, t.total / 15);
     
     const computedMastery = Math.round(
       (recentAcc * 30) +
@@ -301,26 +340,33 @@ class ProgressController {
       (coverageFactor * 20)
     );
 
-    t.confidence = Math.min(100, Math.max(10, t.total * 6));
+    // Multi-factor Confidence calculation: Sample Size (60%) + SRS Evidence (20%) + Consistency (20%)
+    const sampleFactor = Math.min(1.0, t.total / 18);
+    const srsFactor = Math.min(1.0, relatedCardsCount / 10);
+    const consistencyFactor = t.recent.length >= 5 ? 0.9 : 0.6;
+    t.confidence = Math.round((sampleFactor * 60) + (srsFactor * 20) + (consistencyFactor * 20));
+
     t.mastery = Math.min(100, Math.max(10, computedMastery));
 
     // Store Evidence Breakdown
     t.evidence = {
+      topicId: key,
+      topicName: t.name,
       totalAttempts: t.total,
       recentAttempts: t.recent.length,
       recentAccuracy: Math.round(recentAcc * 100),
       overallAccuracy: Math.round(overallAcc * 100),
       srsRetentionPct: Math.round(srsRetention * 100),
       srsCardCount: relatedCardsCount,
+      coveragePct: Math.round(coverageFactor * 100),
+      calculatedMastery: t.mastery,
       confidence: t.confidence
     };
   }
 
-  getTopicMastery(topicKey) {
-    if (this.data.topics[topicKey]) {
-      return this.data.topics[topicKey].mastery || 20;
-    }
-    return 20;
+  getTopicMastery(topicId) {
+    const key = this.normalizeTopicId(topicId);
+    return this.data.topics[key] ? (this.data.topics[key].mastery || 20) : 20;
   }
 
   updateSkillProgress(skill, isCorrect) {
@@ -361,7 +407,10 @@ class ProgressController {
     const oneDayMs = 24 * 60 * 60 * 1000;
 
     for (const [topicKey, stat] of Object.entries(this.data.topics)) {
-      const topicMistakes = mistakes.filter(m => (m.topic || "").toLowerCase().includes(topicKey.toLowerCase()));
+      const topicMistakes = mistakes.filter(m => {
+        const mTopic = (m.topic || "").toLowerCase();
+        return mTopic.includes(topicKey) || mTopic.includes((stat.name || "").toLowerCase());
+      });
       
       // Decay factor: e^(-days / 14)
       let weightedMistakes = 0;
@@ -376,7 +425,8 @@ class ProgressController {
 
       if (weaknessScore > 25 || topicMistakes.length > 0) {
         list.push({
-          topic: topicKey,
+          topicId: topicKey,
+          topic: stat.name || topicKey,
           errorRate: Math.round(errorRate * 100),
           mistakeCount: topicMistakes.length,
           mastery: stat.mastery,
@@ -483,6 +533,64 @@ class ProgressController {
     return queue;
   }
 
+  showEvidenceModal(topicKey) {
+    const key = this.normalizeTopicId(topicKey);
+    const stat = this.data.topics[key];
+    if (!stat) return;
+
+    const modal = document.getElementById("mastery-evidence-modal");
+    const titleEl = document.getElementById("evidence-modal-title");
+    const contentEl = document.getElementById("evidence-modal-content");
+
+    if (titleEl) titleEl.textContent = `Bằng Chứng Năng Lực (Mastery Evidence): ${stat.name || key}`;
+    if (!modal || !contentEl) return;
+
+    const ev = stat.evidence || {};
+    contentEl.innerHTML = `
+      <div class="p-4 rounded-2xl bg-blue-50/60 dark:bg-blue-950/30 border border-blue-100 dark:border-blue-900/50 space-y-3">
+        <div class="flex items-center justify-between">
+          <span class="text-sm font-bold text-gray-700 dark:text-gray-300">Độ làm chủ (Topic Mastery)</span>
+          <span class="text-2xl font-black text-blue-600 dark:text-blue-400 font-mono">${stat.mastery}%</span>
+        </div>
+        <div class="flex items-center justify-between text-xs">
+          <span class="text-gray-500">Độ tin cậy dữ liệu (Confidence)</span>
+          <span class="font-bold text-gray-800 dark:text-gray-200 font-mono">${stat.confidence}%</span>
+        </div>
+      </div>
+
+      <div class="space-y-2 pt-2">
+        <h4 class="text-xs font-bold text-gray-400 uppercase tracking-wider">Chi tiết 4 thành phần cấu thành Mastery:</h4>
+        
+        <div class="p-3 bg-gray-50 dark:bg-gray-900/50 rounded-xl space-y-1.5 text-xs">
+          <div class="flex justify-between">
+            <span class="text-gray-600 dark:text-gray-400">1. Độ chính xác 15 câu gần đây (30% trọng số):</span>
+            <span class="font-bold text-gray-900 dark:text-white font-mono">${ev.recentAccuracy || stat.mastery}%</span>
+          </div>
+          <div class="flex justify-between">
+            <span class="text-gray-600 dark:text-gray-400">2. Độ chính xác lịch sử (20% trọng số):</span>
+            <span class="font-bold text-gray-900 dark:text-white font-mono">${ev.overallAccuracy || stat.mastery}%</span>
+          </div>
+          <div class="flex justify-between">
+            <span class="text-gray-600 dark:text-gray-400">3. Tỷ lệ nhớ thẻ SRS (30% trọng số):</span>
+            <span class="font-bold text-gray-900 dark:text-white font-mono">${ev.srsRetentionPct || 50}%</span>
+          </div>
+          <div class="flex justify-between">
+            <span class="text-gray-600 dark:text-gray-400">4. Độ phủ bài tập (20% trọng số):</span>
+            <span class="font-bold text-gray-900 dark:text-white font-mono">${ev.coveragePct || 40}%</span>
+          </div>
+        </div>
+
+        <div class="p-3 bg-gray-50 dark:bg-gray-900/50 rounded-xl space-y-1 text-xs">
+          <span class="font-bold text-gray-700 dark:text-gray-300">📊 Bằng chứng mẫu dữ liệu thực tế:</span>
+          <p class="text-gray-500">• <b>${stat.total}</b> câu đã thực hiện (${stat.correct} đúng, ${stat.total - stat.correct} sai)</p>
+          <p class="text-gray-500">• <b>${ev.srsCardCount || 0}</b> thẻ nhớ từ vựng liên quan trong bộ thẻ SRS</p>
+        </div>
+      </div>
+    `;
+
+    modal.classList.remove("hidden");
+  }
+
   showDailySummaryModal() {
     const modal = document.getElementById("daily-summary-modal");
     if (!modal) return;
@@ -577,16 +685,17 @@ class ProgressController {
     }
 
     container.innerHTML = weak.map(w => `
-      <div class="p-3.5 bg-amber-50 dark:bg-amber-950/30 rounded-2xl border border-amber-200 dark:border-amber-900/50 text-xs flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
+      <div class="p-3.5 bg-amber-50 dark:bg-amber-950/30 rounded-2xl border border-amber-200 dark:border-amber-900/50 text-xs flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 cursor-pointer hover:border-amber-400 transition-all" onclick="window.progressCtrl && window.progressCtrl.showEvidenceModal('${w.topicId}')">
         <div>
           <div class="flex flex-wrap items-center gap-2">
             <span class="font-black text-amber-900 dark:text-amber-200">⚠️ ${w.topic}</span>
             <span class="px-2 py-0.2 rounded-full text-[10px] font-bold bg-amber-200 dark:bg-amber-900 text-amber-900 dark:text-amber-100">Sai ${w.errorRate}%</span>
             <span class="text-[10px] text-gray-500 font-mono">Mastery: ${w.mastery}% (Độ tin cậy: ${w.confidence}%)</span>
+            <span class="text-[10px] text-blue-600 hover:underline">👁️ Xem bằng chứng</span>
           </div>
           <p class="text-[11px] text-gray-600 dark:text-gray-400 mt-0.5">${w.advice}</p>
         </div>
-        <button onclick="window.appCtrl && window.appCtrl.switchTab('mistakes')" class="px-3 py-1.5 rounded-xl bg-amber-500 hover:bg-amber-600 text-white font-bold text-[11px] shrink-0 shadow-xs self-end sm:self-center">
+        <button onclick="event.stopPropagation(); window.appCtrl && window.appCtrl.switchTab('mistakes')" class="px-3 py-1.5 rounded-xl bg-amber-500 hover:bg-amber-600 text-white font-bold text-[11px] shrink-0 shadow-xs self-end sm:self-center">
           Luyện ngay →
         </button>
       </div>
