@@ -1,0 +1,130 @@
+[
+  {
+    "id": "sound_umlaut",
+    "category": "Biến âm (Umlaut)",
+    "title": "Biến âm: Ä, Ö, Ü",
+    "desc": "Các nguyên âm biến đổi đặc trưng nhất của tiếng Đức, làm thay đổi hoàn toàn nghĩa của từ nếu phát âm sai.",
+    "items": [
+      {
+        "symbol": "ä / Ä",
+        "ipa": "[ɛː] hoặc [ɛ]",
+        "mouth": "Khẩu hình giống như đọc âm 'e' mở hoặc 'e/ê' trong tiếng Việt.",
+        "examples": [
+          { "de": "Mädchen", "vi": "cô bé", "phonetic": "/mết-hyên/" },
+          { "de": "spät", "vi": "muộn, trễ", "phonetic": "/spết/" },
+          { "de": "Äpfel", "vi": "những quả táo", "phonetic": "/ép-phồ/" }
+        ]
+      },
+      {
+        "symbol": "ö / Ö",
+        "ipa": "[øː] hoặc [œ]",
+        "mouth": "Tròn môi như đọc chữ 'O', nhưng phát ra âm 'Ê'. Giữ chặt môi tròn!",
+        "examples": [
+          { "de": "schön", "vi": "đẹp", "phonetic": "/sơn-ê/" },
+          { "de": "möchten", "vi": "muốn (lịch sự)", "phonetic": "/mơ-hy-từn/" },
+          { "de": "Kölner", "vi": "người Köln", "phonetic": "/khơn-nờ/" }
+        ]
+      },
+      {
+        "symbol": "ü / Ü",
+        "ipa": "[yː] hoặc [ʏ]",
+        "mouth": "Tròn môi chúm lại như đọc chữ 'U', nhưng bên trong phát ra âm 'I'.",
+        "examples": [
+          { "de": "Tür", "vi": "cánh cửa", "phonetic": "/tuy-r/" },
+          { "de": "fünf", "vi": "số 5", "phonetic": "/fynf/" },
+          { "de": "über", "vi": "về, trên", "phonetic": "/uy-bờ/" }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "sound_ch",
+    "category": "Phụ âm đặc biệt",
+    "title": "Phụ âm 'ch' (ich-Laut & ach-Laut)",
+    "desc": "Có 2 cách phát âm 'ch' tùy thuộc vào nguyên âm đứng trước nó.",
+    "items": [
+      {
+        "symbol": "ich-Laut [ç]",
+        "ipa": "[ç]",
+        "mouth": "Sau các âm e, i, ä, ö, ü, ei, eu: Đẩy luồng hơi nhẹ qua kẽ răng và vòm họng mềm (như tiếng mèo khè nhẹ).",
+        "examples": [
+          { "de": "ich", "vi": "tôi", "phonetic": "/ích-hy/" },
+          { "de": "nicht", "vi": "không", "phonetic": "/ních-ht/" },
+          { "de": "sprechen", "vi": "nói", "phonetic": "/spré-hyừn/" }
+        ]
+      },
+      {
+        "symbol": "ach-Laut [x]",
+        "ipa": "[x]",
+        "mouth": "Sau các âm a, o, u, au: Phát âm từ cuống họng sâu, ma sát luồng hơi mạnh.",
+        "examples": [
+          { "de": "Buch", "vi": "cuốn sách", "phonetic": "/bukh/" },
+          { "de": "machen", "vi": "làm", "phonetic": "/ma-khừn/" },
+          { "de": "auch", "vi": "cũng", "phonetic": "/au-kh/" }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "sound_s_sch_sp_st",
+    "category": "Cụm phụ âm S",
+    "title": "Phát âm: S, SCH, SP, ST, ß",
+    "desc": "Các quy tắc biến đổi phụ âm S ở đầu từ hoặc trước phụ âm khác.",
+    "items": [
+      {
+        "symbol": "s (đầu từ) & ß",
+        "ipa": "[z] / [s]",
+        "mouth": "'s' đầu từ đọc rung nhẹ như 'd/z' tiếng Việt. 'ß' (Eszett) luôn đọc là 's' sắc bén.",
+        "examples": [
+          { "de": "Sonne", "vi": "mặt trời", "phonetic": "/dôn-nờ/" },
+          { "de": "heißen", "vi": "tên là", "phonetic": "/hai-sừn/" }
+        ]
+      },
+      {
+        "symbol": "sch / sp / st",
+        "ipa": "[ʃ] / [ʃp] / [ʃt]",
+        "mouth": "Chu môi thổi hơi mạnh như âm 'sặng' hoặc 'sh' tiếng Anh.",
+        "examples": [
+          { "de": "Schule", "vi": "trường học", "phonetic": "/su-lờ/" },
+          { "de": "sprechen", "vi": "nói", "phonetic": "/sp-rế-hyừn/" },
+          { "de": "Stadt", "vi": "thành phố", "phonetic": "/stát/" }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "sound_diphthongs",
+    "category": "Nguyên âm đôi (Diphthonge)",
+    "title": "Nguyên âm đôi: EI, IE, EU / ÄU",
+    "desc": "Các cặp nguyên âm kết hợp tạo thành âm thanh hoàn toàn mới.",
+    "items": [
+      {
+        "symbol": "ei / ai",
+        "ipa": "[aɪ̯]",
+        "mouth": "Đọc giống âm 'ai' trong tiếng Việt.",
+        "examples": [
+          { "de": "mein", "vi": "của tôi", "phonetic": "/mai-n/" },
+          { "de": "Eis", "vi": "kem, băng", "phonetic": "/ai-s/" }
+        ]
+      },
+      {
+        "symbol": "ie",
+        "ipa": "[iː]",
+        "mouth": "Đọc là âm 'I' kéo dài (không đọc là 'i-e').",
+        "examples": [
+          { "de": "sie", "vi": "cô ấy / họ", "phonetic": "/zii/" },
+          { "de": "Liebe", "vi": "tình yêu", "phonetic": "/lii-bờ/" }
+        ]
+      },
+      {
+        "symbol": "eu / äu",
+        "ipa": "[ɔɪ̯]",
+        "mouth": "Đọc giống âm 'oi' trong tiếng Việt.",
+        "examples": [
+          { "de": "heute", "vi": "hôm nay", "phonetic": "/hoi-tờ/" },
+          { "de": "Häuser", "vi": "những ngôi nhà", "phonetic": "/hoi-zờ/" }
+        ]
+      }
+    ]
+  }
+]

@@ -1,8 +1,9 @@
-// WEB_Germany Listening Dictation & Speed Control Module
+// WEB_Germany Listening Dictation & Phonetics Diagnostic Module (A1-B1)
 
 class DictationController {
   constructor() {
     this.speed = 0.9;
+    this.currentLevel = "A1";
     this.sentences = [
       {
         id: "dic_01",
@@ -111,6 +112,44 @@ class DictationController {
     }
   }
 
+  analyzeGermanSpellingMistakes(userText, targetText) {
+    const hints = [];
+    const lowerUser = userText.toLowerCase();
+    const lowerTarget = targetText.toLowerCase();
+
+    // Check Umlaut misses
+    if ((lowerTarget.includes("ä") && !lowerUser.includes("ä")) ||
+        (lowerTarget.includes("ö") && !lowerUser.includes("ö")) ||
+        (lowerTarget.includes("ü") && !lowerUser.includes("ü"))) {
+      hints.push("⚠️ <b>Lỗi thiếu biến âm (Umlaut):</b> Tiếng Đức phân biệt rõ giữa <code>a/ä</code>, <code>o/ö</code>, <code>u/ü</code>. Hãy dùng bàn phím ảo hoặc gõ đúng ký tự biến âm.");
+    }
+
+    // Check Eszett ß miss
+    if (lowerTarget.includes("ß") && !lowerUser.includes("ß")) {
+      hints.push("⚠️ <b>Lỗi thiếu ký tự ß (Eszett):</b> Từ tiếng Đức có âm 'ß' (như <code>heißen</code>) không thể viết tùy tiện thành 's'.");
+    }
+
+    // Check Noun Capitalization
+    const targetWords = targetText.split(/\s+/);
+    const userWords = userText.split(/\s+/);
+    let nounCapMiss = false;
+    targetWords.forEach(w => {
+      const cleanW = w.replace(/[^a-zA-ZäöüÄÖÜß]/g, '');
+      if (cleanW && cleanW[0] === cleanW[0].toUpperCase() && cleanW.length > 1) {
+        const found = userWords.find(uw => uw.toLowerCase() === cleanW.toLowerCase());
+        if (found && found[0] !== found[0].toUpperCase()) {
+          nounCapMiss = true;
+        }
+      }
+    });
+
+    if (nounCapMiss) {
+      hints.push("💡 <b>Mẹo chính tả:</b> Trong tiếng Đức, TẤT CẢ các Danh từ đều phải viết hoa chữ cái đầu tiên (ví dụ: <code>Hausaufgaben</code>, <code>Freunden</code>)!");
+    }
+
+    return hints;
+  }
+
   checkAnswer() {
     const item = this.sentences[this.currentIndex];
     const inputEl = document.getElementById("dictation-input");
@@ -130,16 +169,24 @@ class DictationController {
     feedbackBox.classList.remove("hidden");
 
     if (isCorrect) {
-      feedbackBox.className = "p-4 rounded-2xl border-2 border-emerald-500 bg-emerald-50 dark:bg-emerald-950/40 text-emerald-900 dark:text-emerald-100";
+      feedbackBox.className = "p-4 rounded-2xl border-2 border-emerald-500 bg-emerald-50 dark:bg-emerald-950/40 text-emerald-900 dark:text-emerald-100 space-y-2";
       if (feedbackTitle) feedbackTitle.innerHTML = `<span class="font-extrabold text-emerald-600 dark:text-emerald-400">Chính xác 100%! 🎉 Đôi tai của bạn rất tuyệt vời.</span>`;
       if (feedbackDetail) feedbackDetail.innerHTML = `Câu chuẩn: <b>${item.fullText}</b>`;
       if (window.speechCtrl) window.speechCtrl.playCorrectSound();
-      if (window.progressCtrl) window.progressCtrl.recordActivity("lesson", true);
+      if (window.progressCtrl) window.progressCtrl.recordActivity("lesson", true, item.topic || "Nghe chép");
       if (nextBtn) nextBtn.classList.remove("hidden");
     } else {
-      feedbackBox.className = "p-4 rounded-2xl border-2 border-rose-500 bg-rose-50 dark:bg-rose-950/40 text-rose-900 dark:text-rose-100";
+      const diagHints = this.analyzeGermanSpellingMistakes(userText, item.fullText);
+
+      feedbackBox.className = "p-4 rounded-2xl border-2 border-rose-500 bg-rose-50 dark:bg-rose-950/40 text-rose-900 dark:text-rose-100 space-y-2";
       if (feedbackTitle) feedbackTitle.innerHTML = `<span class="font-extrabold text-rose-600 dark:text-rose-400">Chưa hoàn toàn chính xác! ❌</span>`;
-      if (feedbackDetail) feedbackDetail.innerHTML = `Đáp án đúng: <b class="text-blue-600 dark:text-blue-400">${item.fullText}</b>`;
+      
+      let detailHtml = `<p>Đáp án đúng: <b class="text-blue-600 dark:text-blue-400">${item.fullText}</b></p>`;
+      if (diagHints.length > 0) {
+        detailHtml += `<div class="p-2.5 mt-2 bg-rose-100/60 dark:bg-rose-900/30 rounded-xl text-xs space-y-1">${diagHints.join("<br>")}</div>`;
+      }
+
+      if (feedbackDetail) feedbackDetail.innerHTML = detailHtml;
       if (window.speechCtrl) window.speechCtrl.playWrongSound();
       if (window.mistakesCtrl) {
         window.mistakesCtrl.addMistake({
@@ -149,8 +196,8 @@ class DictationController {
           question: `Nghe chép chính tả: "${item.meaning_vi}"`,
           userAnswer: userText || "(Chưa gõ)",
           correctAnswer: item.fullText,
-          topic: "Luyện nghe (Hören)",
-          explanation: `Nghe kỹ từng từ trong câu tiếng Đức: "${item.fullText}"`
+          topic: item.topic || "Nghe chính tả",
+          explanation: `Câu đúng là "${item.fullText}".`
         });
       }
     }

@@ -89,9 +89,11 @@ class SRSController {
 
   getCounts(filterLevel = "ALL") {
     const now = Date.now();
-    let due = 0;
-    let newCount = 0;
+    let reviewDue = 0;
+    let learningDue = 0;
+    let newTotal = 0;
     let learning = 0;
+    let review = 0;
     let mastered = 0;
     let total = 0;
 
@@ -102,19 +104,30 @@ class SRSController {
         mastered++;
       } else if (c.state === "learning") {
         learning++;
-        if ((c.dueAt || 0) <= now) due++;
+        if ((c.dueAt || 0) <= now) learningDue++;
       } else if (c.state === "new") {
-        newCount++;
-        due++;
+        newTotal++;
       } else { // review
-        if ((c.dueAt || 0) <= now) due++;
+        review++;
+        if ((c.dueAt || 0) <= now) reviewDue++;
       }
     });
 
     const todayNewDone = (window.progressCtrl && window.progressCtrl.data.today.newCardsReviewed) || 0;
-    const availableNewToday = Math.min(newCount, Math.max(0, this.newCardsPerDayLimit - todayNewDone));
+    const availableNewToday = Math.min(newTotal, Math.max(0, this.newCardsPerDayLimit - todayNewDone));
+    const totalActionableToday = reviewDue + learningDue + availableNewToday;
 
-    return { due, newCount, availableNewToday, learning, mastered, total };
+    return { 
+      due: totalActionableToday, 
+      reviewDue, 
+      learningDue, 
+      availableNewToday, 
+      newTotal, 
+      learning, 
+      review, 
+      mastered, 
+      total 
+    };
   }
 
   rateCard(cardId, rating) {
@@ -156,7 +169,7 @@ class SRSController {
         }
         break;
 
-      case "hard": // Schwer: due in 1 day
+      case "hard": // Schwer: due in 1 day, counted as remembered with effort
         card.state = "learning";
         card.interval = 1;
         card.repetitions = Math.max(1, card.repetitions);
@@ -197,7 +210,9 @@ class SRSController {
 
     this.saveDeck();
     if (window.progressCtrl) {
-      window.progressCtrl.recordActivity("vocab", rating === "good" || rating === "easy", card.topic || "Từ vựng");
+      // 'again' is incorrect; 'hard', 'good', 'easy' are all recognized as remembered
+      const isRemembered = (rating !== "again");
+      window.progressCtrl.recordActivity("vocab", isRemembered, card.topic || "Từ vựng");
     }
   }
 
@@ -223,10 +238,10 @@ class SRSController {
     const fcBreakdown = document.getElementById("fc-breakdown-stats");
     if (fcBreakdown) {
       fcBreakdown.innerHTML = `
-        <span class="px-2 py-0.5 rounded-lg bg-blue-100 dark:bg-blue-900/40 text-blue-800 dark:text-blue-200 font-bold text-[10px]">🆕 ${counts.availableNewToday} mới</span>
-        <span class="px-2 py-0.5 rounded-lg bg-amber-100 dark:bg-amber-900/40 text-amber-800 dark:text-amber-200 font-bold text-[10px]">🟡 ${counts.learning} đang học</span>
-        <span class="px-2 py-0.5 rounded-lg bg-indigo-100 dark:bg-indigo-900/40 text-indigo-800 dark:text-indigo-200 font-bold text-[10px]">🔄 ${counts.due} đến hạn</span>
-        <span class="px-2 py-0.5 rounded-lg bg-emerald-100 dark:bg-emerald-900/40 text-emerald-800 dark:text-emerald-200 font-bold text-[10px]">🏆 ${counts.mastered} đã thuộc</span>
+        <span class="px-2 py-0.5 rounded-lg bg-blue-100 dark:bg-blue-900/40 text-blue-800 dark:text-blue-200 font-bold text-[10px]">🆕 ${counts.availableNewToday} từ mới hôm nay</span>
+        <span class="px-2 py-0.5 rounded-lg bg-amber-100 dark:bg-amber-900/40 text-amber-800 dark:text-amber-200 font-bold text-[10px]">🟡 ${counts.learningDue} đang ôn</span>
+        <span class="px-2 py-0.5 rounded-lg bg-indigo-100 dark:bg-indigo-900/40 text-indigo-800 dark:text-indigo-200 font-bold text-[10px]">🔄 ${counts.reviewDue} đến hạn ôn</span>
+        <span class="px-2 py-0.5 rounded-lg bg-emerald-100 dark:bg-emerald-900/40 text-emerald-800 dark:text-emerald-200 font-bold text-[10px]">🏆 ${counts.mastered} đã thuộc sâu</span>
       `;
     }
   }
