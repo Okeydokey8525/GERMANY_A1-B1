@@ -10,10 +10,21 @@
           "title": "Bảng chữ cái & Phát âm chuẩn",
           "desc": "Alphabet, biến âm (ä, ö, ü), phụ âm đặc biệt (ch, sch, sp, st, ß), đại từ nhân xưng và chào hỏi.",
           "prerequisites": [],
+          "leadsTo": ["a1_stage_02"],
           "vocabTopics": ["Grundlagen", "Grüße & Alltag"],
-          "grammarTopics": ["Đại từ nhân xưng", "sein"],
+          "grammarTopics": ["Präsens", "Pronomen"],
           "lessonIds": ["A1-01", "A1-02", "A1-03", "A1-04", "A1-05"],
-          "competency": "Có thể đánh vần tên, chào hỏi và giới thiệu thông tin cá nhân cơ bản."
+          "learningObjectives": [
+            { "id": "LO_A1_01", "title": "Đánh vần tên & đọc chuẩn chữ cái tiếng Đức" },
+            { "id": "LO_A1_02", "title": "Sử dụng đại từ nhân xưng (ich, du, er, sie, es, wir, ihr, Sie)" },
+            { "id": "LO_A1_03", "title": "Chia đúng động từ cốt lõi 'sein' (bin, bist, ist, sind, seid)" }
+          ],
+          "competency": "Có thể đánh vần tên, chào hỏi và giới thiệu thông tin cá nhân cơ bản.",
+          "masteryTest": [
+            { "q": "Cách chào hỏi lịch sự vào buổi sáng bằng tiếng Đức là:", "opts": ["Guten Morgen!", "Gute Nacht!", "Tschüss!", "Guten Abend!"], "ans": 0 },
+            { "q": "Đại từ nhân xưng ngôi 'Chúng tôi' trong tiếng Đức là:", "opts": ["wir", "sie", "ihr", "du"], "ans": 0 },
+            { "q": "Chia động từ sein: 'Wir ______ Studenten.'", "opts": ["sind", "seid", "ist", "bin"], "ans": 0 }
+          ]
         },
         {
           "id": "a1_stage_02",
@@ -21,10 +32,21 @@
           "title": "Động từ hiện tại & Câu hỏi W-Fragen",
           "desc": "Chia động từ hiện tại Präsens (haben, kommen, wohnen, heißen), số đếm 0-100 và quốc gia/nguồn gốc.",
           "prerequisites": ["a1_stage_01"],
+          "leadsTo": ["a1_stage_03"],
           "vocabTopics": ["Verben", "Zahlen & Zeit"],
           "grammarTopics": ["Präsens", "W-Fragen"],
           "lessonIds": ["A1-06", "A1-07", "A1-08", "A1-09", "A1-10"],
-          "competency": "Có thể hỏi và trả lời về số điện thoại, quê quán và nghề nghiệp."
+          "learningObjectives": [
+            { "id": "LO_A1_04", "title": "Quy tắc chia đuôi động từ thường (-e, -st, -t, -en, -t, -en)" },
+            { "id": "LO_A1_05", "title": "Đặt câu hỏi W-Fragen (Wie, Woher, Wo, Was, Wer)" },
+            { "id": "LO_A1_06", "title": "Đếm và đọc số từ 0 đến 100 chính xác" }
+          ],
+          "competency": "Có thể hỏi và trả lời về số điện thoại, quê quán và nghề nghiệp.",
+          "masteryTest": [
+            { "q": "Từ để hỏi 'Từ đâu đến?' trong tiếng Đức là:", "opts": ["Woher?", "Wo?", "Wohin?", "Wie?"], "ans": 0 },
+            { "q": "Chia động từ kommen: 'Woher ______ du?'", "opts": ["kommst", "kommt", "kommen", "komme"], "ans": 0 },
+            { "q": "Số 48 đọc là:", "opts": ["achtundvierzig", "vierzigacht", "achtzehn", "vierundachtzig"], "ans": 0 }
+          ]
         },
         {
           "id": "a1_stage_03",
@@ -32,10 +54,21 @@
           "title": "Mạo từ Der/Die/Das & Đồ đạc trong nhà",
           "desc": "Mạo từ xác định/không xác định, danh từ số nhiều, phủ định nicht & kein, nhà ở và đồ dùng.",
           "prerequisites": ["a1_stage_02"],
+          "leadsTo": ["a1_stage_04"],
           "vocabTopics": ["Familie & Alltag", "Im Restaurant"],
           "grammarTopics": ["Artikel", "Negation"],
           "lessonIds": ["A1-11", "A1-12", "A1-13", "A1-14", "A1-15"],
-          "competency": "Có thể mô tả căn phòng, đồ đạc và nhận biết giống mạo từ của danh từ."
+          "learningObjectives": [
+            { "id": "LO_A1_07", "title": "Nhận biết giống danh từ der (đực), die (cái), das (trung)" },
+            { "id": "LO_A1_08", "title": "Mạo từ không xác định ein / eine và phủ định kein / keine" },
+            { "id": "LO_A1_09", "title": "Phân biệt cách dùng phủ định 'nicht' và 'kein'" }
+          ],
+          "competency": "Có thể mô tả căn phòng, đồ đạc và nhận biết giống mạo từ của danh từ.",
+          "masteryTest": [
+            { "q": "Mạo từ xác định của danh từ 'Tisch' (bàn) là:", "opts": ["der", "die", "das", "den"], "ans": 0 },
+            { "q": "Phủ định danh từ giống đực: 'Das ist ______ Stuhl.'", "opts": ["kein", "keine", "nicht", "keinen"], "ans": 0 },
+            { "q": "Mạo từ xác định của danh từ 'Lampe' (đèn) là:", "opts": ["die", "der", "das", "ein"], "ans": 0 }
+          ]
         },
         {
           "id": "a1_stage_04",
@@ -43,10 +76,21 @@
           "title": "Cách Akkusativ & Mua sắm ẩm thực",
           "desc": "Biến cách tân ngữ trực tiếp Akkusativ (den, einen, keinen), ẩm thực, nấu ăn và gọi món tại nhà hàng.",
           "prerequisites": ["a1_stage_03"],
+          "leadsTo": ["a1_stage_05"],
           "vocabTopics": ["Kochen & Lebensmittel", "Im Restaurant"],
           "grammarTopics": ["Akkusativ"],
           "lessonIds": ["A1-16", "A1-17", "A1-18", "A1-19", "A1-20"],
-          "competency": "Có thể đi siêu thị mua thực phẩm, hỏi giá tiền và gọi món ăn ở quán."
+          "learningObjectives": [
+            { "id": "LO_A1_10", "title": "Quy tắc biến đổi mạo từ giống đực der -> den, ein -> einen, kein -> keinen" },
+            { "id": "LO_A1_11", "title": "Nhận diện động từ đòi hỏi tân ngữ Akkusativ (haben, brauchen, kaufen, essen, trinken...)" },
+            { "id": "LO_A1_12", "title": "Gọi món và thanh toán tại quán ăn, siêu thị" }
+          ],
+          "competency": "Có thể đi siêu thị mua thực phẩm, hỏi giá tiền và gọi món ăn ở quán.",
+          "masteryTest": [
+            { "q": "Điền câu: 'Ich habe ______ Apfel (der Apfel) gegessen.'", "opts": ["einen", "ein", "eine", "einem"], "ans": 0 },
+            { "q": "Điền câu: 'Wir brauchen ______ Tisch (der Tisch).'", "opts": ["den", "der", "dem", "das"], "ans": 0 },
+            { "q": "'Ich möchte bitte ______ Kaffee (der Kaffee).' ", "opts": ["einen", "ein", "eine", "einer"], "ans": 0 }
+          ]
         },
         {
           "id": "a1_stage_05",
@@ -54,10 +98,21 @@
           "title": "Động từ khuyết thiếu & Động từ tách",
           "desc": "Modalverben (können, müssen, wollen, dürfen, sollen, möchten), động từ tách Trennbare Verben và lịch sinh hoạt.",
           "prerequisites": ["a1_stage_04"],
+          "leadsTo": ["a1_stage_06"],
           "vocabTopics": ["Verben", "Familie & Alltag"],
           "grammarTopics": ["Modalverben", "Trennbare Verben", "Word Order"],
           "lessonIds": ["A1-21", "A1-22", "A1-23", "A1-24", "A1-25"],
-          "competency": "Có thể diễn đạt khả năng, nghĩa vụ, sở thích và kể về lịch trình trong ngày."
+          "learningObjectives": [
+            { "id": "LO_A1_13", "title": "Chia và sử dụng Modalverben (können, müssen, möchten, wollen)" },
+            { "id": "LO_A1_14", "title": "Quy tắc đóng khung câu (Satzklammer) đẩy động từ nguyên thể về cuối câu" },
+            { "id": "LO_A1_15", "title": "Quy tắc tách tiền tố của động từ tách (aufstehen, anrufen, einkaufen...)" }
+          ],
+          "competency": "Có thể diễn đạt khả năng, nghĩa vụ, sở thích và kể về lịch trình trong ngày.",
+          "masteryTest": [
+            { "q": "Điền câu: 'Nico ______ heute lange arbeiten.' (müssen)", "opts": ["muss", "müsst", "müssen", "musst"], "ans": 0 },
+            { "q": "Động từ tách: 'Der Zug kommt um 8 Uhr ______.' (ankommen)", "opts": ["an", "auf", "aus", "ab"], "ans": 0 },
+            { "q": "'Wir möchten heute Abend Pizza ______.'", "opts": ["essen", "isst", "esse", "gegessen"], "ans": 0 }
+          ]
         },
         {
           "id": "a1_stage_06",
@@ -65,10 +120,21 @@
           "title": "Cách Dativ & Giới từ vị trí (Wo?)",
           "desc": "Tân ngữ gián tiếp Dativ (dem, der, dem, den), giới từ vị trí (in, an, auf, bei, mit) và chỉ đường.",
           "prerequisites": ["a1_stage_05"],
+          "leadsTo": ["a1_stage_07"],
           "vocabTopics": ["Zahlen & Zeit", "Verben"],
           "grammarTopics": ["Dativ", "Präpositionen"],
           "lessonIds": ["A1-26", "A1-27", "A1-28", "A1-29", "A1-30"],
-          "competency": "Có thể hỏi đường, chỉ phương hướng và mô tả vị trí đồ vật chính xác."
+          "learningObjectives": [
+            { "id": "LO_A1_16", "title": "Biến đổi mạo từ sang cách Dativ: dem (đực/trung), der (cái), den (+n) (số nhiều)" },
+            { "id": "LO_A1_17", "title": "Giới từ bắt buộc đi với Dativ: aus, bei, mit, nach, seit, von, zu" },
+            { "id": "LO_A1_18", "title": "Hỏi đường và trả lời với vị trí Dativ (Wo?)" }
+          ],
+          "competency": "Có thể hỏi đường, chỉ phương hướng và mô tả vị trí đồ vật chính xác.",
+          "masteryTest": [
+            { "q": "'Ich fahre mit ______ Bus (der Bus) zur Arbeit.'", "opts": ["dem", "den", "der", "das"], "ans": 0 },
+            { "q": "'Er wohnt bei ______ Eltern (Plural).' ", "opts": ["den", "dem", "die", "der"], "ans": 0 },
+            { "q": "'Ich gehe zu ______ Bahnhof (der Bahnhof).' (zu + dem)", "opts": ["zum", "zur", "den", "das"], "ans": 0 }
+          ]
         },
         {
           "id": "a1_stage_07",
@@ -76,10 +142,21 @@
           "title": "Thì quá khứ hoàn thành (Das Perfekt)",
           "desc": "Cấu trúc thì quá khứ Perfekt với haben/sein + Partizip II và kể về kỳ nghỉ/cuối tuần.",
           "prerequisites": ["a1_stage_06"],
+          "leadsTo": ["a2_stage_01"],
           "vocabTopics": ["Verben", "Familie & Alltag"],
           "grammarTopics": ["Perfekt", "Partizip II"],
           "lessonIds": ["A1-31", "A1-32", "A1-33", "A1-34", "A1-35"],
-          "competency": "Có thể kể lại những việc đã làm hôm qua hoặc trong kỳ nghỉ vừa qua."
+          "learningObjectives": [
+            { "id": "LO_A1_19", "title": "Cấu trúc Perfekt: haben/sein ở V2 + Partizip II ở cuối câu" },
+            { "id": "LO_A1_20", "title": "Phân biệt khi nào dùng haben (hành động) vs sein (di chuyển / đổi trạng thái)" },
+            { "id": "LO_A1_21", "title": "Quy tắc tạo phân từ II (ge-...-t / ge-...-en)" }
+          ],
+          "competency": "Có thể kể lại những việc đã làm hôm qua hoặc trong kỳ nghỉ vừa qua.",
+          "masteryTest": [
+            { "q": "'Gestern habe ich ein Buch ______.' (lesen)", "opts": ["gelesen", "gelest", "geleset", "lesen"], "ans": 0 },
+            { "q": "'Nico ______ gestern nach Berlin gefahren.' (fahren - di chuyển)", "opts": ["ist", "hat", "wird", "war"], "ans": 0 },
+            { "q": "'Wir ______ Deutsch gelernt.'", "opts": ["haben", "sind", "hat", "sein"], "ans": 0 }
+          ]
         }
       ]
     },
@@ -93,10 +170,19 @@
           "title": "Quá khứ đơn (Präteritum) & Động từ phản thân",
           "desc": "Thì Präteritum của war/hatte/Modalverben, động từ phản thân Reflexive Verben (sich freuen, sich interessieren).",
           "prerequisites": ["a1_stage_07"],
+          "leadsTo": ["a2_stage_02"],
           "vocabTopics": ["Verben", "Familie & Alltag"],
           "grammarTopics": ["Präteritum", "Reflexivpronomen"],
           "lessonIds": ["A2-01", "A2-02", "A2-03", "A2-04", "A2-05"],
-          "competency": "Có thể kể chuyện ngắn và biểu đạt cảm xúc, sự quan tâm của bản thân."
+          "learningObjectives": [
+            { "id": "LO_A2_01", "title": "Sử dụng thành thạo war (sein) và hatte (haben) trong quá khứ" },
+            { "id": "LO_A2_02", "title": "Đại từ phản thân Reflexivpronomen (mich, dich, sich, uns, euch, sich)" }
+          ],
+          "competency": "Có thể kể chuyện ngắn và biểu đạt cảm xúc, sự quan tâm của bản thân.",
+          "masteryTest": [
+            { "q": "'Gestern ______ ich keine Zeit.' (haben ở quá khứ)", "opts": ["hatte", "war", "habe", "hat"], "ans": 0 },
+            { "q": "'Ich interessiere ______ für deutsche Musik.'", "opts": ["mich", "sich", "dich", "mir"], "ans": 0 }
+          ]
         },
         {
           "id": "a2_stage_02",
@@ -104,10 +190,19 @@
           "title": "Giới từ 2 chiều (Wechselpräpositionen)",
           "desc": "Phân biệt vị trí đứng yên (Wo? + Dativ) và phương hướng di chuyển (Wohin? + Akkusativ).",
           "prerequisites": ["a2_stage_01"],
+          "leadsTo": ["a2_stage_03"],
           "vocabTopics": ["Verben", "Grundlagen"],
           "grammarTopics": ["Wechselpräpositionen", "Dativ vs Akkusativ"],
           "lessonIds": ["A2-06", "A2-07", "A2-08", "A2-09", "A2-10"],
-          "competency": "Có thể sắp xếp đồ đạc và hướng dẫn di chuyển chính xác trong thành phố."
+          "learningObjectives": [
+            { "id": "LO_A2_03", "title": "9 giới từ 2 chiều (an, auf, hinter, in, neben, über, unter, vor, zwischen)" },
+            { "id": "LO_A2_04", "title": "Phân biệt Wo? (+ Dativ) vs Wohin? (+ Akkusativ)" }
+          ],
+          "competency": "Có thể sắp xếp đồ đạc và hướng dẫn di chuyển chính xác trong thành phố.",
+          "masteryTest": [
+            { "q": "'Das Buch liegt auf ______ Tisch (der Tisch).' (Wo?)", "opts": ["dem", "den", "das", "die"], "ans": 0 },
+            { "q": "'Ich lege das Buch auf ______ Tisch.' (Wohin?)", "opts": ["den", "dem", "das", "die"], "ans": 0 }
+          ]
         },
         {
           "id": "a2_stage_03",
@@ -115,10 +210,19 @@
           "title": "Đuôi tính từ (Adjektivdeklination)",
           "desc": "Quy tắc chia đuôi tính từ sau mạo từ xác định, không xác định và không có mạo từ.",
           "prerequisites": ["a2_stage_02"],
+          "leadsTo": ["a2_stage_04"],
           "vocabTopics": ["Im Restaurant", "Kochen & Lebensmittel"],
           "grammarTopics": ["Adjektivdeklination"],
           "lessonIds": ["A2-11", "A2-12", "A2-13", "A2-14", "A2-15"],
-          "competency": "Có thể miêu tả ngoại hình, trang phục và phẩm chất của sự vật, con người."
+          "learningObjectives": [
+            { "id": "LO_A2_05", "title": "Chia đuôi tính từ sau mạo từ xác định der/die/das (-e, -en)" },
+            { "id": "LO_A2_06", "title": "Chia đuôi tính từ sau mạo từ không xác định ein/eine (-er, -e, -es, -en)" }
+          ],
+          "competency": "Có thể miêu tả ngoại hình, trang phục và phẩm chất của sự vật, con người.",
+          "masteryTest": [
+            { "q": "'Das ist ein schön______ Haus (das Haus).'", "opts": ["es", "er", "e", "en"], "ans": 0 },
+            { "q": "'Ich kaufe den neu______ Pullover (der Pullover, Akkusativ).'", "opts": ["en", "e", "er", "es"], "ans": 0 }
+          ]
         },
         {
           "id": "a2_stage_04",
@@ -126,10 +230,19 @@
           "title": "Mệnh đề phụ với weil, dass, wenn",
           "desc": "Cấu trúc câu phức đẩy động từ về cuối câu với các liên từ nguyên nhân, điều kiện và nội dung.",
           "prerequisites": ["a2_stage_03"],
+          "leadsTo": ["b1_stage_01"],
           "vocabTopics": ["Grundlagen", "Verben"],
           "grammarTopics": ["Nebensätze", "Konnektoren"],
           "lessonIds": ["A2-16", "A2-17", "A2-18", "A2-19", "A2-20"],
-          "competency": "Có thể giải thích lý do, đưa ra điều kiện và diễn đạt suy nghĩ phức tạp hơn."
+          "learningObjectives": [
+            { "id": "LO_A2_07", "title": "Cấu trúc câu phức với liên từ weil (bởi vì) đẩy động từ về cuối câu" },
+            { "id": "LO_A2_08", "title": "Sử dụng liên từ dass (rằng) và wenn (nếu/khi)" }
+          ],
+          "competency": "Có thể giải thích lý do, đưa ra điều kiện và diễn đạt suy nghĩ phức tạp hơn.",
+          "masteryTest": [
+            { "q": "'Ich lerne Deutsch, weil ich in Deutschland studieren ______.'", "opts": ["möchte", "möchten", "willst", "wollen"], "ans": 0 },
+            { "q": "'Er hat gesagt, dass er heute nicht ______.'", "opts": ["kommt", "kommen", "gekommen", "kommst"], "ans": 0 }
+          ]
         }
       ]
     },
@@ -143,10 +256,19 @@
           "title": "Thể bị động (Das Passiv)",
           "desc": "Bị động ở thì hiện tại và quá khứ (werden + Partizip II, wurden + Partizip II) trong quy trình sản xuất và thông báo công cộng.",
           "prerequisites": ["a2_stage_04"],
+          "leadsTo": ["b1_stage_02"],
           "vocabTopics": ["Verben", "Grundlagen"],
           "grammarTopics": ["Passiv Präsens", "Passiv Präteritum"],
           "lessonIds": ["B1-01", "B1-02", "B1-03", "B1-04", "B1-05"],
-          "competency": "Có thể mô tả quy trình công việc, bản tin thời sự và thông báo hành chính."
+          "learningObjectives": [
+            { "id": "LO_B1_01", "title": "Cấu trúc Bị động hiện tại: werden (chia) + Partizip II" },
+            { "id": "LO_B1_02", "title": "Cấu trúc Bị động quá khứ: wurden (chia) + Partizip II" }
+          ],
+          "competency": "Có thể mô tả quy trình công việc, bản tin thời sự và thông báo hành chính.",
+          "masteryTest": [
+            { "q": "'In Deutschland ______ viel Bier getrunken.' (Hiện tại)", "opts": ["wird", "hat", "ist", "wurde"], "ans": 0 },
+            { "q": "'Das Haus ______ im Jahr 1990 gebaut.' (Quá khứ)", "opts": ["wurde", "worden", "hat", "ist"], "ans": 0 }
+          ]
         },
         {
           "id": "b1_stage_02",
@@ -154,10 +276,19 @@
           "title": "Thể giả định Konjunktiv II",
           "desc": "Diễn đạt ước muốn, lời khuyên và yêu cầu lịch sự trang trọng (wäre, hätte, würde + Infinitiv, könnte, müsste).",
           "prerequisites": ["b1_stage_01"],
+          "leadsTo": ["b1_stage_03"],
           "vocabTopics": ["Verben", "Familie & Alltag"],
           "grammarTopics": ["Konjunktiv II", "Höflichkeit"],
           "lessonIds": ["B1-06", "B1-07", "B1-08", "B1-09", "B1-10"],
-          "competency": "Có thể giao tiếp lịch sự trong môi trường công sở, viết thư xin việc và đưa ra lời khuyên."
+          "learningObjectives": [
+            { "id": "LO_B1_03", "title": "Sử dụng thể giả định ước muốn với wäre và hätte" },
+            { "id": "LO_B1_04", "title": "Cấu trúc yêu cầu lịch sự 'würde + Infinitiv' và 'könnten/müssten'" }
+          ],
+          "competency": "Có thể giao tiếp lịch sự trong môi trường công sở, viết thư xin việc và đưa ra lời khuyên.",
+          "masteryTest": [
+            { "q": "'Wenn ich reich ______, würde ich um die Welt reisen.'", "opts": ["wäre", "bin", "war", "werde"], "ans": 0 },
+            { "q": "'Könnten Sie mir bitte das Salz ______?'", "opts": ["geben", "gegeben", "gebt", "gibst"], "ans": 0 }
+          ]
         },
         {
           "id": "b1_stage_03",
@@ -165,10 +296,19 @@
           "title": "Mệnh đề quan hệ (Relativsätze)",
           "desc": "Đại từ quan hệ ở các cách Nominativ, Akkusativ, Dativ và Genitiv (der, die, das, dem, den, dessen, deren).",
           "prerequisites": ["b1_stage_02"],
+          "leadsTo": ["b1_stage_04"],
           "vocabTopics": ["Grundlagen", "Verben"],
           "grammarTopics": ["Relativpronomen", "Relativsätze"],
           "lessonIds": ["B1-11", "B1-12", "B1-13", "B1-14", "B1-15"],
-          "competency": "Có thể bổ sung thông tin chi tiết cho danh từ mà không cần ngắt câu."
+          "learningObjectives": [
+            { "id": "LO_B1_05", "title": "Xác định đại từ quan hệ dựa trên giống danh từ và vai trò ngữ pháp" },
+            { "id": "LO_B1_06", "title": "Cấu trúc mệnh đề quan hệ đẩy động từ chia về cuối mệnh đề" }
+          ],
+          "competency": "Có thể bổ sung thông tin chi tiết cho danh từ mà không cần ngắt câu.",
+          "masteryTest": [
+            { "q": "'Das ist der Mann, ______ ich gestern geholfen habe.' (helfen + Dativ)", "opts": ["dem", "den", "der", "das"], "ans": 0 },
+            { "q": "'Das ist das Buch, ______ ich gelesen habe.' (lesen + Akkusativ)", "opts": ["das", "dem", "den", "der"], "ans": 0 }
+          ]
         },
         {
           "id": "b1_stage_04",
@@ -176,10 +316,19 @@
           "title": "Động từ đi kèm giới từ & Cấu trúc Infinitiv mit zu",
           "desc": "Verben mit festen Präpositionen (warten auf, sich freuen über, denken an) và um...zu, ohne...zu, statt...zu.",
           "prerequisites": ["b1_stage_03"],
+          "leadsTo": [],
           "vocabTopics": ["Verben", "Grundlagen"],
           "grammarTopics": ["Verben mit Präpositionen", "Infinitiv mit zu"],
           "lessonIds": ["B1-16", "B1-17", "B1-18", "B1-19", "B1-20"],
-          "competency": "Có thể tranh luận, nêu quan điểm cá nhân và viết bài luận B1 hoàn chỉnh."
+          "learningObjectives": [
+            { "id": "LO_B1_07", "title": "Ghi nhớ các động từ đi với giới từ cố định (warten auf + Akk, träumen von + Dat...)" },
+            { "id": "LO_B1_08", "title": "Cấu trúc mục đích um...zu + Infinitiv và không có ohne...zu" }
+          ],
+          "competency": "Có thể tranh luận, nêu quan điểm cá nhân và viết bài luận B1 hoàn chỉnh.",
+          "masteryTest": [
+            { "q": "'Ich warte ______ den Bus.' (warten + ...)", "opts": ["auf", "an", "für", "über"], "ans": 0 },
+            { "q": "'Ich lerne Deutsch, ______ in Deutschland zu studieren.'", "opts": ["um", "ohne", "statt", "weil"], "ans": 0 }
+          ]
         }
       ]
     }

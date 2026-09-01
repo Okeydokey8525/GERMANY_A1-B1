@@ -1,0 +1,119 @@
+[
+  {
+    "id": "term_nominativ",
+    "term": "Nominativ (Cách 1)",
+    "category": "Kasus (Biến cách)",
+    "question": "Wer? / Was? (Ai? / Cái gì?)",
+    "definition": "Chủ cách - Dùng cho CHỦ NGỮ trong câu (người hoặc vật thực hiện hành động) và sau động từ 'sein' (thì, là, ở) hoặc 'werden'.",
+    "articles": { "maskulin": "der / ein", "feminin": "die / eine", "neutral": "das / ein", "plural": "die / -" },
+    "examples": [
+      { "de": "Der Lehrer kommt aus Deutschland.", "vi": "Thầy giáo đến từ nước Đức." },
+      { "de": "Das ist ein schönes Haus.", "vi": "Đó là một ngôi nhà đẹp." }
+    ],
+    "tips": "Mọi câu tiếng Đức chuẩn luôn phải có một chủ ngữ ở dạng Nominativ."
+  },
+  {
+    "id": "term_akkusativ",
+    "term": "Akkusativ (Cách 4)",
+    "category": "Kasus (Biến cách)",
+    "question": "Wen? / Was? (Ai? / Cái gì bị tác động?)",
+    "definition": "Đối cách - Dùng cho TÂN NGỮ TRỰC TIẾP chịu tác động trực tiếp của hành động và sau các giới từ bắt buộc Akkusativ (für, ohne, durch, gegen, um).",
+    "articles": { "maskulin": "den / einen", "feminin": "die / eine", "neutral": "das / ein", "plural": "die / -" },
+    "examples": [
+      { "de": "Ich sehe den Mann.", "vi": "Tôi nhìn thấy người đàn ông đó (der -> den)." },
+      { "de": "Ich habe einen Kaffee bestellt.", "vi": "Tôi đã gọi một ly cà phê (ein -> einen)." }
+    ],
+    "tips": "CHỈ CÓ giống Đực (Maskulin) bị biến đổi từ 'der/ein' thành 'den/einen', các giống khác giữ nguyên hình thức mạo từ."
+  },
+  {
+    "id": "term_dativ",
+    "term": "Dativ (Cách 3)",
+    "category": "Kasus (Biến cách)",
+    "question": "Wem? / Wo? (Cho ai? / Ở đâu?)",
+    "definition": "Tặng cách - Dùng cho TÂN NGỮ GIÁN TIẾP (người nhận lợi ích), vị trí đứng yên (Wo?) và sau các giới từ bắt buộc Dativ (aus, bei, mit, nach, seit, von, zu, ab).",
+    "articles": { "maskulin": "dem / einem", "feminin": "der / einer", "neutral": "dem / einem", "plural": "den (+n) / - (+n)" },
+    "examples": [
+      { "de": "Ich gebe dem Kind einen Apfel.", "vi": "Tôi cho đứa trẻ một quả táo (dem Kind = Dativ, einen Apfel = Akkusativ)." },
+      { "de": "Ich fahre mit dem Bus zur Schule.", "vi": "Tôi đi xe buýt đến trường (mit + dem Bus)." }
+    ],
+    "tips": "Danh từ số nhiều ở cách Dativ phải thêm đuôi '-n' vào cuối danh từ (trừ danh từ kết thúc bằng -s hoặc -n sẵn)."
+  },
+  {
+    "id": "term_v2",
+    "term": "Quy tắc V2 (Verb-Zweit-Stellung)",
+    "category": "Satzbau (Trật tự câu)",
+    "question": "Động từ chia đứng ở đâu trong câu trần thuật?",
+    "definition": "Quy tắc vàng của tiếng Đức: Trong mọi câu trần thuật (Aussagesatz) và câu hỏi có từ để hỏi (W-Frage), ĐỘNG TỪ CHIA luôn luôn đứng ở vị trí số 2 (Position 2).",
+    "examples": [
+      { "de": "Ich lerne heute Deutsch.", "vi": "Vị trí 1 (Ich) -> Vị trí 2 (lerne) -> Thời gian (heute) -> Tân ngữ (Deutsch)." },
+      { "de": "Heute lerne ich Deutsch.", "vi": "Vị trí 1 (Heute) -> Vị trí 2 (lerne) -> Chủ ngữ đảo ra sau (ich) -> Tân ngữ." }
+    ],
+    "tips": "Dù vị trí 1 là một từ hay một cụm từ dài, động từ chia vẫn phải đứng ngay sau nó ở vị trí 2!"
+  },
+  {
+    "id": "term_satzklammer",
+    "term": "Khung câu (Satzklammer)",
+    "category": "Satzbau (Trật tự câu)",
+    "question": "Cấu trúc đóng khung động từ",
+    "definition": "Khi câu có 2 thành phần động từ (Modalverb + Infinitiv, Perfekt haben/sein + Partizip II, hoặc Động từ tách), thành phần chia đứng ở V2, thành phần còn lại bị đẩy về VỊ TRÍ CUỐI CÙNG của câu.",
+    "examples": [
+      { "de": "Ich kann sehr gut Deutsch sprechen.", "vi": "kann (V2) ... sprechen (cuối câu)." },
+      { "de": "Ich habe gestern ein Buch gelesen.", "vi": "habe (V2) ... gelesen (cuối câu)." },
+      { "de": "Der Zug kommt um 8 Uhr an.", "vi": "kommt (V2) ... an (tiền tố tách ở cuối câu)." }
+    ],
+    "tips": "Toàn bộ thông tin bổ ngữ, thời gian, nơi chốn phải được đặt nằm trọn giữa 2 gọng kìm động từ này."
+  },
+  {
+    "id": "term_wechselpraepositionen",
+    "term": "Giới từ 2 chiều (Wechselpräpositionen)",
+    "category": "Präpositionen (Giới từ)",
+    "question": "Wo? (Dativ) hay Wohin? (Akkusativ)?",
+    "definition": "9 giới từ có thể đi với Dativ hoặc Akkusativ tùy thuộc vào ý nghĩa: an, auf, hinter, in, neben, über, unter, vor, zwischen.",
+    "rules": [
+      "Wo? (Ở đâu? - Vị trí đứng yên / không đổi vị trí) -> DATIV",
+      "Wohin? (Đi đâu? - Phương hướng di chuyển / thay đổi vị trí) -> AKKUSATIV"
+    ],
+    "examples": [
+      { "de": "Das Bild hängt an der Wand. (Wo? -> Dativ)", "vi": "Bức tranh đang treo trên tường." },
+      { "de": "Ich hänge das Bild an die Wand. (Wohin? -> Akkusativ)", "vi": "Tôi treo bức tranh lên tường." }
+    ],
+    "tips": "Cặp động từ kinh điển: liegen/stehen/sitzen (+ Dativ) vs legen/stellen/setzen (+ Akkusativ)."
+  },
+  {
+    "id": "term_nebensatz",
+    "term": "Mệnh đề phụ (Nebensatz)",
+    "category": "Satzbau (Câu phức)",
+    "question": "Liên từ phụ thuộc (weil, dass, wenn, obwohl, während...)",
+    "definition": "Trong mệnh đề phụ, liên từ phụ thuộc đứng ở đầu mệnh đề, và ĐỘNG TỪ CHIA bị đẩy về ĐỨNG Ở CUỐI CÙNG của mệnh đề đó.",
+    "examples": [
+      { "de": "Ich lerne Deutsch, weil tôi du học tại Đức.", "vi": "Ich lerne Deutsch, weil ich in Deutschland studieren möchte." }
+    ],
+    "tips": "Luôn có dấu phẩy ',' ngăn cách giữa mệnh đề chính và mệnh đề phụ."
+  },
+  {
+    "id": "term_konjunktiv2",
+    "term": "Thể giả định (Konjunktiv II)",
+    "category": "Modus (Thức giả định)",
+    "question": "Ước muốn, giả định không có thật & Lời yêu cầu lịch sự",
+    "definition": "Dùng để diễn tả ước muốn không có thực trong hiện tại, lời khuyên và yêu cầu cực kỳ lịch sự trang trọng.",
+    "forms": { "sein": "wäre", "haben": "hätte", "können": "könnte", "müssen": "müsste", "động từ khác": "würde + Infinitiv" },
+    "examples": [
+      { "de": "Könnten Sie mir bitte helfen?", "vi": "Ngài có thể vui lòng giúp tôi được không?" },
+      { "de": "Wenn ich reich wäre, würde ich ein Haus kaufen.", "vi": "Nếu tôi giàu có, tôi sẽ mua một ngôi nhà." }
+    ],
+    "tips": "Trong giao tiếp B1 hàng ngày, dùng 'würde + Infinitiv' cho hầu hết các động từ thường."
+  },
+  {
+    "id": "term_passiv",
+    "term": "Thể bị động (Das Passiv)",
+    "category": "Genus Verbi (Thể bị động)",
+    "question": "Hành động được thực hiện bởi ai/cái gì",
+    "definition": "Nhấn mạnh vào HÀNH ĐỘNG hoặc ĐỐI TƯỢNG chịu tác động, người thực hiện hành động không quan trọng hoặc không được nhắc tới.",
+    "formula": "werden (chia) + Partizip II (ở cuối câu)",
+    "examples": [
+      { "de": "Das Auto wird in Deutschland gebaut.", "vi": "Chiếc xe ô tô này được sản xuất tại Đức." },
+      { "de": "Die Straße wurde gestern repariert.", "vi": "Con đường đã được sửa chữa hôm qua (Bị động quá khứ)." }
+    ],
+    "tips": "Chủ thể thực hiện hành động nếu muốn nhắc đến thì đi với giới từ 'von + Dativ'."
+  }
+]

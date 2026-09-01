@@ -122,7 +122,7 @@
           <span>📖</span> <span>Nicos Weg & Nghe</span>
         </button>
         <button class="nav-tab-btn px-3.5 py-1.5 rounded-xl text-xs font-semibold text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800 transition-all" data-tab="grammar">
-          <span>📊</span> <span>Ngữ pháp Cornelsen</span>
+          <span>📊</span> <span>Ngữ pháp & Tra từ</span>
         </button>
         <button class="nav-tab-btn px-3.5 py-1.5 rounded-xl text-xs font-semibold text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800 transition-all" data-tab="speaking">
           <span>🗣️</span> <span>Luyện nói</span>
@@ -220,7 +220,7 @@
         </div>
       </div>
 
-      <!-- ADAPTIVE TODAY QUEUE (Chuỗi Học Tập Tự Động Thích Ứng Hôm Nay) -->
+      <!-- ADAPTIVE TODAY QUEUE -->
       <div class="p-6 rounded-3xl border-2 border-blue-100 dark:border-blue-950/50 bg-white dark:bg-gray-800 shadow-sm space-y-4">
         <div class="flex items-center justify-between">
           <div class="flex items-center gap-2">
@@ -233,26 +233,22 @@
           <span class="px-2.5 py-1 rounded-full text-xs font-bold bg-blue-100 text-blue-800 dark:bg-blue-900/40 dark:text-blue-300">Tự động thích ứng</span>
         </div>
 
-        <div id="dash-today-queue-container" class="space-y-2.5">
-          <!-- Rendered by progress.js -->
-        </div>
+        <div id="dash-today-queue-container" class="space-y-2.5"></div>
       </div>
 
-      <!-- WEAK AREAS & RECOMMENDATIONS (Điểm Yếu Tính Theo Tỷ Lệ Sai) -->
+      <!-- WEAK AREAS & RECOMMENDATIONS -->
       <div class="p-6 rounded-3xl border-2 border-amber-100 dark:border-amber-950/40 bg-white dark:bg-gray-800 shadow-sm space-y-3">
         <div class="flex items-center justify-between">
           <div class="flex items-center gap-2">
             <span class="text-lg">⚠️</span>
             <h3 class="font-extrabold text-base text-gray-900 dark:text-gray-100">Điểm Yếu Cần Củng Cố (Weakness Scoring)</h3>
           </div>
-          <span class="text-xs text-gray-400 font-mono">Tính theo Error Rate</span>
+          <span class="text-xs text-gray-400 font-mono">Tính theo Error Rate & Decay</span>
         </div>
-        <div id="dash-weak-areas-container" class="space-y-2">
-          <!-- Rendered by progress.js -->
-        </div>
+        <div id="dash-weak-areas-container" class="space-y-2"></div>
       </div>
 
-      <!-- GERMAN SURVIVAL SCENARIOS (Tình huống giao tiếp thực tế) -->
+      <!-- GERMAN SURVIVAL SCENARIOS -->
       <div class="p-6 rounded-3xl border-2 border-indigo-100 dark:border-indigo-950/40 bg-white dark:bg-gray-800 shadow-sm space-y-4">
         <div class="flex items-center justify-between">
           <div class="flex items-center gap-2">
@@ -265,9 +261,7 @@
           <span class="px-2.5 py-0.5 rounded-full text-xs font-bold bg-indigo-100 text-indigo-800 dark:bg-indigo-900/40 dark:text-indigo-300">Thực chiến A1</span>
         </div>
 
-        <div id="survival-cards-container" class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-          <!-- Rendered by survival.js -->
-        </div>
+        <div id="survival-cards-container" class="grid grid-cols-1 sm:grid-cols-2 gap-4"></div>
       </div>
 
       <!-- CEFR Skills Matrix -->
@@ -364,13 +358,25 @@
         </div>
       </div>
 
+      <!-- GRAMMAR DEPENDENCY GRAPH -->
+      <div class="p-5 rounded-3xl border-2 border-indigo-100 dark:border-indigo-950/40 bg-white dark:bg-gray-800 shadow-sm space-y-3">
+        <div class="flex items-center justify-between">
+          <div class="flex items-center gap-2">
+            <span class="text-lg">🗺️</span>
+            <h3 class="font-extrabold text-sm text-gray-900 dark:text-white">Sơ Đồ Tiền Đề Ngữ Pháp (Prerequisites Dependency Graph)</h3>
+          </div>
+          <span class="text-[11px] text-gray-400">Học theo chuỗi để không bị hổng kiến thức</span>
+        </div>
+        <div id="grammar-dependency-container" class="flex items-center gap-2 overflow-x-auto no-scrollbar pb-2 pt-1"></div>
+      </div>
+
       <div id="roadmap-stages-container" class="space-y-4"></div>
 
       <!-- CEFR Can-Do Checklist -->
       <div class="p-6 rounded-3xl border-2 border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 shadow-sm space-y-4">
         <div>
           <h3 class="font-extrabold text-base text-gray-900 dark:text-gray-100">Bảng Kiểm Năng Lực Thực Tế (Can-Do Checklist)</h3>
-          <p class="text-xs text-gray-500 dark:text-gray-400">Nhấp vào từng kỹ năng để làm bài kiểm tra trắc nghiệm thực tế (≥ 80% để đạt):</p>
+          <p class="text-xs text-gray-500 dark:text-gray-400">Hoàn thành bài thi tốt nghiệp từng chặng (≥ 80%) để chính thức đạt năng lực:</p>
         </div>
         <div id="cando-checklist-container" class="space-y-2.5"></div>
       </div>
@@ -584,7 +590,7 @@
         </button>
       </div>
 
-      <!-- SECTION 2: GERMAN SENTENCE BUILDER (Ghép từ tạo câu V2 Rule) -->
+      <!-- SECTION 2: GERMAN SENTENCE BUILDER -->
       <div class="p-6 bg-white dark:bg-gray-800 rounded-3xl border-2 border-indigo-100 dark:border-indigo-950/40 shadow-sm space-y-4">
         <div class="flex items-center justify-between">
           <div class="flex items-center gap-2">
@@ -668,7 +674,7 @@
     </section>
 
     <!-- ========================================================= -->
-    <!-- TAB 5: GRAMMAR & EXERCISES (Ngữ pháp Cornelsen Grammatik)  -->
+    <!-- TAB 5: GRAMMAR & DICTIONARY (Ngữ pháp Cornelsen & Tra từ)  -->
     <!-- ========================================================= -->
     <section id="tab-grammar" class="tab-content space-y-4">
       <div class="flex items-center gap-2 border-b border-gray-200 dark:border-gray-700 pb-2">
@@ -676,7 +682,7 @@
           ✍️ Luyện Tập Điền Từ (Cornelsen)
         </button>
         <button id="btn-grammar-sub-theory" class="px-4 py-2 rounded-2xl text-xs sm:text-sm font-semibold bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700 transition-all">
-          📖 Tra Cứu Bảng Biến Cách & Động Từ
+          📚 Từ Điển Ngữ Pháp (Glossary)
         </button>
       </div>
 
@@ -713,11 +719,14 @@
         </div>
       </div>
 
-      <div id="grammar-view-theory" class="hidden space-y-5">
-        <div class="p-5 rounded-3xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 shadow-sm space-y-4">
-          <h3 class="font-extrabold text-base text-gray-900 dark:text-white">Bảng Biến Cách 4 Cách (Kasus)</h3>
-          <div id="grammar-articles-matrix" class="overflow-x-auto"></div>
+      <!-- GRAMMAR GLOSSARY & REFERENCE VIEW -->
+      <div id="grammar-view-theory" class="hidden space-y-4">
+        <div class="relative">
+          <input type="text" id="glossary-search-input" placeholder="🔍 Tra cứu thuật ngữ ngữ pháp (Nominativ, Akkusativ, Dativ, V2 Rule, Satzklammer...)" class="w-full pl-9 pr-4 py-3 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-2xl text-xs sm:text-sm text-gray-800 dark:text-gray-200 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 shadow-2xs">
+          <svg class="w-4 h-4 text-gray-400 absolute left-3 top-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
         </div>
+
+        <div id="glossary-terms-container" class="space-y-3"></div>
       </div>
     </section>
 
@@ -861,19 +870,19 @@
   </div>
 
   <!-- ========================================================= -->
-  <!-- CAN-DO MINI SKILL TEST MODAL                              -->
+  <!-- STAGE MASTERY TEST MODAL                                  -->
   <!-- ========================================================= -->
-  <div id="cando-test-modal" class="hidden fixed inset-0 z-50 bg-black/70 backdrop-blur-xs flex items-center justify-center p-4 overflow-y-auto">
-    <div class="bg-white dark:bg-gray-800 w-full max-w-lg rounded-3xl shadow-2xl border border-gray-200 dark:border-gray-700 p-6 space-y-4 animate-gentle-pulse">
+  <div id="stage-test-modal" class="hidden fixed inset-0 z-50 bg-black/70 backdrop-blur-xs flex items-center justify-center p-4 overflow-y-auto">
+    <div class="bg-white dark:bg-gray-800 w-full max-w-lg rounded-3xl shadow-2xl border-2 border-amber-400 p-6 space-y-4 animate-gentle-pulse">
       <div class="flex items-center justify-between border-b border-gray-100 dark:border-gray-700 pb-3">
         <div class="flex items-center gap-2">
-          <span class="text-xl">🧪</span>
-          <h3 id="cando-test-title" class="font-extrabold text-base text-gray-900 dark:text-white">Kiểm Tra Năng Lực Thực Tế</h3>
+          <span class="text-xl">🎯</span>
+          <h3 id="stage-test-title" class="font-extrabold text-base text-gray-900 dark:text-white">Kiểm Tra Tốt Nghiệp Chặng</h3>
         </div>
-        <button id="btn-close-cando-test" class="p-1.5 rounded-xl text-gray-400 hover:text-gray-900 text-sm">✕</button>
+        <button id="btn-close-stage-test" class="p-1.5 rounded-xl text-gray-400 hover:text-gray-900 text-sm">✕</button>
       </div>
 
-      <div id="cando-test-questions" class="space-y-3.5 max-h-[65vh] overflow-y-auto pr-1"></div>
+      <div id="stage-test-questions" class="space-y-3.5 max-h-[65vh] overflow-y-auto pr-1"></div>
     </div>
   </div>
 
@@ -1097,6 +1106,7 @@
   <script src="js/mistakes.js"></script>
   <script src="js/roadmap.js"></script>
   <script src="js/survival.js"></script>
+  <script src="js/glossary.js"></script>
   <script src="js/sentence_builder.js"></script>
   <script src="js/speaking.js"></script>
   <script src="js/dictation.js"></script>

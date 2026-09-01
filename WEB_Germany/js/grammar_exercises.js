@@ -25,6 +25,28 @@ class GrammarExerciseController {
     const btnResetAll = document.getElementById("btn-reset-grammar");
     const btnPlayAudio = document.getElementById("btn-play-grammar-audio");
 
+    const btnPractice = document.getElementById("btn-grammar-sub-practice");
+    const btnTheory = document.getElementById("btn-grammar-sub-theory");
+    const viewPractice = document.getElementById("grammar-view-practice");
+    const viewTheory = document.getElementById("grammar-view-theory");
+
+    if (btnPractice && btnTheory && viewPractice && viewTheory) {
+      btnPractice.addEventListener("click", () => {
+        btnPractice.className = "px-4 py-2 rounded-2xl text-xs sm:text-sm font-bold bg-blue-600 text-white shadow-md transition-all";
+        btnTheory.className = "px-4 py-2 rounded-2xl text-xs sm:text-sm font-semibold bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700 transition-all";
+        viewPractice.classList.remove("hidden");
+        viewTheory.classList.add("hidden");
+      });
+
+      btnTheory.addEventListener("click", () => {
+        btnTheory.className = "px-4 py-2 rounded-2xl text-xs sm:text-sm font-bold bg-blue-600 text-white shadow-md transition-all";
+        btnPractice.className = "px-4 py-2 rounded-2xl text-xs sm:text-sm font-semibold bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700 transition-all";
+        viewTheory.classList.remove("hidden");
+        viewPractice.classList.add("hidden");
+        if (window.glossaryCtrl) window.glossaryCtrl.renderGlossary();
+      });
+    }
+
     if (btnCheckAll) btnCheckAll.addEventListener("click", () => this.checkAllAnswers());
     if (btnShowAnswers) btnShowAnswers.addEventListener("click", () => this.showAllAnswers());
     if (btnResetAll) btnResetAll.addEventListener("click", () => this.resetAllAnswers());

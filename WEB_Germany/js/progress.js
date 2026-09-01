@@ -1,4 +1,4 @@
-// WEB_Germany Unified Learning Progress, Topic Mastery & Adaptive Learning Engine (v4)
+// WEB_Germany Unified Learning Progress, Topic Mastery & Adaptive Learning Engine (v4.2)
 
 class ProgressController {
   constructor() {
@@ -48,19 +48,20 @@ class ProgressController {
       },
       // Topic-level granular mastery tracking
       topics: {
-        "Artikel": { mastery: 30, correct: 0, total: 0, recent: [], lastPracticed: 0 },
-        "Akkusativ": { mastery: 25, correct: 0, total: 0, recent: [], lastPracticed: 0 },
-        "Dativ": { mastery: 20, correct: 0, total: 0, recent: [], lastPracticed: 0 },
-        "Modalverben": { mastery: 25, correct: 0, total: 0, recent: [], lastPracticed: 0 },
-        "Perfekt": { mastery: 20, correct: 0, total: 0, recent: [], lastPracticed: 0 },
-        "Präsens": { mastery: 35, correct: 0, total: 0, recent: [], lastPracticed: 0 },
-        "W-Fragen": { mastery: 40, correct: 0, total: 0, recent: [], lastPracticed: 0 },
-        "Wechselpräpositionen": { mastery: 15, correct: 0, total: 0, recent: [], lastPracticed: 0 },
-        "Adjektivdeklination": { mastery: 15, correct: 0, total: 0, recent: [], lastPracticed: 0 },
-        "Nebensätze": { mastery: 15, correct: 0, total: 0, recent: [], lastPracticed: 0 },
-        "Passiv": { mastery: 10, correct: 0, total: 0, recent: [], lastPracticed: 0 },
-        "Konjunktiv II": { mastery: 10, correct: 0, total: 0, recent: [], lastPracticed: 0 }
+        "Artikel": { mastery: 30, confidence: 20, correct: 0, total: 0, recent: [], lastPracticed: 0 },
+        "Akkusativ": { mastery: 25, confidence: 20, correct: 0, total: 0, recent: [], lastPracticed: 0 },
+        "Dativ": { mastery: 20, confidence: 20, correct: 0, total: 0, recent: [], lastPracticed: 0 },
+        "Modalverben": { mastery: 25, confidence: 20, correct: 0, total: 0, recent: [], lastPracticed: 0 },
+        "Perfekt": { mastery: 20, confidence: 20, correct: 0, total: 0, recent: [], lastPracticed: 0 },
+        "Präsens": { mastery: 35, confidence: 25, correct: 0, total: 0, recent: [], lastPracticed: 0 },
+        "W-Fragen": { mastery: 40, confidence: 25, correct: 0, total: 0, recent: [], lastPracticed: 0 },
+        "Wechselpräpositionen": { mastery: 15, confidence: 15, correct: 0, total: 0, recent: [], lastPracticed: 0 },
+        "Adjektivdeklination": { mastery: 15, confidence: 15, correct: 0, total: 0, recent: [], lastPracticed: 0 },
+        "Nebensätze": { mastery: 15, confidence: 15, correct: 0, total: 0, recent: [], lastPracticed: 0 },
+        "Passiv": { mastery: 10, confidence: 10, correct: 0, total: 0, recent: [], lastPracticed: 0 },
+        "Konjunktiv II": { mastery: 10, confidence: 10, correct: 0, total: 0, recent: [], lastPracticed: 0 }
       },
+      stageTestsPassed: {}, // { 'a1_stage_01': { score: 100, date: '...' } }
       completedLessons: [], // ['A1-01', 'A1-02']
       lastActivity: {
         type: "lesson",
@@ -87,21 +88,18 @@ class ProgressController {
     return `${year}-${month}-${day}`;
   }
 
-  // Safe Version Migration
   migrateData(rawParsed) {
     if (!rawParsed || typeof rawParsed !== "object") return this.getDefaultData();
     let data = Object.assign(this.getDefaultData(), rawParsed);
     
-    // v3 -> v4 migration
     if (!data.topics) {
       data.topics = this.getDefaultData().topics;
     }
+    if (!data.stageTestsPassed) {
+      data.stageTestsPassed = {};
+    }
     if (data.today.newCardsReviewed === undefined) {
       data.today.newCardsReviewed = 0;
-    }
-    if (data.today.correctCount === undefined) {
-      data.today.correctCount = 0;
-      data.today.totalAttempted = 0;
     }
     data.version = 4;
     return data;
@@ -114,7 +112,6 @@ class ProgressController {
         const parsed = JSON.parse(raw);
         this.data = this.migrateData(parsed);
       } else {
-        // Check older version keys for fallback migration
         const v3 = localStorage.getItem("deutschmaster_user_progress_v3");
         if (v3) {
           this.data = this.migrateData(JSON.parse(v3));
@@ -245,9 +242,7 @@ class ProgressController {
       this.updateSkillScore("writing", isCorrect);
     }
 
-    // Granular Topic Mastery Recording
     this.recordTopicAttempt(topic, isCorrect);
-
     this.checkDailyGoalCompletion();
     this.saveProgress();
   }
@@ -255,7 +250,6 @@ class ProgressController {
   recordTopicAttempt(topicName, isCorrect) {
     if (!topicName || topicName === "Allgemein" || topicName === "Chung") return;
     
-    // Normalize topic key
     let key = topicName;
     for (const k of Object.keys(this.data.topics)) {
       if (topicName.toLowerCase().includes(k.toLowerCase())) {
@@ -265,7 +259,7 @@ class ProgressController {
     }
 
     if (!this.data.topics[key]) {
-      this.data.topics[key] = { mastery: 20, correct: 0, total: 0, recent: [], lastPracticed: 0 };
+      this.data.topics[key] = { mastery: 20, confidence: 15, correct: 0, total: 0, recent: [], lastPracticed: 0 };
     }
 
     const t = this.data.topics[key];
@@ -275,17 +269,29 @@ class ProgressController {
     if (t.recent.length > 15) t.recent.shift();
     t.lastPracticed = Date.now();
 
-    // Scientific Mastery Calculation: 40% Recent Accuracy + 25% Overall Accuracy + 20% SRS Retention + 15% Coverage
+    // SRS Retention calculation for this topic
+    let srsRetention = 0.5;
+    if (window.srsCtrl) {
+      const relatedCards = Object.values(window.srsCtrl.cards).filter(c => (c.topic || "").includes(key));
+      if (relatedCards.length > 0) {
+        const masteredOrGood = relatedCards.filter(c => c.state === "mastered" || c.interval >= 3).length;
+        srsRetention = masteredOrGood / relatedCards.length;
+      }
+    }
+
+    // Strict 4-Component Mastery Formula: 30% Recent + 20% Overall + 30% SRS Retention + 20% Coverage
     const recentAcc = t.recent.length > 0 ? (t.recent.reduce((a, b) => a + b, 0) / t.recent.length) : 0.5;
     const overallAcc = t.total > 0 ? (t.correct / t.total) : 0.5;
-    const coverageFactor = Math.min(1.0, t.total / 15);
+    const coverageFactor = Math.min(1.0, t.total / 12);
     
     const computedMastery = Math.round(
-      (recentAcc * 40) +
-      (overallAcc * 25) +
-      (coverageFactor * 35)
+      (recentAcc * 30) +
+      (overallAcc * 20) +
+      (srsRetention * 30) +
+      (coverageFactor * 20)
     );
 
+    t.confidence = Math.min(100, Math.max(10, t.total * 6));
     t.mastery = Math.min(100, Math.max(10, computedMastery));
   }
 
@@ -325,26 +331,36 @@ class ProgressController {
     this.saveProgress();
   }
 
-  // Weak Areas using Error Rate Formula: 50% Error Rate + 30% Recent Mistakes + 20% Recency
+  // Weak Areas using Decay-Weighted Recency Formula
   getWeakAreas() {
     const list = [];
     const mistakes = (window.mistakesCtrl && window.mistakesCtrl.mistakes) || [];
+    const now = Date.now();
+    const oneDayMs = 24 * 60 * 60 * 1000;
 
     for (const [topicKey, stat] of Object.entries(this.data.topics)) {
       const topicMistakes = mistakes.filter(m => (m.topic || "").toLowerCase().includes(topicKey.toLowerCase()));
-      const mistakeCount = topicMistakes.length;
       
-      const errorRate = stat.total > 0 ? ((stat.total - stat.correct) / stat.total) : (mistakeCount > 0 ? 0.6 : 0.2);
-      const weaknessScore = Math.round((errorRate * 50) + (Math.min(10, mistakeCount) * 3) + (stat.mastery < 50 ? 20 : 0));
+      // Decay factor: e^(-days / 14)
+      let weightedMistakes = 0;
+      topicMistakes.forEach(m => {
+        const daysAgo = Math.max(0, (now - (m.timestamp || now)) / oneDayMs);
+        const decay = Math.exp(-daysAgo / 14); // 14-day half-life
+        weightedMistakes += (m.mistakeCount || 1) * decay;
+      });
 
-      if (weaknessScore > 30 || mistakeCount > 0) {
+      const errorRate = stat.total > 0 ? ((stat.total - stat.correct) / stat.total) : (topicMistakes.length > 0 ? 0.6 : 0.2);
+      const weaknessScore = Math.round((errorRate * 50) + (Math.min(10, weightedMistakes) * 4) + (stat.mastery < 50 ? 15 : 0));
+
+      if (weaknessScore > 25 || topicMistakes.length > 0) {
         list.push({
           topic: topicKey,
           errorRate: Math.round(errorRate * 100),
-          mistakeCount,
+          mistakeCount: topicMistakes.length,
           mastery: stat.mastery,
+          confidence: stat.confidence || 30,
           weaknessScore,
-          advice: `Tỷ lệ sai ${Math.round(errorRate * 100)}% (${mistakeCount} lỗi gần đây). Cần củng cố ngay!`
+          advice: `Tỷ lệ sai ${Math.round(errorRate * 100)}% (Độ tin cậy dữ liệu: ${stat.confidence || 30}%). Cần củng cố ngay!`
         });
       }
     }
@@ -360,7 +376,6 @@ class ProgressController {
     const weak = this.getWeakAreas();
     const skills = this.data.skills;
 
-    // 1. High Priority: Top Weak Area (if weakness score > 30)
     if (weak.length > 0 && weak[0].weaknessScore > 35) {
       queue.push({
         id: "q_weak",
@@ -370,12 +385,11 @@ class ProgressController {
         desc: weak[0].advice,
         timeEst: "~5 phút",
         tab: "mistakes",
-        why: `Bạn có tỷ lệ sai ${weak[0].errorRate}% và ${weak[0].mistakeCount} câu làm sai trong 7 ngày qua.`,
+        why: `Bạn có tỷ lệ sai ${weak[0].errorRate}% và ${weak[0].mistakeCount} câu làm sai gần đây.`,
         badge: "Ưu tiên cao"
       });
     }
 
-    // 2. High Priority: SRS Due Review
     if (srsDue > 0) {
       queue.push({
         id: "q_srs",
@@ -385,7 +399,7 @@ class ProgressController {
         desc: `${srsDue} từ vựng đã đến chu kỳ lặp lại ngắt quãng SM-2`,
         timeEst: `~${Math.ceil(srsDue * 0.5)} phút`,
         tab: "flashcards",
-        why: "Từ vựng cần được ôn đúng ngày để chuyển vào trí nhớ dài hạn.",
+        why: "Từ vựng cần được ôn đúng ngày để củng cố trí nhớ dài hạn.",
         badge: `${srsDue} từ due`
       });
     } else {
@@ -402,7 +416,6 @@ class ProgressController {
       });
     }
 
-    // 3. Normal Priority: Next Roadmap Lesson
     const nextLessonNum = (this.data.completedLessons.length + 1);
     queue.push({
       id: "q_lesson",
@@ -416,7 +429,6 @@ class ProgressController {
       badge: "Kịch bản"
     });
 
-    // 4. Goal-Tailored Task: Speaking or Grammar
     const lowestSkill = Object.entries(skills).sort((a, b) => a[1].score - b[1].score)[0];
     if (lowestSkill && lowestSkill[0] === "speaking") {
       queue.push({
@@ -513,7 +525,6 @@ class ProgressController {
       dashTodayBar.style.width = `${pct}%`;
     }
 
-    // Render Skills Matrix
     for (const [skill, val] of Object.entries(this.data.skills)) {
       const score = val.score !== undefined ? val.score : val;
       const bar = document.getElementById(`skill-bar-${skill}`);
@@ -547,6 +558,7 @@ class ProgressController {
           <div class="flex items-center gap-2">
             <span class="font-black text-amber-900 dark:text-amber-200">⚠️ ${w.topic}</span>
             <span class="px-2 py-0.2 rounded-full text-[10px] font-bold bg-amber-200 dark:bg-amber-900 text-amber-900 dark:text-amber-100">Sai ${w.errorRate}%</span>
+            <span class="text-[10px] text-gray-400 font-mono">Độ tin cậy: ${w.confidence}%</span>
           </div>
           <p class="text-[11px] text-gray-600 dark:text-gray-400 mt-0.5">${w.advice}</p>
         </div>
