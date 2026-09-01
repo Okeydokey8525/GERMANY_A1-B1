@@ -103,7 +103,7 @@
       </div>
     </div>
 
-    <!-- Desktop Navigation Ribbon (Horizontal Scroll) -->
+    <!-- Desktop Navigation Ribbon -->
     <div class="hidden sm:block border-t border-gray-100 dark:border-gray-800/80 bg-white/50 dark:bg-gray-900/50">
       <nav class="max-w-5xl mx-auto px-4 py-1.5 flex items-center gap-1.5 overflow-x-auto no-scrollbar">
         <button class="nav-tab-btn px-3.5 py-1.5 rounded-xl text-xs font-bold bg-blue-600 text-white shadow-xs" data-tab="dashboard">
@@ -154,7 +154,7 @@
           </div>
           <h2 class="text-2xl sm:text-3xl font-extrabold tracking-tight">Guten Tag, bạn học! 👋</h2>
           <p class="text-xs sm:text-sm text-blue-100 max-w-xl">
-            Hệ thống đã tự động xây dựng lộ trình học hôm nay dựa trên điểm yếu và chu kỳ lặp lại ngắt quãng (SRS) của bạn.
+            Hệ thống đã tự động điều phối chuỗi bài học hôm nay dựa trên điểm yếu, tỷ lệ sai và chu kỳ lặp lại ngắt quãng (SRS) của bạn.
           </p>
 
           <!-- Quick Action Buttons -->
@@ -188,7 +188,7 @@
       <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
         <div class="p-5 rounded-3xl border-2 border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 shadow-sm space-y-3">
           <div class="flex items-center justify-between">
-            <span class="text-xs font-bold text-gray-500 dark:text-gray-400">Thời gian học hôm nay</span>
+            <span class="text-xs font-bold text-gray-500 dark:text-gray-400">Thời gian học thực tế</span>
             <span class="text-lg">⏱️</span>
           </div>
           <div class="text-2xl font-black text-gray-900 dark:text-gray-100 font-mono" id="dash-today-mins">0 / 20 phút</div>
@@ -220,17 +220,17 @@
         </div>
       </div>
 
-      <!-- TODAY'S LEARNING QUEUE (Chuỗi Học Tập Tự Động Hôm Nay) -->
+      <!-- ADAPTIVE TODAY QUEUE (Chuỗi Học Tập Tự Động Thích Ứng Hôm Nay) -->
       <div class="p-6 rounded-3xl border-2 border-blue-100 dark:border-blue-950/50 bg-white dark:bg-gray-800 shadow-sm space-y-4">
         <div class="flex items-center justify-between">
           <div class="flex items-center gap-2">
             <span class="text-xl">🎯</span>
             <div>
-              <h3 class="font-extrabold text-base text-gray-900 dark:text-gray-100">Kế Hoạch Học Tập Hôm Nay (Daily Queue)</h3>
-              <p class="text-xs text-gray-500 dark:text-gray-400">Các nhiệm vụ được hệ thống điều phối thông minh cho bạn:</p>
+              <h3 class="font-extrabold text-base text-gray-900 dark:text-gray-100">Kế Hoạch Học Tập Hôm Nay (Adaptive Queue)</h3>
+              <p class="text-xs text-gray-500 dark:text-gray-400">Điều phối tự động theo điểm yếu & chu kỳ trí nhớ của bạn:</p>
             </div>
           </div>
-          <span class="px-2.5 py-1 rounded-full text-xs font-bold bg-blue-100 text-blue-800 dark:bg-blue-900/40 dark:text-blue-300">Tự động</span>
+          <span class="px-2.5 py-1 rounded-full text-xs font-bold bg-blue-100 text-blue-800 dark:bg-blue-900/40 dark:text-blue-300">Tự động thích ứng</span>
         </div>
 
         <div id="dash-today-queue-container" class="space-y-2.5">
@@ -238,17 +238,35 @@
         </div>
       </div>
 
-      <!-- WEAK AREAS & RECOMMENDATIONS (Điểm Yếu & Khuyến Nghị Trọng Tâm) -->
+      <!-- WEAK AREAS & RECOMMENDATIONS (Điểm Yếu Tính Theo Tỷ Lệ Sai) -->
       <div class="p-6 rounded-3xl border-2 border-amber-100 dark:border-amber-950/40 bg-white dark:bg-gray-800 shadow-sm space-y-3">
         <div class="flex items-center justify-between">
           <div class="flex items-center gap-2">
             <span class="text-lg">⚠️</span>
-            <h3 class="font-extrabold text-base text-gray-900 dark:text-gray-100">Điểm Yếu Cần Củng Cố (Weak Areas)</h3>
+            <h3 class="font-extrabold text-base text-gray-900 dark:text-gray-100">Điểm Yếu Cần Củng Cố (Weakness Scoring)</h3>
           </div>
-          <span class="text-xs text-gray-400">Phân tích từ lỗi sai</span>
+          <span class="text-xs text-gray-400 font-mono">Tính theo Error Rate</span>
         </div>
         <div id="dash-weak-areas-container" class="space-y-2">
           <!-- Rendered by progress.js -->
+        </div>
+      </div>
+
+      <!-- GERMAN SURVIVAL SCENARIOS (Tình huống giao tiếp thực tế) -->
+      <div class="p-6 rounded-3xl border-2 border-indigo-100 dark:border-indigo-950/40 bg-white dark:bg-gray-800 shadow-sm space-y-4">
+        <div class="flex items-center justify-between">
+          <div class="flex items-center gap-2">
+            <span class="text-xl">🇩🇪</span>
+            <div>
+              <h3 class="font-extrabold text-base text-gray-900 dark:text-gray-100">Tiếng Đức Sinh Tồn Thực Tế (Survival German)</h3>
+              <p class="text-xs text-gray-500 dark:text-gray-400">Các mẫu câu tình huống thực tế thường gặp nhất khi sống tại Đức</p>
+            </div>
+          </div>
+          <span class="px-2.5 py-0.5 rounded-full text-xs font-bold bg-indigo-100 text-indigo-800 dark:bg-indigo-900/40 dark:text-indigo-300">Thực chiến A1</span>
+        </div>
+
+        <div id="survival-cards-container" class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <!-- Rendered by survival.js -->
         </div>
       </div>
 
@@ -256,67 +274,67 @@
       <div class="p-6 rounded-3xl border-2 border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 shadow-sm space-y-4">
         <div class="flex items-center justify-between">
           <h3 class="font-extrabold text-base text-gray-900 dark:text-gray-100">Bảng đánh giá năng lực ngôn ngữ thực tế</h3>
-          <span class="text-xs text-gray-400">Dynamic Mastery Score</span>
+          <span class="text-xs text-gray-400">Topic-Level Mastery Engine</span>
         </div>
 
         <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
           <div class="space-y-1.5">
             <div class="flex justify-between text-xs font-bold">
               <span class="text-gray-600 dark:text-gray-300">📚 Từ vựng (Wortschatz)</span>
-              <span id="skill-val-vocab" class="text-blue-600 dark:text-blue-400 font-mono">20%</span>
+              <span id="skill-val-vocab" class="text-blue-600 dark:text-blue-400 font-mono">25%</span>
             </div>
             <div class="w-full h-2 bg-gray-100 dark:bg-gray-700 rounded-full overflow-hidden">
-              <div id="skill-bar-vocab" class="h-full bg-blue-600 rounded-full transition-all duration-500" style="width: 20%;"></div>
+              <div id="skill-bar-vocab" class="h-full bg-blue-600 rounded-full transition-all duration-500" style="width: 25%;"></div>
             </div>
           </div>
 
           <div class="space-y-1.5">
             <div class="flex justify-between text-xs font-bold">
               <span class="text-gray-600 dark:text-gray-300">📊 Ngữ pháp (Grammatik)</span>
-              <span id="skill-val-grammar" class="text-indigo-600 dark:text-indigo-400 font-mono">15%</span>
+              <span id="skill-val-grammar" class="text-indigo-600 dark:text-indigo-400 font-mono">20%</span>
             </div>
             <div class="w-full h-2 bg-gray-100 dark:bg-gray-700 rounded-full overflow-hidden">
-              <div id="skill-bar-grammar" class="h-full bg-indigo-600 rounded-full transition-all duration-500" style="width: 15%;"></div>
+              <div id="skill-bar-grammar" class="h-full bg-indigo-600 rounded-full transition-all duration-500" style="width: 20%;"></div>
             </div>
           </div>
 
           <div class="space-y-1.5">
             <div class="flex justify-between text-xs font-bold">
               <span class="text-gray-600 dark:text-gray-300">🎧 Nghe hiểu (Hörverstehen)</span>
-              <span id="skill-val-listening" class="text-emerald-600 dark:text-emerald-400 font-mono">15%</span>
+              <span id="skill-val-listening" class="text-emerald-600 dark:text-emerald-400 font-mono">20%</span>
             </div>
             <div class="w-full h-2 bg-gray-100 dark:bg-gray-700 rounded-full overflow-hidden">
-              <div id="skill-bar-listening" class="h-full bg-emerald-600 rounded-full transition-all duration-500" style="width: 15%;"></div>
+              <div id="skill-bar-listening" class="h-full bg-emerald-600 rounded-full transition-all duration-500" style="width: 20%;"></div>
             </div>
           </div>
 
           <div class="space-y-1.5">
             <div class="flex justify-between text-xs font-bold">
               <span class="text-gray-600 dark:text-gray-300">📖 Đọc hiểu (Leseverstehen)</span>
-              <span id="skill-val-reading" class="text-amber-600 dark:text-amber-400 font-mono">15%</span>
+              <span id="skill-val-reading" class="text-amber-600 dark:text-amber-400 font-mono">20%</span>
             </div>
             <div class="w-full h-2 bg-gray-100 dark:bg-gray-700 rounded-full overflow-hidden">
-              <div id="skill-bar-reading" class="h-full bg-amber-600 rounded-full transition-all duration-500" style="width: 15%;"></div>
+              <div id="skill-bar-reading" class="h-full bg-amber-600 rounded-full transition-all duration-500" style="width: 20%;"></div>
             </div>
           </div>
 
           <div class="space-y-1.5">
             <div class="flex justify-between text-xs font-bold">
               <span class="text-gray-600 dark:text-gray-300">🗣️ Luyện nói (Sprechen)</span>
-              <span id="skill-val-speaking" class="text-rose-600 dark:text-rose-400 font-mono">10%</span>
+              <span id="skill-val-speaking" class="text-rose-600 dark:text-rose-400 font-mono">15%</span>
             </div>
             <div class="w-full h-2 bg-gray-100 dark:bg-gray-700 rounded-full overflow-hidden">
-              <div id="skill-bar-speaking" class="h-full bg-rose-600 rounded-full transition-all duration-500" style="width: 10%;"></div>
+              <div id="skill-bar-speaking" class="h-full bg-rose-600 rounded-full transition-all duration-500" style="width: 15%;"></div>
             </div>
           </div>
 
           <div class="space-y-1.5">
             <div class="flex justify-between text-xs font-bold">
               <span class="text-gray-600 dark:text-gray-300">✍️ Viết & Chính tả (Schreiben)</span>
-              <span id="skill-val-writing" class="text-purple-600 dark:text-purple-400 font-mono">10%</span>
+              <span id="skill-val-writing" class="text-purple-600 dark:text-purple-400 font-mono">15%</span>
             </div>
             <div class="w-full h-2 bg-gray-100 dark:bg-gray-700 rounded-full overflow-hidden">
-              <div id="skill-bar-writing" class="h-full bg-purple-600 rounded-full transition-all duration-500" style="width: 10%;"></div>
+              <div id="skill-bar-writing" class="h-full bg-purple-600 rounded-full transition-all duration-500" style="width: 15%;"></div>
             </div>
           </div>
         </div>
@@ -333,7 +351,6 @@
           <p class="text-xs sm:text-sm text-gray-500 dark:text-gray-400">Các giai đoạn học tập chi tiết chuẩn khung tham chiếu châu Âu (CEFR)</p>
         </div>
 
-        <!-- Level Selector Buttons -->
         <div class="flex items-center gap-1.5 bg-gray-100 dark:bg-gray-800 p-1 rounded-2xl shrink-0 self-start sm:self-auto">
           <button onclick="window.roadmapCtrl && window.roadmapCtrl.switchLevel('A1')" class="roadmap-level-btn px-4 py-1.5 rounded-xl text-xs font-bold bg-blue-600 text-white shadow-xs" data-level="A1">
             Trình độ A1
@@ -347,20 +364,15 @@
         </div>
       </div>
 
-      <!-- Roadmap Stages List -->
-      <div id="roadmap-stages-container" class="space-y-4">
-        <!-- Rendered by roadmap.js -->
-      </div>
+      <div id="roadmap-stages-container" class="space-y-4"></div>
 
       <!-- CEFR Can-Do Checklist -->
       <div class="p-6 rounded-3xl border-2 border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 shadow-sm space-y-4">
         <div>
           <h3 class="font-extrabold text-base text-gray-900 dark:text-gray-100">Bảng Kiểm Năng Lực Thực Tế (Can-Do Checklist)</h3>
-          <p class="text-xs text-gray-500 dark:text-gray-400">Nhấp vào trạng thái để chuyển đổi giữa (Chưa học ➔ Đang luyện ➔ Đã kiểm tra đạt):</p>
+          <p class="text-xs text-gray-500 dark:text-gray-400">Nhấp vào từng kỹ năng để làm bài kiểm tra trắc nghiệm thực tế (≥ 80% để đạt):</p>
         </div>
-        <div id="cando-checklist-container" class="space-y-2.5">
-          <!-- Rendered by roadmap.js -->
-        </div>
+        <div id="cando-checklist-container" class="space-y-2.5"></div>
       </div>
     </section>
 
@@ -368,9 +380,10 @@
     <!-- TAB 2: FLASHCARDS (Thẻ nhớ 3D & SRS Spaced Repetition)     -->
     <!-- ========================================================= -->
     <section id="tab-flashcards" class="tab-content space-y-4">
-      <div class="flex items-center gap-2 overflow-x-auto no-scrollbar pb-1" id="topic-pills">
-        <!-- Generated by flashcard.js -->
-      </div>
+      <div class="flex items-center gap-2 overflow-x-auto no-scrollbar pb-1" id="topic-pills"></div>
+
+      <!-- SRS 4-State Breakdown Stats -->
+      <div id="fc-breakdown-stats" class="flex flex-wrap items-center gap-2 pt-1"></div>
 
       <div class="flex flex-wrap items-center justify-between gap-3">
         <div class="relative flex-1 min-w-[200px]">
@@ -448,7 +461,7 @@
               <div class="text-[10px] text-center text-gray-400 font-semibold">Đánh giá độ nhớ (SRS):</div>
               <div class="grid grid-cols-4 gap-1.5">
                 <button data-rating="again" class="srs-rate-btn py-2 px-1 rounded-xl bg-rose-100 dark:bg-rose-950/50 text-rose-700 dark:text-rose-300 hover:bg-rose-200 font-bold text-[11px] transition-all">
-                  ❌ Lặp lại
+                  ❌ Lặp lại (10m)
                 </button>
                 <button data-rating="hard" class="srs-rate-btn py-2 px-1 rounded-xl bg-amber-100 dark:bg-amber-950/50 text-amber-700 dark:text-amber-300 hover:bg-amber-200 font-bold text-[11px] transition-all">
                   😐 Khó (1d)
@@ -779,7 +792,6 @@
         </div>
       </div>
 
-      <!-- Filter Buttons for Mistakes -->
       <div class="flex items-center gap-1.5 overflow-x-auto no-scrollbar pb-1">
         <button class="mistake-filter-btn px-3 py-1.5 rounded-xl text-xs font-bold bg-rose-600 text-white shadow-xs transition-all" data-filter="ALL">
           Tất cả
@@ -795,14 +807,12 @@
         </button>
       </div>
 
-      <!-- Empty State -->
       <div id="mistakes-empty-state" class="p-10 rounded-3xl border-2 border-dashed border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 text-center space-y-2">
         <span class="text-4xl">🎉</span>
         <h3 class="text-base font-bold text-gray-900 dark:text-gray-100">Không có lỗi sai nào!</h3>
         <p class="text-xs text-gray-500 dark:text-gray-400">Sổ tay lỗi sai hoàn toàn sạch sẽ. Hãy tiếp tục làm bài tập và thi thử nhé!</p>
       </div>
 
-      <!-- Mistakes List Container -->
       <div id="mistakes-list-container" class="space-y-3"></div>
     </section>
 
@@ -848,6 +858,61 @@
       <span class="text-lg">🗣️</span>
       <span>Nói</span>
     </button>
+  </div>
+
+  <!-- ========================================================= -->
+  <!-- CAN-DO MINI SKILL TEST MODAL                              -->
+  <!-- ========================================================= -->
+  <div id="cando-test-modal" class="hidden fixed inset-0 z-50 bg-black/70 backdrop-blur-xs flex items-center justify-center p-4 overflow-y-auto">
+    <div class="bg-white dark:bg-gray-800 w-full max-w-lg rounded-3xl shadow-2xl border border-gray-200 dark:border-gray-700 p-6 space-y-4 animate-gentle-pulse">
+      <div class="flex items-center justify-between border-b border-gray-100 dark:border-gray-700 pb-3">
+        <div class="flex items-center gap-2">
+          <span class="text-xl">🧪</span>
+          <h3 id="cando-test-title" class="font-extrabold text-base text-gray-900 dark:text-white">Kiểm Tra Năng Lực Thực Tế</h3>
+        </div>
+        <button id="btn-close-cando-test" class="p-1.5 rounded-xl text-gray-400 hover:text-gray-900 text-sm">✕</button>
+      </div>
+
+      <div id="cando-test-questions" class="space-y-3.5 max-h-[65vh] overflow-y-auto pr-1"></div>
+    </div>
+  </div>
+
+  <!-- ========================================================= -->
+  <!-- DAILY SESSION SUMMARY MODAL                               -->
+  <!-- ========================================================= -->
+  <div id="daily-summary-modal" class="hidden fixed inset-0 z-50 bg-black/70 backdrop-blur-xs flex items-center justify-center p-4 overflow-y-auto">
+    <div class="bg-white dark:bg-gray-800 w-full max-w-md rounded-3xl shadow-2xl border-2 border-emerald-500 p-6 text-center space-y-4 animate-gentle-pulse">
+      <div class="w-16 h-16 rounded-3xl bg-emerald-100 text-emerald-600 mx-auto flex items-center justify-center text-3xl shadow-md">
+        🎉
+      </div>
+      <div class="space-y-1">
+        <h3 class="text-xl font-black text-gray-900 dark:text-white">Hoàn Thành Buổi Học Hôm Nay!</h3>
+        <p class="text-xs text-gray-500 dark:text-gray-400">Bạn đã đạt đủ mục tiêu thời gian và năng lực đặt ra</p>
+      </div>
+
+      <div class="grid grid-cols-2 gap-3 p-4 bg-gray-50 dark:bg-gray-900/50 rounded-2xl border border-gray-200 dark:border-gray-700 text-left text-xs">
+        <div>
+          <span class="text-gray-400">Thời gian học:</span>
+          <div id="summary-time" class="font-bold text-gray-900 dark:text-white font-mono text-sm">20 phút</div>
+        </div>
+        <div>
+          <span class="text-gray-400">Độ chính xác:</span>
+          <div id="summary-accuracy" class="font-bold text-emerald-600 font-mono text-sm">85%</div>
+        </div>
+        <div>
+          <span class="text-gray-400">Từ vựng đã ôn:</span>
+          <div id="summary-words" class="font-bold text-blue-600 font-mono text-sm">12 từ</div>
+        </div>
+        <div>
+          <span class="text-gray-400">Chuỗi ngày học:</span>
+          <div id="summary-streak" class="font-bold text-amber-600 font-mono text-sm">1 ngày 🔥</div>
+        </div>
+      </div>
+
+      <button id="btn-close-summary" class="w-full py-3 bg-emerald-600 hover:bg-emerald-700 text-white font-extrabold text-sm rounded-2xl shadow-md transition-all">
+        Tuyệt Vời! Tiếp Tục Giữ Vững Phong Độ 🚀
+      </button>
+    </div>
   </div>
 
   <!-- ========================================================= -->
@@ -936,7 +1001,7 @@
 
         <div class="pt-3 border-t border-gray-100 dark:border-gray-700">
           <button id="btn-reset-all-data" class="w-full py-2 rounded-xl text-rose-600 hover:bg-rose-50 dark:hover:bg-rose-950/30 font-bold text-[11px] transition-all">
-            ⚠️ Xóa toàn bộ dữ liệu & đặt lại từ đầu
+            ⚠️ Đặt lại toàn bộ dữ liệu DeutschMaster
           </button>
         </div>
       </div>
@@ -1031,6 +1096,7 @@
   <script src="js/srs.js"></script>
   <script src="js/mistakes.js"></script>
   <script src="js/roadmap.js"></script>
+  <script src="js/survival.js"></script>
   <script src="js/sentence_builder.js"></script>
   <script src="js/speaking.js"></script>
   <script src="js/dictation.js"></script>

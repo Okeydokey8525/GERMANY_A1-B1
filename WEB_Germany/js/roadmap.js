@@ -1,23 +1,86 @@
-// WEB_Germany Dynamic Learning Roadmap & CEFR Can-Do Checklist Module
+// WEB_Germany Dynamic Learning Roadmap & Real Can-Do Skill Verification Engine
 
 class RoadmapController {
   constructor() {
     this.curriculum = null;
     this.selectedLevel = "A1";
+    this.currentTestingItem = null;
     this.canDoItems = [
-      { id: "cd_01", level: "A1", text: "Tôi có thể tự giới thiệu tên, tuổi, nghề nghiệp và quê quán bằng tiếng Đức.", state: "tested" },
-      { id: "cd_02", level: "A1", text: "Tôi có thể đếm số từ 0 đến 100 và đọc số điện thoại, giá tiền.", state: "tested" },
-      { id: "cd_03", level: "A1", text: "Tôi có thể hỏi đường và xem giờ giấc xe buýt, tàu hỏa.", state: "learning" },
-      { id: "cd_04", level: "A1", text: "Tôi có thể gọi món ăn, đồ uống và yêu cầu thanh toán tại nhà hàng.", state: "learning" },
-      { id: "cd_05", level: "A1", text: "Tôi có thể phân biệt và chia đúng động từ khuyết thiếu (können, müssen, möchten).", state: "learning" },
-      { id: "cd_06", level: "A1", text: "Tôi có thể kể lại ngắn gọn một sự việc đã diễn ra trong quá khứ (Perfekt).", state: "unlearned" },
-      { id: "cd_07", level: "A2", text: "Tôi có thể viết email/tin nhắn hẹn lịch hoặc xin phép nghỉ phép đơn giản.", state: "unlearned" },
-      { id: "cd_08", level: "A2", text: "Tôi có thể phân biệt vị trí đứng yên (Wo? + Dativ) và hướng di chuyển (Wohin? + Akkusativ).", state: "unlearned" },
-      { id: "cd_09", level: "B1", text: "Tôi có thể trình bày quan điểm cá nhân và giải thích lý do bằng liên từ weil/dass/obwohl.", state: "unlearned" },
-      { id: "cd_10", level: "B1", text: "Tôi có thể sử dụng câu bị động Passiv và thể giả định Konjunktiv II trong công việc.", state: "unlearned" }
+      {
+        id: "cd_01",
+        level: "A1",
+        text: "Tôi có thể tự giới thiệu tên, tuổi, nghề nghiệp và quê quán bằng tiếng Đức.",
+        state: "unlearned",
+        testQuestions: [
+          { q: "Cách nói 'Tôi tên là Nico và tôi đến từ Việt Nam' là gì?", opts: ["Ich heiße Nico und komme aus Vietnam.", "Ich bin Nico und wohne in Vietnam.", "Mein Name ist Nico und ich gehe nach Vietnam."], ans: 0 },
+          { q: "'Wie alt bist du?' nghĩa là gì?", opts: ["Bạn bao nhiêu tuổi?", "Bạn sống ở đâu?", "Bạn làm nghề gì?"], ans: 0 },
+          { q: "Đại từ nhân xưng ngôi 'Chúng tôi' trong tiếng Đức là:", opts: ["wir", "sie", "ihr"], ans: 0 }
+        ]
+      },
+      {
+        id: "cd_02",
+        level: "A1",
+        text: "Tôi có thể đếm số từ 0 đến 100 và đọc số điện thoại, giá tiền.",
+        state: "unlearned",
+        testQuestions: [
+          { q: "Số 25 trong tiếng Đức đọc là gì?", opts: ["fünfundzwanzig", "zwanzigfünf", "fünfzehn"], ans: 0 },
+          { q: "'Wie viel kostet das?' nghĩa là gì?", opts: ["Cái này giá bao nhiêu?", "Bây giờ là mấy giờ?", "Nhà ga ở đâu?"], ans: 0 }
+        ]
+      },
+      {
+        id: "cd_03",
+        level: "A1",
+        text: "Tôi có thể phân biệt mạo từ xác định der / die / das và cách Akkusativ.",
+        state: "unlearned",
+        testQuestions: [
+          { q: "Điền câu: 'Ich habe ______ Tisch (der Tisch) gekauft.'", opts: ["einen", "ein", "eine"], ans: 0 },
+          { q: "Mạo từ của danh từ 'Kaffee' là gì?", opts: ["der", "die", "das"], ans: 0 }
+        ]
+      },
+      {
+        id: "cd_04",
+        level: "A1",
+        text: "Tôi có thể sử dụng động từ khuyết thiếu (Modalverben) và động từ tách.",
+        state: "unlearned",
+        testQuestions: [
+          { q: "Điền câu: 'Nico ______ sehr gut Deutsch sprechen.'", opts: ["kann", "können", "kannst"], ans: 0 },
+          { q: "Động từ tách 'aufstehen' trong câu: 'Ich stehe um 7 Uhr ______.'", opts: ["auf", "an", "aus"], ans: 0 }
+        ]
+      },
+      {
+        id: "cd_05",
+        level: "A1",
+        text: "Tôi có thể kể lại ngắn gọn một sự việc trong quá khứ với thì Perfekt.",
+        state: "unlearned",
+        testQuestions: [
+          { q: "'Gestern habe ich meine Hausaufgaben ______.'", opts: ["gemacht", "machen", "gemachen"], ans: 0 },
+          { q: "'Er ______ nach Berlin gefahren.'", opts: ["ist", "hat", "wird"], ans: 0 }
+        ]
+      },
+      {
+        id: "cd_06",
+        level: "A2",
+        text: "Tôi có thể phân biệt vị trí đứng yên (Wo? + Dativ) và hướng di chuyển (Wohin? + Akkusativ).",
+        state: "unlearned",
+        testQuestions: [
+          { q: "'Das Buch liegt auf ______ Tisch (der Tisch).' (Wo?)", opts: ["dem", "den", "das"], ans: 0 },
+          { q: "'Ich lege das Buch auf ______ Tisch.' (Wohin?)", opts: ["den", "dem", "das"], ans: 0 }
+        ]
+      },
+      {
+        id: "cd_07",
+        level: "B1",
+        text: "Tôi có thể sử dụng câu bị động Passiv và thể giả định Konjunktiv II.",
+        state: "unlearned",
+        testQuestions: [
+          { q: "'In Deutschland ______ viel Bier getrunken.'", opts: ["wird", "hat", "ist"], ans: 0 },
+          { q: "'Wenn ich Zeit hätte, ______ ich nach Berlin reisen.'", opts: ["würde", "werde", "habe"], ans: 0 }
+        ]
+      }
     ];
 
     this.initCurriculum();
+    this.initTestModal();
   }
 
   async initCurriculum() {
@@ -25,10 +88,18 @@ class RoadmapController {
       const resp = await fetch("./data/curriculum.json");
       this.curriculum = await resp.json();
     } catch (e) {
-      console.warn("Failed to load curriculum.json, using fallback:", e);
+      console.warn("Failed to load curriculum.json:", e);
     }
     this.renderRoadmap();
     this.renderCanDoChecklist();
+  }
+
+  initTestModal() {
+    const modal = document.getElementById("cando-test-modal");
+    const closeBtn = document.getElementById("btn-close-cando-test");
+    if (closeBtn && modal) {
+      closeBtn.addEventListener("click", () => modal.classList.add("hidden"));
+    }
   }
 
   switchLevel(level) {
@@ -36,25 +107,25 @@ class RoadmapController {
     document.querySelectorAll(".roadmap-level-btn").forEach(btn => {
       const bLvl = btn.getAttribute("data-level");
       if (bLvl === level) {
-        btn.className = "roadmap-level-btn px-4 py-2 rounded-xl text-xs font-bold bg-blue-600 text-white shadow-xs transition-all";
+        btn.className = "roadmap-level-btn px-4 py-1.5 rounded-xl text-xs font-bold bg-blue-600 text-white shadow-xs transition-all";
       } else {
-        btn.className = "roadmap-level-btn px-4 py-2 rounded-xl text-xs font-semibold bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700 transition-all";
+        btn.className = "roadmap-level-btn px-4 py-1.5 rounded-xl text-xs font-semibold bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700 transition-all";
       }
     });
     this.renderRoadmap();
   }
 
-  // Dynamic Progress Calculation for each stage!
+  // Real Dynamic Progress Calculation linked to Stage-Specific Topic Mastery!
   calculateStageProgress(stage) {
     let score = 0;
     const completedLessons = (window.progressCtrl && window.progressCtrl.data.completedLessons) || [];
     
-    // 1. Lessons coverage (40% weight)
+    // 1. Lessons coverage (35% weight)
     if (stage.lessonIds && stage.lessonIds.length > 0) {
       const doneCount = stage.lessonIds.filter(id => completedLessons.includes(id)).length;
-      score += (doneCount / stage.lessonIds.length) * 40;
+      score += (doneCount / stage.lessonIds.length) * 35;
     } else {
-      score += 20;
+      score += 15;
     }
 
     // 2. Vocabulary mastery in this stage (30% weight)
@@ -76,12 +147,24 @@ class RoadmapController {
       score += 15;
     }
 
-    // 3. Overall Skill Level baseline (30% weight)
-    const skills = (window.progressCtrl && window.progressCtrl.data.skills) || {};
-    const grammarScore = skills.grammar?.score || 10;
-    score += (grammarScore / 100) * 30;
+    // 3. Stage-Specific Topic Mastery from progressCtrl (35% weight)
+    let topicMasterySum = 0;
+    let topicCount = 0;
+    if (window.progressCtrl && stage.grammarTopics) {
+      stage.grammarTopics.forEach(top => {
+        const m = window.progressCtrl.getTopicMastery(top);
+        topicMasterySum += m;
+        topicCount++;
+      });
+    }
 
-    return Math.min(100, Math.max(0, Math.round(score)));
+    if (topicCount > 0) {
+      score += (topicMasterySum / (topicCount * 100)) * 35;
+    } else {
+      score += 15;
+    }
+
+    return Math.min(100, Math.max(10, Math.round(score)));
   }
 
   renderRoadmap() {
@@ -125,19 +208,19 @@ class RoadmapController {
               <h3 class="text-base font-bold text-gray-900 dark:text-gray-100 mt-0.5">${stage.title}</h3>
             </div>
           </div>
-          <button class="stage-action-btn px-3 py-1.5 rounded-xl text-xs font-bold bg-blue-600 hover:bg-blue-700 text-white transition-all shadow-2xs shrink-0">
+          <button class="stage-action-btn px-3.5 py-1.5 rounded-xl text-xs font-bold bg-blue-600 hover:bg-blue-700 text-white transition-all shadow-2xs shrink-0">
             Học ngay →
           </button>
         </div>
 
-        <p class="text-xs text-gray-500 dark:text-gray-400 mb-3">${stage.desc}</p>
-        <div class="p-2.5 bg-gray-50 dark:bg-gray-900/50 rounded-xl text-[11px] text-blue-700 dark:text-blue-300 font-medium mb-3 border border-blue-50 dark:border-blue-950/30">
+        <p class="text-xs text-gray-600 dark:text-gray-300 mb-2.5">${stage.desc}</p>
+        <div class="p-2.5 bg-blue-50/60 dark:bg-blue-950/30 rounded-xl text-[11px] text-blue-900 dark:text-blue-200 font-medium mb-3 border border-blue-100 dark:border-blue-900/40">
           🎯 <b>Chuẩn đầu ra:</b> ${stage.competency}
         </div>
 
         <div class="space-y-1.5 pt-2 border-t border-gray-100 dark:border-gray-700/60">
           <div class="flex items-center justify-between text-[11px] font-semibold text-gray-500 dark:text-gray-400">
-            <span>Tiến độ thực tế (Dynamic Mastery)</span>
+            <span>Tiến độ thực tế (Topic Mastery Engine)</span>
             <span class="font-mono font-bold ${isCompleted ? 'text-emerald-600 dark:text-emerald-400' : 'text-blue-600 dark:text-blue-400'}">${dynProgress}%</span>
           </div>
           <div class="w-full h-2 bg-gray-100 dark:bg-gray-700 rounded-full overflow-hidden">
@@ -157,7 +240,6 @@ class RoadmapController {
     });
   }
 
-  // 3-State Can-Do Checklist (Unlearned -> Learning -> Tested)
   renderCanDoChecklist() {
     const container = document.getElementById("cando-checklist-container");
     if (!container) return;
@@ -176,10 +258,10 @@ class RoadmapController {
       }`;
 
       const stateBadgeHtml = curState === "tested"
-        ? `<span class="px-2.5 py-1 rounded-full text-[10px] font-bold bg-emerald-100 text-emerald-800 dark:bg-emerald-900/40 dark:text-emerald-300">🟢 Đã kiểm tra đạt</span>`
+        ? `<span class="px-3 py-1 rounded-xl text-[11px] font-bold bg-emerald-100 text-emerald-800 dark:bg-emerald-900/40 dark:text-emerald-300 flex items-center gap-1">🟢 Đã kiểm tra đạt</span>`
         : (curState === "learning"
-          ? `<span class="px-2.5 py-1 rounded-full text-[10px] font-bold bg-amber-100 text-amber-800 dark:bg-amber-900/40 dark:text-amber-300">🟡 Đang rèn luyện</span>`
-          : `<span class="px-2.5 py-1 rounded-full text-[10px] font-bold bg-gray-100 text-gray-600 dark:bg-gray-700 dark:text-gray-300">○ Chưa học</span>`);
+          ? `<span class="px-3 py-1 rounded-xl text-[11px] font-bold bg-amber-100 text-amber-800 dark:bg-amber-900/40 dark:text-amber-300 flex items-center gap-1">🟡 Đang học (🧪 Kiểm tra ngay)</span>`
+          : `<span class="px-3 py-1 rounded-xl text-[11px] font-bold bg-gray-100 text-gray-600 dark:bg-gray-700 dark:text-gray-300 flex items-center gap-1">○ Chưa kiểm tra (🧪 Bắt đầu)</span>`);
 
       row.innerHTML = `
         <div class="flex items-center gap-3 flex-1">
@@ -189,21 +271,84 @@ class RoadmapController {
         </div>
         <div class="flex items-center gap-2 self-end sm:self-center">
           <span class="px-2 py-0.5 rounded-full text-[10px] font-bold bg-blue-100 text-blue-800 dark:bg-blue-900/40 dark:text-blue-300">${item.level}</span>
-          <button class="cando-toggle-btn">${stateBadgeHtml}</button>
+          <button class="cando-test-btn cursor-pointer hover:scale-105 active:scale-95 transition-all">${stateBadgeHtml}</button>
         </div>
       `;
 
-      row.querySelector(".cando-toggle-btn").addEventListener("click", () => {
-        const nextState = curState === "unlearned" ? "learning" : (curState === "learning" ? "tested" : "unlearned");
-        if (window.progressCtrl) {
-          window.progressCtrl.data.canDoChecklist[item.id] = nextState;
-          window.progressCtrl.saveProgress();
-          this.renderCanDoChecklist();
-        }
+      row.querySelector(".cando-test-btn").addEventListener("click", () => {
+        this.openSkillTest(item);
       });
 
       container.appendChild(row);
     });
+  }
+
+  // Opens Real Mini Skill Test Modal (No more self-declaration!)
+  openSkillTest(item) {
+    this.currentTestingItem = item;
+    const modal = document.getElementById("cando-test-modal");
+    const testTitle = document.getElementById("cando-test-title");
+    const testContainer = document.getElementById("cando-test-questions");
+
+    if (testTitle) testTitle.textContent = `Kiểm Tra Năng Lực: ${item.text}`;
+    if (!testContainer || !modal) return;
+
+    testContainer.innerHTML = "";
+    const questions = item.testQuestions || [];
+    let userAnswers = {};
+
+    questions.forEach((q, qIdx) => {
+      const qBlock = document.createElement("div");
+      qBlock.className = "p-4 rounded-2xl bg-gray-50 dark:bg-gray-900/50 border border-gray-200 dark:border-gray-700 space-y-2.5";
+      qBlock.innerHTML = `
+        <span class="text-xs font-bold text-gray-500 font-mono">Câu hỏi ${qIdx + 1} / ${questions.length}</span>
+        <h4 class="text-sm font-bold text-gray-900 dark:text-white">${q.q}</h4>
+        <div class="space-y-1.5">
+          ${q.opts.map((opt, optIdx) => `
+            <label class="p-2.5 rounded-xl border border-gray-200 dark:border-gray-700 hover:border-blue-500 bg-white dark:bg-gray-800 flex items-center gap-2 text-xs font-medium cursor-pointer">
+              <input type="radio" name="test_q_${qIdx}" value="${optIdx}">
+              <span>${opt}</span>
+            </label>
+          `).join("")}
+        </div>
+      `;
+      testContainer.appendChild(qBlock);
+    });
+
+    const submitBtn = document.createElement("button");
+    submitBtn.className = "w-full py-3.5 bg-blue-600 hover:bg-blue-700 text-white font-extrabold text-sm rounded-2xl shadow-md transition-all";
+    submitBtn.textContent = "Nộp Bài Kiểm Tra Kỹ Năng (Prüfen)";
+    submitBtn.addEventListener("click", () => {
+      let correct = 0;
+      questions.forEach((q, qIdx) => {
+        const sel = document.querySelector(`input[name='test_q_${qIdx}']:checked`);
+        if (sel && parseInt(sel.value) === q.ans) correct++;
+      });
+
+      const scorePct = Math.round((correct / questions.length) * 100);
+      if (scorePct >= 80) {
+        if (window.progressCtrl) {
+          window.progressCtrl.data.canDoChecklist[item.id] = "tested";
+          window.progressCtrl.saveProgress();
+        }
+        if (window.appCtrl) {
+          window.appCtrl.showToast(`🎉 Xuất sắc! Bạn đạt ${scorePct}% và đã chính thức làm chủ năng lực này!`);
+        }
+        modal.classList.add("hidden");
+        this.renderCanDoChecklist();
+      } else {
+        if (window.progressCtrl) {
+          window.progressCtrl.data.canDoChecklist[item.id] = "learning";
+          window.progressCtrl.saveProgress();
+        }
+        alert(`Bạn đạt ${scorePct}% (Cần ≥ 80% để đạt). Hãy tiếp tục rèn luyện và thử lại nhé!`);
+        modal.classList.add("hidden");
+        this.renderCanDoChecklist();
+      }
+    });
+
+    testContainer.appendChild(submitBtn);
+    modal.classList.remove("hidden");
   }
 }
 

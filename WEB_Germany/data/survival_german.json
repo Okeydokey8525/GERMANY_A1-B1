@@ -1,0 +1,111 @@
+[
+  {
+    "id": "surv_01",
+    "icon": "👋",
+    "title": "Chào hỏi & Tự giới thiệu",
+    "level": "A1",
+    "desc": "Các mẫu câu chào hỏi theo thời gian trong ngày và giới thiệu họ tên, quốc tịch.",
+    "phrases": [
+      { "de": "Guten Tag! Ich heiße Minh và ich komme aus Vietnam.", "vi": "Xin chào! Tôi tên là Minh và tôi đến từ Việt Nam." },
+      { "de": "Freut mich, Sie kennenzulernen!", "vi": "Rất vui được làm quen với ngài/bạn!" },
+      { "de": "Wie geht es Ihnen? - Mir geht es gut, danke!", "vi": "Ngài có khỏe không? - Tôi khỏe, cảm ơn!" }
+    ],
+    "testQuestion": {
+      "question": "Cách chào hỏi lịch sự vào buổi sáng bằng tiếng Đức là gì?",
+      "options": ["Guten Morgen!", "Gute Nacht!", "Tschüss!", "Auf Wiedersehen!"],
+      "answer": "Guten Morgen!",
+      "explanation": "'Guten Morgen!' dùng để chào buổi sáng từ khoảng 6h đến 11h."
+    }
+  },
+  {
+    "id": "surv_02",
+    "icon": "🍽️",
+    "title": "Tại Nhà Hàng & Quán Ăn",
+    "level": "A1",
+    "desc": "Cách hỏi bàn trống, xem thực đơn, gọi món và yêu cầu hóa đơn thanh toán.",
+    "phrases": [
+      { "de": "Haben Sie einen Tisch für zwei Personen frei?", "vi": "Quán còn bàn trống cho 2 người không ạ?" },
+      { "de": "Ich möchte bitte die Speisekarte sehen.", "vi": "Làm ơn cho tôi xem thực đơn." },
+      { "de": "Ich nehme ein Schnitzel und ein Mineralwasser, bitte.", "vi": "Cho tôi một phần thịt chiên Schnitzel và một nước khoáng." },
+      { "de": "Zahlen, bitte! / Die Rechnung, bitte!", "vi": "Làm ơn cho tôi thanh toán / Xin hóa đơn!" }
+    ],
+    "testQuestion": {
+      "question": "Khi muốn gọi thanh toán tại quán ăn ở Đức, bạn nói câu nào?",
+      "options": ["Zahlen, bitte!", "Guten Appetit!", "Bitte schön!", "Kein Problem!"],
+      "answer": "Zahlen, bitte!",
+      "explanation": "'Zahlen, bitte!' hoặc 'Die Rechnung, bitte!' là câu chuẩn để gọi tính tiền."
+    }
+  },
+  {
+    "id": "surv_03",
+    "icon": "🛒",
+    "title": "Mua Sắm Tại Siêu Thị",
+    "level": "A1",
+    "desc": "Hỏi vị trí quầy hàng, giá tiền, cân rau củ quả và thanh toán bằng tiền mặt/thẻ.",
+    "phrases": [
+      { "de": "Entschuldigung, wie viel kostet das?", "vi": "Xin lỗi, món này giá bao nhiêu tiền?" },
+      { "de": "Wo finde ich frisches Obst und Gemüse?", "vi": "Tôi có thể tìm rau và trái cây tươi ở đâu?" },
+      { "de": "Kann ich mit Karte oder bar bezahlen?", "vi": "Tôi có thể trả bằng thẻ hay tiền mặt?" }
+    ],
+    "testQuestion": {
+      "question": "'Wie viel kostet das?' có nghĩa là gì?",
+      "options": ["Cái này giá bao nhiêu?", "Cái này ở đâu?", "Bạn tên là gì?", "Mấy giờ rồi?"],
+      "answer": "Cái này giá bao nhiêu?",
+      "explanation": "'Wie viel kostet das?' là câu hỏi giá tiền phổ biến nhất."
+    }
+  },
+  {
+    "id": "surv_04",
+    "icon": "🚆",
+    "title": "Ga Tàu & Đi Lại Công Cộng",
+    "level": "A1",
+    "desc": "Mua vé tàu xe buýt, hỏi giờ tàu chạy và tìm sân ga (Gleis).",
+    "phrases": [
+      { "de": "Eine Fahrkarte nach Berlin, bitte!", "vi": "Làm ơn cho tôi một vé đi Berlin!" },
+      { "de": "Wann fährt der nächste Zug nach München ab?", "vi": "Khi nào chuyến tàu tiếp theo đi München khởi hành?" },
+      { "de": "Auf welchem Gleis fährt der Zug ab?", "vi": "Chuyến tàu khởi hành ở sân ga số mấy?" }
+    ],
+    "testQuestion": {
+      "question": "Từ tiếng Đức nào chỉ 'Sân ga / Đường ray' nơi tàu đón khách?",
+      "options": ["das Gleis", "der Bahnhof", "das Ticket", "der Bus"],
+      "answer": "das Gleis",
+      "explanation": "'das Gleis' là sân ga / đường ray số (ví dụ: Gleis 4 = Sân ga số 4)."
+    }
+  },
+  {
+    "id": "surv_05",
+    "icon": "🗺️",
+    "title": "Hỏi Đường Trong Thành Phố",
+    "level": "A1",
+    "desc": "Chỉ phương hướng: rẽ trái, rẽ phải, đi thẳng và khoảng cách.",
+    "phrases": [
+      { "de": "Entschuldigung, wie komme ich zum Bahnhof?", "vi": "Xin lỗi, làm sao để tôi đi đến nhà ga?" },
+      { "de": "Gehen Sie geradeaus và dann nach links / rechts.", "vi": "Bạn hãy đi thẳng rồi sau đó rẽ trái / rẽ phải." },
+      { "de": "Ist es weit von hier? - Nein, nur 5 Minuten zu Fuß.", "vi": "Có xa đây không? - Không, chỉ 5 phút đi bộ." }
+    ],
+    "testQuestion": {
+      "question": "'Gehen Sie geradeaus' nghĩa là gì?",
+      "options": ["Hãy đi thẳng", "Hãy rẽ trái", "Hãy rẽ phải", "Hãy dừng lại"],
+      "answer": "Hãy đi thẳng",
+      "explanation": "'geradeaus' nghĩa là đi thẳng về phía trước."
+    }
+  },
+  {
+    "id": "surv_06",
+    "icon": "🏥",
+    "title": "Khám Bệnh & Hiệu Thuốc",
+    "level": "A1",
+    "desc": "Diễn tả triệu chứng đau ốm và mua thuốc thông dụng.",
+    "phrases": [
+      { "de": "Ich fühle mich nicht gut, tôi bị đau đầu.", "vi": "Tôi cảm thấy không khỏe, tôi bị đau đầu." },
+      { "de": "Ich habe Kopfschmerzen und Fieber.", "vi": "Tôi bị đau đầu và sốt." },
+      { "de": "Haben Sie ein Medikament gegen Halsschmerzen?", "vi": "Hiệu thuốc có thuốc trị đau họng không ạ?" }
+    ],
+    "testQuestion": {
+      "question": "'Ich habe Kopfschmerzen' nghĩa là gì?",
+      "options": ["Tôi bị đau đầu", "Tôi bị đau bụng", "Tôi bị sốt", "Tôi bị cảm lạnh"],
+      "answer": "Tôi bị đau đầu",
+      "explanation": "Kopf (đầu) + Schmerzen (cơn đau) = Kopfschmerzen (đau đầu)."
+    }
+  }
+]

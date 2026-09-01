@@ -13,6 +13,7 @@ class AppController {
     this.initTheme();
     this.initNavigation();
     this.initSettingsModal();
+    this.initDailySummaryModal();
     this.initOnboarding();
     await this.loadAllDatasets();
     this.initResumeBtn();
@@ -230,13 +231,31 @@ class AppController {
       });
     }
 
+    // Safe Namespace-based Reset (Never clears other origins' localStorage!)
     if (resetBtn) {
       resetBtn.addEventListener("click", () => {
-        if (confirm("CẢNH BÁO: Hành động này sẽ xóa toàn bộ lịch sử ôn tập, streak và sổ tay lỗi sai. Bạn có chắc chắn không?")) {
-          localStorage.clear();
+        if (confirm("CẢNH BÁO: Bạn có chắc chắn muốn đặt lại dữ liệu học tập của DeutschMaster?")) {
+          const dmKeys = [
+            "deutschmaster_user_progress_v4",
+            "deutschmaster_user_progress_v3",
+            "deutschmaster_srs_deck_v4",
+            "deutschmaster_srs_deck_v3",
+            "deutschmaster_mistakes_v3",
+            "deutschmaster_onboarding_seen",
+            "web_germany_theme"
+          ];
+          dmKeys.forEach(k => localStorage.removeItem(k));
           window.location.reload();
         }
       });
+    }
+  }
+
+  initDailySummaryModal() {
+    const modal = document.getElementById("daily-summary-modal");
+    const closeBtn = document.getElementById("btn-close-summary");
+    if (closeBtn && modal) {
+      closeBtn.addEventListener("click", () => modal.classList.add("hidden"));
     }
   }
 

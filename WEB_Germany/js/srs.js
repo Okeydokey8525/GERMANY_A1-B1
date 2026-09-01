@@ -1,8 +1,8 @@
-// WEB_Germany Spaced Repetition System (SRS) Engine based on Modified SM-2 with Timestamp Scheduling
+// WEB_Germany Spaced Repetition System (SRS) Engine with SM-2, Timestamp Scheduling & Daily New Card Cap
 
 class SRSController {
   constructor() {
-    this.storageKey = "deutschmaster_srs_deck_v3";
+    this.storageKey = "deutschmaster_srs_deck_v4";
     this.cards = {}; // { id: { id, word, article, meaning_vi, level, state, interval, ease, repetitions, dueAt, wrongCount, reviewCount } }
     this.newCardsPerDayLimit = 10;
     this.loadDeck();
@@ -13,6 +13,12 @@ class SRSController {
       const raw = localStorage.getItem(this.storageKey);
       if (raw) {
         this.cards = JSON.parse(raw);
+      } else {
+        const v3 = localStorage.getItem("deutschmaster_srs_deck_v3");
+        if (v3) {
+          this.cards = JSON.parse(v3);
+          this.saveDeck();
+        }
       }
     } catch (e) {
       this.cards = {};
@@ -60,8 +66,23 @@ class SRSController {
 
   getDueCards(filterLevel = "ALL") {
     const now = Date.now();
+    const todayNewDone = (window.progressCtrl && window.progressCtrl.data.today.newCardsReviewed) || 0;
+    const remainingNewAllowed = Math.max(0, this.newCardsPerDayLimit - todayNewDone);
+    
+    let newCardsCount = 0;
     return Object.values(this.cards).filter(c => {
       if (filterLevel !== "ALL" && c.level !== filterLevel) return false;
+      
+      // If card is 'new', check daily cap
+      if (c.state === "new") {
+        if (newCardsCount < remainingNewAllowed) {
+          newCardsCount++;
+          return true;
+        }
+        return false;
+      }
+
+      // Review and learning cards due at or before now
       return (c.dueAt || 0) <= now;
     });
   }
@@ -69,6 +90,7 @@ class SRSController {
   getCounts(filterLevel = "ALL") {
     const now = Date.now();
     let due = 0;
+    let newCount = 0;
     let learning = 0;
     let mastered = 0;
     let total = 0;
@@ -80,13 +102,19 @@ class SRSController {
         mastered++;
       } else if (c.state === "learning") {
         learning++;
-      }
-      if ((c.dueAt || 0) <= now) {
+        if ((c.dueAt || 0) <= now) due++;
+      } else if (c.state === "new") {
+        newCount++;
         due++;
+      } else { // review
+        if ((c.dueAt || 0) <= now) due++;
       }
     });
 
-    return { due, learning, mastered, total };
+    const todayNewDone = (window.progressCtrl && window.progressCtrl.data.today.newCardsReviewed) || 0;
+    const availableNewToday = Math.min(newCount, Math.max(0, this.newCardsPerDayLimit - todayNewDone));
+
+    return { due, newCount, availableNewToday, learning, mastered, total };
   }
 
   rateCard(cardId, rating) {
@@ -96,6 +124,11 @@ class SRSController {
     const now = Date.now();
     const oneDayMs = 24 * 60 * 60 * 1000;
     const tenMinMs = 10 * 60 * 1000;
+
+    const isFirstTimeStudied = (card.state === "new");
+    if (isFirstTimeStudied && window.progressCtrl) {
+      window.progressCtrl.data.today.newCardsReviewed = (window.progressCtrl.data.today.newCardsReviewed || 0) + 1;
+    }
 
     card.reviewCount = (card.reviewCount || 0) + 1;
 
@@ -108,7 +141,7 @@ class SRSController {
         card.wrongCount = (card.wrongCount || 0) + 1;
         card.dueAt = now + tenMinMs;
         
-        // Add to Mistake Notebook
+        // Register in Mistake Notebook
         if (window.mistakesCtrl) {
           window.mistakesCtrl.addMistake({
             id: `vocab_${card.id}`,
@@ -164,7 +197,7 @@ class SRSController {
 
     this.saveDeck();
     if (window.progressCtrl) {
-      window.progressCtrl.recordActivity("vocab", rating === "good" || rating === "easy");
+      window.progressCtrl.recordActivity("vocab", rating === "good" || rating === "easy", card.topic || "Từ vựng");
     }
   }
 
@@ -184,6 +217,17 @@ class SRSController {
       } else {
         fcDueBadge.classList.add("hidden");
       }
+    }
+
+    // Breakdown Stats pill on Flashcard tab
+    const fcBreakdown = document.getElementById("fc-breakdown-stats");
+    if (fcBreakdown) {
+      fcBreakdown.innerHTML = `
+        <span class="px-2 py-0.5 rounded-lg bg-blue-100 dark:bg-blue-900/40 text-blue-800 dark:text-blue-200 font-bold text-[10px]">🆕 ${counts.availableNewToday} mới</span>
+        <span class="px-2 py-0.5 rounded-lg bg-amber-100 dark:bg-amber-900/40 text-amber-800 dark:text-amber-200 font-bold text-[10px]">🟡 ${counts.learning} đang học</span>
+        <span class="px-2 py-0.5 rounded-lg bg-indigo-100 dark:bg-indigo-900/40 text-indigo-800 dark:text-indigo-200 font-bold text-[10px]">🔄 ${counts.due} đến hạn</span>
+        <span class="px-2 py-0.5 rounded-lg bg-emerald-100 dark:bg-emerald-900/40 text-emerald-800 dark:text-emerald-200 font-bold text-[10px]">🏆 ${counts.mastered} đã thuộc</span>
+      `;
     }
   }
 }
