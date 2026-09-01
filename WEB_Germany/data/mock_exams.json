@@ -1,0 +1,369 @@
+{
+  "A1": {
+    "title": "Đề thi mẫu Goethe-Zertifikat A1: Start Deutsch 1",
+    "duration_minutes": 65,
+    "total_score": 100,
+    "pass_score": 60,
+    "sections": [
+      {
+        "id": "lesen",
+        "name": "Teil 1: Lesen (Đọc hiểu - 25 điểm)",
+        "instruction": "Đọc các đoạn văn ngắn và chọn đáp án đúng (A, B hoặc C).",
+        "questions": [
+          {
+            "id": "a1_r1",
+            "context": "Thông báo tại siêu thị: 'Liebe Kundinnen und Kunden, am Samstag, den 15. Oktober, schließt unser Markt wegen Inventur bereits um 16:00 Uhr.'",
+            "question": "Wann schließt der Supermarkt am 15. Oktober?",
+            "options": [
+              {
+                "id": "A",
+                "text": "Um 18:00 Uhr"
+              },
+              {
+                "id": "B",
+                "text": "Um 16:00 Uhr"
+              },
+              {
+                "id": "C",
+                "text": "Um 20:00 Uhr"
+              }
+            ],
+            "correct": "B",
+            "explanation": "Thông báo ghi rõ 'schließt unser Markt wegen Inventur bereits um 16:00 Uhr' (đóng cửa lúc 16:00)."
+          },
+          {
+            "id": "a1_r2",
+            "context": "Tin nhắn của Lisa: 'Hallo Anna, ich bin leider krank und kann heute nicht zum Deutschkurs kommen. Kannst du mir bitte die Hausaufgaben schicken?'",
+            "question": "Warum kommt Lisa nicht zum Deutschkurs?",
+            "options": [
+              {
+                "id": "A",
+                "text": "Sie hat keine Hausaufgaben."
+              },
+              {
+                "id": "B",
+                "text": "Sie muss arbeiten."
+              },
+              {
+                "id": "C",
+                "text": "Sie ist krank."
+              }
+            ],
+            "correct": "C",
+            "explanation": "Lisa nói rõ 'ich bin leider krank' (tôi bị ốm)."
+          },
+          {
+            "id": "a1_r3",
+            "context": "Biển chỉ dẫn tại ga tàu: 'Sehr geehrte Fahrgäste, der Regional-Express nach Hamburg fährt heute von Gleis 5 statt Gleis 3 ab.'",
+            "question": "Von welchem Gleis fährt der Zug nach Hamburg ab?",
+            "options": [
+              {
+                "id": "A",
+                "text": "Gleis 3"
+              },
+              {
+                "id": "B",
+                "text": "Gleis 5"
+              },
+              {
+                "id": "C",
+                "text": "Gleis 8"
+              }
+            ],
+            "correct": "B",
+            "explanation": "Tàu chuyển sang khởi hành từ đường ray số 5 ('fährt heute von Gleis 5 ab')."
+          }
+        ]
+      },
+      {
+        "id": "hoeren",
+        "name": "Teil 2: Hören (Nghe hiểu - 25 điểm)",
+        "instruction": "Bấm nút nghe phát âm câu nói và chọn câu trả lời chính xác.",
+        "questions": [
+          {
+            "id": "a1_h1",
+            "audio_text": "Guten Tag, ich möchte bitte zwei Brötchen und ein Stück Apfelkuchen haben. Was kostet das zusammen? - Das macht 4 Euro 50, bitte.",
+            "question": "Wie viel kostet der Einkauf?",
+            "options": [
+              {
+                "id": "A",
+                "text": "3,50 Euro"
+              },
+              {
+                "id": "B",
+                "text": "4,50 Euro"
+              },
+              {
+                "id": "C",
+                "text": "5,40 Euro"
+              }
+            ],
+            "correct": "B",
+            "explanation": "Người bán hàng thông báo 'Das macht 4 Euro 50'."
+          },
+          {
+            "id": "a1_h2",
+            "audio_text": "Achtung an Gleis 2: Der Intercity nach München hat circa 15 Minuten Verspätung. Grund dafür ist eine technische Störung.",
+            "question": "Wie viel Verspätung hat der Zug?",
+            "options": [
+              {
+                "id": "A",
+                "text": "5 Minuten"
+              },
+              {
+                "id": "B",
+                "text": "15 Minuten"
+              },
+              {
+                "id": "C",
+                "text": "50 Minuten"
+              }
+            ],
+            "correct": "B",
+            "explanation": "Thông báo phát thanh ghi nhận 'circa 15 Minuten Verspätung' (trễ 15 phút)."
+          }
+        ]
+      },
+      {
+        "id": "sprachbausteine",
+        "name": "Teil 3: Sprachbausteine (Ngữ pháp & Từ vựng - 25 điểm)",
+        "instruction": "Chọn từ thích hợp để điền vào chỗ trống.",
+        "questions": [
+          {
+            "id": "a1_s1",
+            "context": "Ich habe gestern einen neuen Laptop gekauft. ___ Laptop ist sehr schnell.",
+            "question": "Điền mạo từ đúng vào chỗ trống:",
+            "options": [
+              {
+                "id": "A",
+                "text": "Der"
+              },
+              {
+                "id": "B",
+                "text": "Die"
+              },
+              {
+                "id": "C",
+                "text": "Das"
+              }
+            ],
+            "correct": "A",
+            "explanation": "Laptop là giống đực (der Laptop) làm chủ ngữ trong câu tiếp theo."
+          },
+          {
+            "id": "a1_s2",
+            "context": "Kannst du ___ bitte helfen? Ich verstehe diese Aufgabe nicht.",
+            "question": "Điền đại từ đúng vào chỗ trống:",
+            "options": [
+              {
+                "id": "A",
+                "text": "mich"
+              },
+              {
+                "id": "B",
+                "text": "mir"
+              },
+              {
+                "id": "C",
+                "text": "ich"
+              }
+            ],
+            "correct": "B",
+            "explanation": "Động từ 'helfen' luôn đi kèm với tân ngữ cách Dativ (helfen + Dativ: hilf mir)."
+          }
+        ]
+      }
+    ]
+  },
+  "A2": {
+    "title": "Đề thi mẫu Goethe-Zertifikat A2: Modellsatz",
+    "duration_minutes": 70,
+    "total_score": 100,
+    "pass_score": 60,
+    "sections": [
+      {
+        "id": "lesen",
+        "name": "Teil 1: Lesen (Đọc hiểu)",
+        "instruction": "Đọc đoạn thư điện tử và trả lời câu hỏi.",
+        "questions": [
+          {
+            "id": "a2_r1",
+            "context": "E-Mail von Michael: 'Liebe Kollegen, nächste Woche feiert unsere Abteilung das 10-jährige Jubiläum. Das Fest findet am Freitag ab 18 Uhr im Restaurant Krone statt. Bitte gebt mir bis Mittwoch Bescheid, wer teilnimmt.'",
+            "question": "Bis wann soll man Michael antworten?",
+            "options": [
+              {
+                "id": "A",
+                "text": "Bis Freitag um 18 Uhr"
+              },
+              {
+                "id": "B",
+                "text": "Bis Mittwoch"
+              },
+              {
+                "id": "C",
+                "text": "Nächsten Monat"
+              }
+            ],
+            "correct": "B",
+            "explanation": "Michael yêu cầu 'Bitte gebt mir bis Mittwoch Bescheid'."
+          },
+          {
+            "id": "a2_r2",
+            "context": "Wohnungsanzeige: 'Helle 3-Zimmer-Wohnung im Zentrum von Köln, 75 qm, Balkon, Einbauküche, sofort frei. Kaltmiete: 850 Euro zzgl. 150 Euro Nebenkosten.'",
+            "question": "Wie hoch ist die Gesamtmiete (Warmmiete)?",
+            "options": [
+              {
+                "id": "A",
+                "text": "850 Euro"
+              },
+              {
+                "id": "B",
+                "text": "1000 Euro"
+              },
+              {
+                "id": "C",
+                "text": "750 Euro"
+              }
+            ],
+            "correct": "B",
+            "explanation": "Tổng tiền thuê Warmmiete = Kaltmiete (850) + Nebenkosten (150) = 1000 Euro."
+          }
+        ]
+      },
+      {
+        "id": "sprachbausteine",
+        "name": "Teil 2: Grammatik & Wortschatz",
+        "instruction": "Chọn phương án đúng để hoàn chỉnh ngữ pháp.",
+        "questions": [
+          {
+            "id": "a2_s1",
+            "context": "Wenn das Wetter morgen schön ist, ___ wir einen Ausflug machen.",
+            "question": "Chọn động từ đúng:",
+            "options": [
+              {
+                "id": "A",
+                "text": "werden"
+              },
+              {
+                "id": "B",
+                "text": "habe"
+              },
+              {
+                "id": "C",
+                "text": "sind"
+              }
+            ],
+            "correct": "A",
+            "explanation": "Mệnh đề chính với 'werden' diễn tả dự định/tương lai hoặc câu điều kiện 'Wenn'."
+          },
+          {
+            "id": "a2_s2",
+            "context": "Er ist gestern nicht zur Party gekommen, ___ er lernen musste.",
+            "question": "Chọn liên từ phù hợp:",
+            "options": [
+              {
+                "id": "A",
+                "text": "obwohl"
+              },
+              {
+                "id": "B",
+                "text": "weil"
+              },
+              {
+                "id": "C",
+                "text": "deshalb"
+              }
+            ],
+            "correct": "B",
+            "explanation": "Liên từ 'weil' chỉ nguyên nhân và đẩy động từ chia 'musste' xuống cuối câu."
+          }
+        ]
+      }
+    ]
+  },
+  "B1": {
+    "title": "Đề thi mẫu Goethe/ÖSD-Zertifikat B1",
+    "duration_minutes": 80,
+    "total_score": 100,
+    "pass_score": 60,
+    "sections": [
+      {
+        "id": "lesen",
+        "name": "Teil 1: Lesen (Đọc hiểu B1)",
+        "instruction": "Đọc bài báo và xác định tính đúng/sai hoặc lựa chọn đáp án.",
+        "questions": [
+          {
+            "id": "b1_r1",
+            "context": "Artikel über Digitalisierung: 'Immer mehr Universitäten in Deutschland setzen auf hybride Lehrformate. Studierende schätzen die Flexibilität von Online-Vorlesungen, vermissen jedoch oft den persönlichen Austausch auf dem Campus.'",
+            "question": "Was vermissen die Studierenden laut dem Text?",
+            "options": [
+              {
+                "id": "A",
+                "text": "Die Flexibilität der Online-Kurse"
+              },
+              {
+                "id": "B",
+                "text": "Den persönlichen Kontakt und Austausch auf dem Campus"
+              },
+              {
+                "id": "C",
+                "text": "Moderne Technologien"
+              }
+            ],
+            "correct": "B",
+            "explanation": "Bài viết nêu rõ: 'vermissen jedoch oft den persönlichen Austausch auf dem Campus'."
+          }
+        ]
+      },
+      {
+        "id": "sprachbausteine",
+        "name": "Teil 2: Sprachbausteine (B1)",
+        "instruction": "Chọn từ ngữ thích hợp điền vào đoạn văn.",
+        "questions": [
+          {
+            "id": "b1_s1",
+            "context": "Trotz ___ schlechten Wetters haben wir die Wanderung durch die Berge sehr genossen.",
+            "question": "Chọn dạng mạo từ phù hợp với giới từ 'trotz':",
+            "options": [
+              {
+                "id": "A",
+                "text": "dem"
+              },
+              {
+                "id": "B",
+                "text": "des"
+              },
+              {
+                "id": "C",
+                "text": "das"
+              }
+            ],
+            "correct": "B",
+            "explanation": "Giới từ 'trotz' luôn đòi hỏi danh từ ở cách Genitiv (trotz des schlechten Wetters - das Wetter -> des Wetters)."
+          },
+          {
+            "id": "b1_s2",
+            "context": "Das ist das Buch, ___ ich dir letzte Woche empfohlen habe.",
+            "question": "Chọn đại từ quan hệ (Relativpronomen) phù hợp:",
+            "options": [
+              {
+                "id": "A",
+                "text": "das"
+              },
+              {
+                "id": "B",
+                "text": "dem"
+              },
+              {
+                "id": "C",
+                "text": "dessen"
+              }
+            ],
+            "correct": "A",
+            "explanation": "Das Buch là giống trung (das), làm tân ngữ trực tiếp (Akkusativ) trong mệnh đề quan hệ."
+          }
+        ]
+      }
+    ]
+  }
+}

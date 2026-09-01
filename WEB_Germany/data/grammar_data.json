@@ -1,0 +1,611 @@
+{
+  "articles_by_case": {
+    "nominativ": {
+      "name": "Nominativ (Chủ ngữ)",
+      "question": "Wer? / Was? (Ai? / Cái gì?)",
+      "bestimmt": {
+        "maskulin": "der",
+        "feminin": "die",
+        "neutral": "das",
+        "plural": "die"
+      },
+      "unbestimmt": {
+        "maskulin": "ein",
+        "feminin": "eine",
+        "neutral": "ein",
+        "plural": "-"
+      },
+      "negativ": {
+        "maskulin": "kein",
+        "feminin": "keine",
+        "neutral": "kein",
+        "plural": "keine"
+      },
+      "possessiv": {
+        "maskulin": "mein",
+        "feminin": "meine",
+        "neutral": "mein",
+        "plural": "meine"
+      },
+      "adj_bestimmt": {
+        "maskulin": "-e (der alte Mann)",
+        "feminin": "-e (die junge Frau)",
+        "neutral": "-e (das kleine Kind)",
+        "plural": "-en (die alten Leute)"
+      },
+      "adj_unbestimmt": {
+        "maskulin": "-er (ein alter Mann)",
+        "feminin": "-e (eine junge Frau)",
+        "neutral": "-es (ein kleines Kind)",
+        "plural": "-en (meine alten Freunde)"
+      }
+    },
+    "akkusativ": {
+      "name": "Akkusativ (Tân ngữ trực tiếp / Chỉ chuyển động Wohin)",
+      "question": "Wen? / Was? / Wohin? (Ai? / Cái gì? / Đi đâu?)",
+      "bestimmt": {
+        "maskulin": "den",
+        "feminin": "die",
+        "neutral": "das",
+        "plural": "die"
+      },
+      "unbestimmt": {
+        "maskulin": "einen",
+        "feminin": "eine",
+        "neutral": "ein",
+        "plural": "-"
+      },
+      "negativ": {
+        "maskulin": "keinen",
+        "feminin": "keine",
+        "neutral": "kein",
+        "plural": "keine"
+      },
+      "possessiv": {
+        "maskulin": "meinen",
+        "feminin": "meine",
+        "neutral": "mein",
+        "plural": "meine"
+      },
+      "adj_bestimmt": {
+        "maskulin": "-en (den alten Mann)",
+        "feminin": "-e (die junge Frau)",
+        "neutral": "-e (das kleine Kind)",
+        "plural": "-en (die alten Leute)"
+      },
+      "adj_unbestimmt": {
+        "maskulin": "-en (einen alten Mann)",
+        "feminin": "-e (eine junge Frau)",
+        "neutral": "-es (ein kleines Kind)",
+        "plural": "-en (meine alten Freunde)"
+      }
+    },
+    "dativ": {
+      "name": "Dativ (Tân ngữ gián tiếp / Chỉ vị trí Wo)",
+      "question": "Wem? / Wo? (Cho ai? / Ở đâu?)",
+      "bestimmt": {
+        "maskulin": "dem",
+        "feminin": "der",
+        "neutral": "dem",
+        "plural": "den (+n)"
+      },
+      "unbestimmt": {
+        "maskulin": "einem",
+        "feminin": "einer",
+        "neutral": "einem",
+        "plural": "-"
+      },
+      "negativ": {
+        "maskulin": "keinem",
+        "feminin": "keiner",
+        "neutral": "keinem",
+        "plural": "keinen (+n)"
+      },
+      "possessiv": {
+        "maskulin": "meinem",
+        "feminin": "meiner",
+        "neutral": "meinem",
+        "plural": "meinen (+n)"
+      },
+      "adj_bestimmt": {
+        "maskulin": "-en (dem alten Mann)",
+        "feminin": "-en (der jungen Frau)",
+        "neutral": "-en (dem kleinen Kind)",
+        "plural": "-en (den alten Leuten)"
+      },
+      "adj_unbestimmt": {
+        "maskulin": "-en (einem alten Mann)",
+        "feminin": "-en (einer jungen Frau)",
+        "neutral": "-en (einem kleinen Kind)",
+        "plural": "-en (meinen alten Freunden)"
+      }
+    },
+    "genitiv": {
+      "name": "Genitiv (Sở hữu cách / Của ai)",
+      "question": "Wessen? (Của ai?)",
+      "bestimmt": {
+        "maskulin": "des (+s/es)",
+        "feminin": "der",
+        "neutral": "des (+s/es)",
+        "plural": "der"
+      },
+      "unbestimmt": {
+        "maskulin": "eines (+s/es)",
+        "feminin": "einer",
+        "neutral": "eines (+s/es)",
+        "plural": "-"
+      },
+      "negativ": {
+        "maskulin": "keines (+s/es)",
+        "feminin": "keiner",
+        "neutral": "keines (+s/es)",
+        "plural": "keiner"
+      },
+      "possessiv": {
+        "maskulin": "meines (+s/es)",
+        "feminin": "meiner",
+        "neutral": "meines (+s/es)",
+        "plural": "meiner"
+      },
+      "adj_bestimmt": {
+        "maskulin": "-en (des alten Mannes)",
+        "feminin": "-en (der jungen Frau)",
+        "neutral": "-en (des kleinen Kindes)",
+        "plural": "-en (der alten Leute)"
+      },
+      "adj_unbestimmt": {
+        "maskulin": "-en (eines alten Mannes)",
+        "feminin": "-en (einer jungen Frau)",
+        "neutral": "-en (eines kleinen Kindes)",
+        "plural": "-en (meiner alten Freunde)"
+      }
+    }
+  },
+  "prepositions": {
+    "akkusativ": {
+      "name": "Giới từ luôn đi với Akkusativ (FUDGE / DOGFU)",
+      "list": [
+        "durch (xuyên qua)",
+        "für (cho/dành cho)",
+        "gegen (chống lại/khoảng)",
+        "ohne (không có)",
+        "um (xung quanh/vào lúc)",
+        "bis (cho đến khi)",
+        "entlang (dọc theo)"
+      ]
+    },
+    "dativ": {
+      "name": "Giới từ luôn đi với Dativ (Blue Monday Rule)",
+      "list": [
+        "aus (từ đâu ra/làm từ)",
+        "bei (ở chỗ/gần)",
+        "mit (với/bằng phương tiện)",
+        "nach (sau khi/đến nước, TP)",
+        "seit (từ khi - hiện tại)",
+        "von (từ/của)",
+        "zu (đến đâu/ở)",
+        "ab (kể từ)",
+        "gegenüber (đối diện)"
+      ]
+    },
+    "wechsel": {
+      "name": "Giới từ 2 cách (Wechselpräpositionen - Akk: Đi đâu? / Dat: Ở đâu?)",
+      "list": [
+        "an (sát bên/ở bờ)",
+        "auf (trên bề mặt)",
+        "hinter (phía sau)",
+        "in (bên trong)",
+        "neben (bên cạnh)",
+        "über (phía trên/về)",
+        "unter (ở dưới)",
+        "vor (phía trước/trước khi)",
+        "zwischen (ở giữa)"
+      ]
+    },
+    "genitiv": {
+      "name": "Giới từ đi với Genitiv (Trình độ B1)",
+      "list": [
+        "während (trong suốt)",
+        "wegen (bởi vì)",
+        "trotz (mặc dù)",
+        "(an)statt (thay vì)",
+        "innerhalb (trong phạm vi)",
+        "außerhalb (ngoài phạm vi)"
+      ]
+    }
+  },
+  "irregular_verbs": [
+    {
+      "infinitiv": "anfangen",
+      "prasens": "fängt an",
+      "prateritum": "fing an",
+      "perfekt": "hat angefangen",
+      "meaning_vi": "bắt đầu",
+      "level": "A1"
+    },
+    {
+      "infinitiv": "ankommen",
+      "prasens": "kommt an",
+      "prateritum": "kam an",
+      "perfekt": "ist angekommen",
+      "meaning_vi": "đến nơi",
+      "level": "A1"
+    },
+    {
+      "infinitiv": "anrufen",
+      "prasens": "ruft an",
+      "prateritum": "rief an",
+      "perfekt": "hat angerufen",
+      "meaning_vi": "gọi điện thoại",
+      "level": "A1"
+    },
+    {
+      "infinitiv": "aufstehen",
+      "prasens": "steht auf",
+      "prateritum": "stand auf",
+      "perfekt": "ist aufgestanden",
+      "meaning_vi": "thức dậy, đứng dậy",
+      "level": "A1"
+    },
+    {
+      "infinitiv": "aussehen",
+      "prasens": "sieht aus",
+      "prateritum": "sah aus",
+      "perfekt": "hat ausgesehen",
+      "meaning_vi": "trông có vẻ",
+      "level": "A2"
+    },
+    {
+      "infinitiv": "beginnen",
+      "prasens": "beginnt",
+      "prateritum": "begann",
+      "perfekt": "hat begonnen",
+      "meaning_vi": "bắt đầu",
+      "level": "A2"
+    },
+    {
+      "infinitiv": "bekommen",
+      "prasens": "bekommt",
+      "prateritum": "bekam",
+      "perfekt": "hat bekommen",
+      "meaning_vi": "nhận được",
+      "level": "A1"
+    },
+    {
+      "infinitiv": "bieten",
+      "prasens": "bietet",
+      "prateritum": "bot",
+      "perfekt": "hat geboten",
+      "meaning_vi": "cung cấp, mời chào",
+      "level": "B1"
+    },
+    {
+      "infinitiv": "bitten",
+      "prasens": "bittet",
+      "prateritum": "bat",
+      "perfekt": "hat gebeten",
+      "meaning_vi": "yêu cầu, xin giúp",
+      "level": "A2"
+    },
+    {
+      "infinitiv": "bleiben",
+      "prasens": "bleibt",
+      "prateritum": "blieb",
+      "perfekt": "ist geblieben",
+      "meaning_vi": "ở lại",
+      "level": "A1"
+    },
+    {
+      "infinitiv": "bringen",
+      "prasens": "bringt",
+      "prateritum": "brachte",
+      "perfekt": "hat gebracht",
+      "meaning_vi": "mang đến",
+      "level": "A1"
+    },
+    {
+      "infinitiv": "denken",
+      "prasens": "denkt",
+      "prateritum": "dachte",
+      "perfekt": "hat gedacht",
+      "meaning_vi": "nghĩ, suy nghĩ",
+      "level": "A2"
+    },
+    {
+      "infinitiv": "einladen",
+      "prasens": "lädt ein",
+      "prateritum": "lud ein",
+      "perfekt": "hat eingeladen",
+      "meaning_vi": "mời",
+      "level": "A1"
+    },
+    {
+      "infinitiv": "entscheiden",
+      "prasens": "entscheidet",
+      "prateritum": "entschied",
+      "perfekt": "hat entschieden",
+      "meaning_vi": "quyết định",
+      "level": "B1"
+    },
+    {
+      "infinitiv": "essen",
+      "prasens": "isst",
+      "prateritum": "aß",
+      "perfekt": "hat gegessen",
+      "meaning_vi": "ăn",
+      "level": "A1"
+    },
+    {
+      "infinitiv": "fahren",
+      "prasens": "fährt",
+      "prateritum": "fuhr",
+      "perfekt": "ist gefahren",
+      "meaning_vi": "lái xe / đi xe",
+      "level": "A1"
+    },
+    {
+      "infinitiv": "fallen",
+      "prasens": "fällt",
+      "prateritum": "fiel",
+      "perfekt": "ist gefallen",
+      "meaning_vi": "ngã, rơi",
+      "level": "A2"
+    },
+    {
+      "infinitiv": "finden",
+      "prasens": "findet",
+      "prateritum": "fand",
+      "perfekt": "hat gefunden",
+      "meaning_vi": "tìm thấy / nhận thấy",
+      "level": "A1"
+    },
+    {
+      "infinitiv": "fliegen",
+      "prasens": "fliegt",
+      "prateritum": "flog",
+      "perfekt": "ist geflogen",
+      "meaning_vi": "bay",
+      "level": "A1"
+    },
+    {
+      "infinitiv": "geben",
+      "prasens": "gibt",
+      "prateritum": "gab",
+      "perfekt": "hat gegeben",
+      "meaning_vi": "cho, đưa cho",
+      "level": "A1"
+    },
+    {
+      "infinitiv": "gehen",
+      "prasens": "geht",
+      "prateritum": "ging",
+      "perfekt": "ist gegangen",
+      "meaning_vi": "đi bộ / diễn ra",
+      "level": "A1"
+    },
+    {
+      "infinitiv": "gewinnen",
+      "prasens": "gewinnt",
+      "prateritum": "gewann",
+      "perfekt": "hat gewonnen",
+      "meaning_vi": "chiến thắng, trúng thưởng",
+      "level": "A2"
+    },
+    {
+      "infinitiv": "haben",
+      "prasens": "hat",
+      "prateritum": "hatte",
+      "perfekt": "hat gehabt",
+      "meaning_vi": "có",
+      "level": "A1"
+    },
+    {
+      "infinitiv": "halten",
+      "prasens": "hält",
+      "prateritum": "hielt",
+      "perfekt": "hat gehalten",
+      "meaning_vi": "giữ, dừng lại",
+      "level": "B1"
+    },
+    {
+      "infinitiv": "helfen",
+      "prasens": "hilft",
+      "prateritum": "half",
+      "perfekt": "hat geholfen",
+      "meaning_vi": "giúp đỡ",
+      "level": "A1"
+    },
+    {
+      "infinitiv": "kennen",
+      "prasens": "kennt",
+      "prateritum": "kannte",
+      "perfekt": "hat gekannt",
+      "meaning_vi": "biết / quen biết",
+      "level": "A1"
+    },
+    {
+      "infinitiv": "kommen",
+      "prasens": "kommt",
+      "prateritum": "kam",
+      "perfekt": "ist gekommen",
+      "meaning_vi": "đến, tới",
+      "level": "A1"
+    },
+    {
+      "infinitiv": "lassen",
+      "prasens": "lässt",
+      "prateritum": "ließ",
+      "perfekt": "hat gelassen",
+      "meaning_vi": "để lại, cho phép",
+      "level": "B1"
+    },
+    {
+      "infinitiv": "laufen",
+      "prasens": "läuft",
+      "prateritum": "lief",
+      "perfekt": "ist gelaufen",
+      "meaning_vi": "chạy, đi bộ",
+      "level": "A1"
+    },
+    {
+      "infinitiv": "lesen",
+      "prasens": "liest",
+      "prateritum": "las",
+      "perfekt": "hat gelesen",
+      "meaning_vi": "đọc",
+      "level": "A1"
+    },
+    {
+      "infinitiv": "liegen",
+      "prasens": "liegt",
+      "prateritum": "lag",
+      "perfekt": "hat gelegen",
+      "meaning_vi": "nằm ở",
+      "level": "A1"
+    },
+    {
+      "infinitiv": "nehmen",
+      "prasens": "nimmt",
+      "prateritum": "nahm",
+      "perfekt": "hat genommen",
+      "meaning_vi": "lấy, dùng món",
+      "level": "A1"
+    },
+    {
+      "infinitiv": "schlafen",
+      "prasens": "schläft",
+      "prateritum": "schlief",
+      "perfekt": "hat geschlafen",
+      "meaning_vi": "ngủ",
+      "level": "A1"
+    },
+    {
+      "infinitiv": "schreiben",
+      "prasens": "schreibt",
+      "prateritum": "schrieb",
+      "perfekt": "hat geschrieben",
+      "meaning_vi": "viết",
+      "level": "A1"
+    },
+    {
+      "infinitiv": "sehen",
+      "prasens": "sieht",
+      "prateritum": "sah",
+      "perfekt": "hat gesehen",
+      "meaning_vi": "nhìn, xem",
+      "level": "A1"
+    },
+    {
+      "infinitiv": "sein",
+      "prasens": "ist",
+      "prateritum": "war",
+      "perfekt": "ist gewesen",
+      "meaning_vi": "thì, là, ở",
+      "level": "A1"
+    },
+    {
+      "infinitiv": "sprechen",
+      "prasens": "spricht",
+      "prateritum": "sprach",
+      "perfekt": "hat gesprochen",
+      "meaning_vi": "nói chuyện",
+      "level": "A1"
+    },
+    {
+      "infinitiv": "stehen",
+      "prasens": "steht",
+      "prateritum": "stand",
+      "perfekt": "hat gestanden",
+      "meaning_vi": "đứng ở",
+      "level": "A1"
+    },
+    {
+      "infinitiv": "sterben",
+      "prasens": "stirbt",
+      "prateritum": "starb",
+      "perfekt": "ist gestorben",
+      "meaning_vi": "qua đời",
+      "level": "B1"
+    },
+    {
+      "infinitiv": "tragen",
+      "prasens": "trägt",
+      "prateritum": "trug",
+      "perfekt": "hat getragen",
+      "meaning_vi": "mặc, mang vác",
+      "level": "A2"
+    },
+    {
+      "infinitiv": "treffen",
+      "prasens": "trifft",
+      "prateritum": "traf",
+      "perfekt": "hat getroffen",
+      "meaning_vi": "gặp gỡ",
+      "level": "A1"
+    },
+    {
+      "infinitiv": "trinken",
+      "prasens": "trinkt",
+      "prateritum": "trank",
+      "perfekt": "hat getrunken",
+      "meaning_vi": "uống",
+      "level": "A1"
+    },
+    {
+      "infinitiv": "tun",
+      "prasens": "tut",
+      "prateritum": "tat",
+      "perfekt": "hat getan",
+      "meaning_vi": "làm",
+      "level": "A2"
+    },
+    {
+      "infinitiv": "vergessen",
+      "prasens": "vergisst",
+      "prateritum": "vergaß",
+      "perfekt": "hat vergessen",
+      "meaning_vi": "quên",
+      "level": "A2"
+    },
+    {
+      "infinitiv": "verstehen",
+      "prasens": "versteht",
+      "prateritum": "verstand",
+      "perfekt": "hat verstanden",
+      "meaning_vi": "hiểu",
+      "level": "A1"
+    },
+    {
+      "infinitiv": "waschen",
+      "prasens": "wäscht",
+      "prateritum": "wusch",
+      "perfekt": "hat gewaschen",
+      "meaning_vi": "giặt, rửa",
+      "level": "A2"
+    },
+    {
+      "infinitiv": "werden",
+      "prasens": "wird",
+      "prateritum": "wurde",
+      "perfekt": "ist geworden",
+      "meaning_vi": "trở thành, sẽ",
+      "level": "A1"
+    },
+    {
+      "infinitiv": "wissen",
+      "prasens": "weiß",
+      "prateritum": "wusste",
+      "perfekt": "hat gewusst",
+      "meaning_vi": "biết sự việc",
+      "level": "A1"
+    },
+    {
+      "infinitiv": "ziehen",
+      "prasens": "zieht",
+      "prateritum": "zog",
+      "perfekt": "ist/hat gezogen",
+      "meaning_vi": "kéo / chuyển nhà",
+      "level": "B1"
+    }
+  ]
+}

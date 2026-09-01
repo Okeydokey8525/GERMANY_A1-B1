@@ -1,0 +1,177 @@
+[
+  {
+    "file_name": "A1_Goethe_Wortliste.pdf",
+    "folder": "01_Tu_Vung",
+    "size_mb": 0.68,
+    "source_url": "https://www.goethe.de/pro/relaunch/prf/de/A1_SD1_Wortliste_02.pdf",
+    "status": "Thành công"
+  },
+  {
+    "file_name": "A2_Goethe_Wortliste.pdf",
+    "folder": "01_Tu_Vung",
+    "size_mb": 1.19,
+    "source_url": "https://www.goethe.de/pro/relaunch/prf/de/Goethe-Zertifikat_A2_Wortliste.pdf",
+    "status": "Thành công"
+  },
+  {
+    "file_name": "B1_Goethe_OSD_Wortliste.pdf",
+    "folder": "01_Tu_Vung",
+    "size_mb": 0.45,
+    "source_url": "https://www.goethe.de/pro/relaunch/prf/de/Goethe-Zertifikat_B1_Wortliste.pdf",
+    "status": "Thành công"
+  },
+  {
+    "file_name": "A1_B1_Grammatik_Aktiv_Cornelsen.pdf",
+    "folder": "02_Ngu_Phap",
+    "size_mb": 58.89,
+    "source_url": "https://archive.org/download/grammatik-aktiv-a-1-b-1-2.-aktualisierte-ausgabe_202507/Grammatik%20aktiv%20A1-B1%20%5B2.%20aktualisierte%20Ausgabe%5D.pdf",
+    "status": "Thành công"
+  },
+  {
+    "file_name": "A1_B1_Tabelle_Artikel_Deklination.pdf",
+    "folder": "02_Ngu_Phap",
+    "size_mb": 0.01,
+    "source_url": "Biên soạn chuẩn ngữ pháp DaF A1-B1 (Schubert & Goethe)",
+    "status": "Thành công"
+  },
+  {
+    "file_name": "A1_B1_Tabelle_Unregelmaessige_Verben.pdf",
+    "folder": "02_Ngu_Phap",
+    "size_mb": 0.01,
+    "source_url": "Biên soạn bảng động từ bất quy tắc DaF A1-B1 (Schubert & Goethe)",
+    "status": "Thành công"
+  },
+  {
+    "file_name": "A1_Schubert_Arbeitsblaetter_Grammatik_001_099.pdf",
+    "folder": "02_Ngu_Phap",
+    "size_mb": 3.36,
+    "source_url": "https://www.schubert-verlag.de/aufgaben/arbeitsblaetter_a1_z/arbeitsblatt001-099.pdf",
+    "status": "Thành công"
+  },
+  {
+    "file_name": "A1_Nicos_Weg_Manuskript.pdf",
+    "folder": "03_Luyen_Nghe_Transcript",
+    "size_mb": 0.12,
+    "source_url": "https://learngerman.dw.com/de/nicos-weg/c-36519789 (Deutsche Welle Nicos Weg A1)",
+    "status": "Thành công"
+  },
+  {
+    "file_name": "A1_Nicos_Weg_Manuskript.txt",
+    "folder": "03_Luyen_Nghe_Transcript",
+    "size_mb": 0.08,
+    "source_url": "https://learngerman.dw.com/de/nicos-weg/c-36519789 (Deutsche Welle Nicos Weg A1)",
+    "status": "Thành công"
+  },
+  {
+    "file_name": "A2_Nicos_Weg_Manuskript.pdf",
+    "folder": "03_Luyen_Nghe_Transcript",
+    "size_mb": 0.14,
+    "source_url": "https://learngerman.dw.com/de/nicos-weg/c-36519789 (Deutsche Welle Nicos Weg A2)",
+    "status": "Thành công"
+  },
+  {
+    "file_name": "A2_Nicos_Weg_Manuskript.txt",
+    "folder": "03_Luyen_Nghe_Transcript",
+    "size_mb": 0.1,
+    "source_url": "https://learngerman.dw.com/de/nicos-weg/c-36519789 (Deutsche Welle Nicos Weg A2)",
+    "status": "Thành công"
+  },
+  {
+    "file_name": "B1_Nicos_Weg_Manuskript.pdf",
+    "folder": "03_Luyen_Nghe_Transcript",
+    "size_mb": 0.14,
+    "source_url": "https://learngerman.dw.com/de/nicos-weg/c-36519789 (Deutsche Welle Nicos Weg B1)",
+    "status": "Thành công"
+  },
+  {
+    "file_name": "B1_Nicos_Weg_Manuskript.txt",
+    "folder": "03_Luyen_Nghe_Transcript",
+    "size_mb": 0.11,
+    "source_url": "https://learngerman.dw.com/de/nicos-weg/c-36519789 (Deutsche Welle Nicos Weg B1)",
+    "status": "Thành công"
+  },
+  {
+    "file_name": "Nicos_Weg_Full_Transcript_A1_B1.txt",
+    "folder": "03_Luyen_Nghe_Transcript",
+    "size_mb": 0.26,
+    "source_url": "https://raw.githubusercontent.com/lightsongjs/DW-Nicos-Weg/master/Nico's%20Weg%20A1%2CA2%2CB1%20-%20FULL%20SCRIPT.txt",
+    "status": "Thành công"
+  },
+  {
+    "file_name": "A1_Goethe_Modellsatz.pdf",
+    "folder": "04_De_Thi_Mau",
+    "size_mb": 1.15,
+    "source_url": "https://www.goethe.de/resources/files/pdf103/start_deutsch_1_modellsatz_geaendert21111113.pdf",
+    "status": "Thành công"
+  },
+  {
+    "file_name": "A1_Telc_Audio_Hoeren.mp3",
+    "folder": "04_De_Thi_Mau",
+    "size_mb": 15.48,
+    "source_url": "https://www.telc.net/fileadmin/user_upload/mock_exams/Deutsch/telc_deutsch_a1.zip",
+    "status": "Thành công"
+  },
+  {
+    "file_name": "A1_Telc_Modellsatz.pdf",
+    "folder": "04_De_Thi_Mau",
+    "size_mb": 2.67,
+    "source_url": "https://www.telc.net/fileadmin/user_upload/mock_exams/Deutsch/telc_deutsch_a1.zip",
+    "status": "Thành công"
+  },
+  {
+    "file_name": "A2_Goethe_Modellsatz.pdf",
+    "folder": "04_De_Thi_Mau",
+    "size_mb": 6.12,
+    "source_url": "https://www.goethe.de/pro/relaunch/prf/a2/jugendliche/Goethe-Zertifikat_A2_Fit_Modellsatz.pdf",
+    "status": "Thành công"
+  },
+  {
+    "file_name": "A2_Telc_Audio_Hoeren.mp3",
+    "folder": "04_De_Thi_Mau",
+    "size_mb": 18.86,
+    "source_url": "https://www.telc.net/fileadmin/user_upload/mock_exams/Deutsch/telc_deutsch_a2_schule.zip",
+    "status": "Thành công"
+  },
+  {
+    "file_name": "A2_Telc_Modellsatz.pdf",
+    "folder": "04_De_Thi_Mau",
+    "size_mb": 1.0,
+    "source_url": "https://www.telc.net/fileadmin/user_upload/mock_exams/Deutsch/telc_deutsch_a2_schule.zip",
+    "status": "Thành công"
+  },
+  {
+    "file_name": "B1_Telc_Audio_Hoeren.mp3",
+    "folder": "04_De_Thi_Mau",
+    "size_mb": 9.01,
+    "source_url": "https://www.telc.net/fileadmin/user_upload/mock_exams/Deutsch/telc_deutsch_b1.zip",
+    "status": "Thành công"
+  },
+  {
+    "file_name": "B1_Telc_Modellsatz.pdf",
+    "folder": "04_De_Thi_Mau",
+    "size_mb": 1.89,
+    "source_url": "https://www.telc.net/fileadmin/user_upload/mock_exams/Deutsch/telc_deutsch_b1.zip",
+    "status": "Thành công"
+  },
+  {
+    "file_name": "A1_Netzwerk_Neu_Kursbuch.pdf",
+    "folder": "05_Giao_Trinh_Tham_Khao",
+    "size_mb": 92.38,
+    "source_url": "https://archive.org/download/netzwerk-neu-a-1.1-german-coursebook-with-audio-video-klett/Netzwerk%20neu%20A1.1%20German%20Coursebook%20with%20Audio%20%26%20Video%20_%20Klett.pdf",
+    "status": "Thành công"
+  },
+  {
+    "file_name": "A2_Netzwerk_Neu_Kursbuch.pdf",
+    "folder": "05_Giao_Trinh_Tham_Khao",
+    "size_mb": 56.34,
+    "source_url": "https://archive.org/download/netzwerk-neu-a-2-kb-240927-170654/Netzwerk%20neu%20A2%20KB_240927_170654.pdf",
+    "status": "Thành công"
+  },
+  {
+    "file_name": "B1_Menschen_Kursbuch.pdf",
+    "folder": "05_Giao_Trinh_Tham_Khao",
+    "size_mb": 80.65,
+    "source_url": "https://archive.org/download/menschenb1.1kursbuch/Menschen%20B1.1%20kursbuch.pdf",
+    "status": "Thành công"
+  }
+]
