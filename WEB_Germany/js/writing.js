@@ -1,4 +1,4 @@
-// WEB_Germany Guided Writing Studio Controller (Schreiben A1-B1)
+// WEB_Germany Guided Writing Studio Controller (Schreiben A1-B1 with Criteria Self-Evaluation)
 
 class WritingController {
   constructor() {
@@ -132,13 +132,26 @@ class WritingController {
     counterEl.textContent = `${words} từ`;
   }
 
+  analyzeTextQuality(text) {
+    const lower = text.toLowerCase();
+    const hasGreeting = /^(hallo|guten tag|sehr geehrte|liebe|lieber)/i.test(text.trim());
+    const hasClosing = /(viele grüße|mit freundlichen grüßen|schöne grüße|herzliche grüße|tschüss)/i.test(lower);
+    const hasPunctuation = /[.!?]/.test(text);
+
+    return {
+      hasGreeting,
+      hasClosing,
+      hasPunctuation
+    };
+  }
+
   submitTask() {
     const task = this.tasks[this.currentIndex];
     if (!task) return;
 
     const words = (this.userText || "").trim().split(/\s+/).filter(Boolean).length;
     if (words < 10) {
-      if (window.appCtrl) window.appCtrl.showToast("Bài viết còn quá ngắn! Hãy viết thêm theo gợi ý nhé.");
+      if (window.appCtrl) window.appCtrl.showToast("Bài viết còn quá ngắn! Hãy viết thêm ít nhất 10 từ theo gợi ý nhé.");
       return;
     }
 
@@ -147,20 +160,46 @@ class WritingController {
     let checkedCount = 0;
     chks.forEach(c => { if (c.checked) checkedCount++; });
 
-    const isPassed = checkedCount >= 2 && words >= 20;
+    const quality = this.analyzeTextQuality(this.userText);
+    const isPassed = checkedCount >= 2 && words >= 15;
 
-    // Record into Progress Learning Engine!
+    // Record into Progress Learning Engine
     if (window.progressCtrl) {
       window.progressCtrl.recordActivity("writing", isPassed, `write_${task.level.toLowerCase()}`);
+      window.progressCtrl.updateSkillProgress("writing", isPassed);
     }
 
     // Auto open Model Answer for self comparison
     const box = document.getElementById("writing-model-answer-box");
-    if (box) box.classList.remove("hidden");
+    if (box) {
+      box.classList.remove("hidden");
+      const breakdownEl = document.getElementById("writing-model-breakdown");
+      if (breakdownEl) {
+        breakdownEl.innerHTML = `
+          <div class="p-3 bg-white dark:bg-gray-800 rounded-2xl border border-emerald-200 dark:border-emerald-900/50 space-y-1.5 text-xs">
+            <span class="font-bold text-gray-800 dark:text-gray-200">🔍 Phản hồi nhanh cấu trúc bài viết của bạn:</span>
+            <div class="space-y-1 text-gray-600 dark:text-gray-300">
+              <div>${quality.hasGreeting ? '✓' : '⚠️'} <b>Lời chào đầu thư (Anrede):</b> ${quality.hasGreeting ? 'Đã có' : 'Nên bổ sung (Liebe/Lieber/Sehr geehrte...)'}</div>
+              <div>${quality.hasClosing ? '✓' : '⚠️'} <b>Lời chào kết thư (Grußformel):</b> ${quality.hasClosing ? 'Đã có' : 'Nên bổ sung (Viele Grüße / Mit freundlichen Grüßen)'}</div>
+              <div>${words >= 25 ? '✓' : '⚠️'} <b>Độ dài bài viết:</b> ${words} từ (${task.wordCountTarget})</div>
+              <div>${checkedCount >= 3 ? '✓' : '⚠️'} <b>Tiêu chí tự kiểm tra:</b> Đạt ${checkedCount}/${chks.length} tiêu chí</div>
+            </div>
+          </div>
+          <div class="pt-2">${task.breakdown.replace(/\n/g, '<br>')}</div>
+        `;
+      }
+    }
+
+    if (window.speechCtrl) {
+      if (isPassed) window.speechCtrl.playCorrectSound();
+      else window.speechCtrl.playComboSound(1);
+    }
 
     if (window.appCtrl) {
-      window.appCtrl.showToast("🎉 Đã hoàn thành bài viết! Hãy đối chiếu với Bài mẫu bên dưới nhé.");
+      window.appCtrl.showToast(`Đã nộp bài viết (${words} từ)! Hãy đối chiếu với bài mẫu bên dưới.`);
     }
+
+    box.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
   }
 }
 

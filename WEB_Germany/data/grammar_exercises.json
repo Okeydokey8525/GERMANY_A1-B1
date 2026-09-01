@@ -1,114 +1,134 @@
 [
   {
-    "id": "ex_unit_artikel_01",
+    "id": "unit_artikel",
     "topicId": "artikel",
-    "unit_title": "Kapitel 1: Mạo từ & Danh từ (Artikel & Nomen)",
+    "unit_title": "Bài 01: Mạo từ & Danh từ (Artikel & Nomen)",
     "level": "A1",
-    "source": "Goethe-Institut & Cornelsen Grammatik aktiv A1",
+    "source": "Goethe-Zertifikat A1 Standard",
     "topic": "Artikel & Nomen",
-    "instruction": "Điền mạo từ xác định (der/die/das), không xác định (ein/eine) hoặc phủ định (kein/keine) vào chỗ trống.",
-    "grammar_rule": "<b>Quy tắc Mạo từ tiếng Đức:</b><br>• <b>Giống đực (Maskulin):</b> <i>der</i> / <i>ein</i> / <i>kein</i> Tisch (cái bàn), Mann (người đàn ông).<br>• <b>Giống cái (Feminin):</b> <i>die</i> / <i>eine</i> / <i>keine</i> Lampe (cái đèn), Frau (người phụ nữ).<br>• <b>Giống trung (Neutral):</b> <i>das</i> / <i>ein</i> / <i>kein</i> Buch (quyển sách), Kind (đứa trẻ).<br>• <b>Số nhiều (Plural):</b> <i>die</i> / <i>keine</i> Tische / Lampen / Bücher (không có ein).",
+    "instruction": "Điền mạo từ xác định (der/die/das), không xác định (ein/eine) hoặc phủ định (kein/keine) vào chỗ trống:",
+    "grammar_rule": "• Giống đực (Maskulin): <b>der</b> / ein / kein<br>• Giống cái (Feminin): <b>die</b> / eine / keine<br>• Giống trung (Neutral): <b>das</b> / ein / kein<br>• Số nhiều (Plural): <b>die</b> / - / keine",
     "dialogues": [
       {
-        "section_num": "1",
-        "section_title": "Phần 1: Mạo từ xác định & Giống của danh từ",
+        "section_num": 1,
+        "section_title": "Phần 1: Giống của danh từ & Mạo từ không xác định",
         "topicId": "artikel",
         "objectiveId": "LO_ART_01",
-        "context_vi": "Nhận biết mạo từ giống đực, giống cái và giống trung trong phòng học",
+        "context_vi": "Làm quen với đồ vật trong phòng học",
         "lines": [
           {
-            "speaker": "Lehrer",
-            "text_template": "Hier ist {blank_art1} Tisch (m), dort ist {blank_art2} Lampe (f) und auf dem Tisch liegt {blank_art3} Buch (n).",
+            "speaker": "Lisa",
+            "text_template": "Ist das {b_art_01} Tisch?",
+            "translation_vi": "Đây có phải là một cái bàn không?",
             "blanks": [
               {
-                "id": "blank_art1",
-                "topicId": "artikel",
-                "objectiveId": "LO_ART_01",
-                "errorTags": [
-                  "ARTICLE_GENUS_CONFUSION",
-                  "NOMINATIV_ARTIKEL"
+                "id": "b_art_01",
+                "placeholder": "{b_art_01}",
+                "correct": [
+                  "ein"
                 ],
+                "answer": "ein",
+                "hint": "ein (Tisch là giống đực der Tisch)",
+                "topicId": "artikel",
+                "objectiveId": "LO_ART_02",
+                "errorTag": "ARTICLE_CASE_CONFUSION"
+              }
+            ]
+          },
+          {
+            "speaker": "Nico",
+            "text_template": "Ja, das ist {b_art_02} Tisch von Frau Müller.",
+            "translation_vi": "Vâng, đó là cái bàn của cô Müller.",
+            "blanks": [
+              {
+                "id": "b_art_02",
+                "placeholder": "{b_art_02}",
                 "correct": [
                   "der"
                 ],
-                "hint": "der Tisch (giống đực - Maskulin)"
-              },
-              {
-                "id": "blank_art2",
+                "answer": "der",
+                "hint": "der (bàn xác định, giống đực)",
                 "topicId": "artikel",
                 "objectiveId": "LO_ART_01",
-                "errorTags": [
-                  "ARTICLE_GENUS_CONFUSION",
-                  "NOMINATIV_ARTIKEL"
-                ],
+                "errorTag": "GENUS_CONFUSION"
+              }
+            ]
+          },
+          {
+            "speaker": "Lisa",
+            "text_template": "Und hier ist {b_art_03} Lampe und {b_art_04} Buch.",
+            "translation_vi": "Và ở đây có một cái đèn và một cuốn sách.",
+            "blanks": [
+              {
+                "id": "b_art_03",
+                "placeholder": "{b_art_03}",
                 "correct": [
-                  "die"
+                  "eine"
                 ],
-                "hint": "die Lampe (giống cái - Feminin)"
+                "answer": "eine",
+                "hint": "eine (die Lampe - giống cái)",
+                "topicId": "artikel",
+                "objectiveId": "LO_ART_02",
+                "errorTag": "GENUS_CONFUSION"
               },
               {
-                "id": "blank_art3",
-                "topicId": "artikel",
-                "objectiveId": "LO_ART_01",
-                "errorTags": [
-                  "ARTICLE_GENUS_CONFUSION",
-                  "NOMINATIV_ARTIKEL"
-                ],
+                "id": "b_art_04",
+                "placeholder": "{b_art_04}",
                 "correct": [
-                  "das"
+                  "ein"
                 ],
-                "hint": "das Buch (giống trung - Neutral)"
+                "answer": "ein",
+                "hint": "ein (das Buch - giống trung)",
+                "topicId": "artikel",
+                "objectiveId": "LO_ART_02",
+                "errorTag": "GENUS_CONFUSION"
               }
             ]
           }
         ]
       },
       {
-        "section_num": "2",
-        "section_title": "Phần 2: Mạo từ không xác định & Phủ định (ein / kein)",
+        "section_num": 2,
+        "section_title": "Phần 2: Phủ định kein và Số nhiều Plural",
         "topicId": "artikel",
-        "objectiveId": "LO_ART_02",
-        "context_vi": "Hỏi và phủ định đồ vật trong cặp sách",
+        "objectiveId": "LO_ART_03",
+        "context_vi": "Hỏi về đồ đạc và số lượng",
         "lines": [
           {
-            "speaker": "Lisa",
-            "text_template": "Ist das {blank_art4} Kugelschreiber (m)? - Nein, das ist {blank_art5} Kugelschreiber, das ist {blank_art6} Bleistift (m).",
+            "speaker": "Max",
+            "text_template": "Hast du einen Stift? - Nein, ich habe {b_art_05} Stift.",
+            "translation_vi": "Bạn có bút không? - Không, tôi không có bút nào.",
             "blanks": [
               {
-                "id": "blank_art4",
-                "topicId": "artikel",
-                "objectiveId": "LO_ART_02",
-                "errorTags": [
-                  "INDEFINITE_ARTICLE_CONFUSION"
-                ],
+                "id": "b_art_05",
+                "placeholder": "{b_art_05}",
                 "correct": [
-                  "ein"
+                  "keinen"
                 ],
-                "hint": "ein Kugelschreiber (giống đực)"
-              },
-              {
-                "id": "blank_art5",
+                "answer": "keinen",
+                "hint": "keinen (phủ định danh từ đực ở Akkusativ)",
                 "topicId": "artikel",
                 "objectiveId": "LO_ART_03",
-                "errorTags": [
-                  "NEGATIVE_ARTICLE_KEIN"
-                ],
-                "correct": [
-                  "kein"
-                ],
-                "hint": "phủ định danh từ giống đực: kein"
-              },
+                "errorTag": "ARTICLE_CASE_CONFUSION"
+              }
+            ]
+          },
+          {
+            "speaker": "Anna",
+            "text_template": "Dort liegen {b_art_06} Bücher für den Kurs.",
+            "translation_vi": "Ở đằng kia có những cuốn sách cho khóa học.",
+            "blanks": [
               {
-                "id": "blank_art6",
-                "topicId": "artikel",
-                "objectiveId": "LO_ART_02",
-                "errorTags": [
-                  "INDEFINITE_ARTICLE_CONFUSION"
-                ],
+                "id": "b_art_06",
+                "placeholder": "{b_art_06}",
                 "correct": [
-                  "ein"
+                  "die"
                 ],
-                "hint": "ein Bleistift (giống đực)"
+                "answer": "die",
+                "hint": "die (mạo từ số nhiều của das Buch -> die Bücher)",
+                "topicId": "artikel",
+                "objectiveId": "LO_ART_04",
+                "errorTag": "PLURAL_FORMATION"
               }
             ]
           }
@@ -117,138 +137,115 @@
     ]
   },
   {
-    "id": "ex_unit_praesens_02",
+    "id": "unit_praesens",
     "topicId": "praesens",
-    "unit_title": "Kapitel 2: Hiện tại & Chia Động Từ (Präsens & Verben)",
+    "unit_title": "Bài 02: Thì hiện tại & Động từ (Präsens & Verben)",
     "level": "A1",
-    "source": "Menschen A1 & Hueber Grammatik",
-    "topic": "Präsens",
-    "instruction": "Chia động từ trong ngoặc ở thì Hiện tại (Präsens) theo đúng ngôi chủ ngữ.",
-    "grammar_rule": "<b>Quy tắc chia đuôi thì hiện tại:</b><br>• ich <b>-e</b> (lerne, komme)<br>• du <b>-st</b> (lernst, kommst)<br>• er/sie/es <b>-t</b> (lernt, kommt)<br>• wir <b>-en</b> (lernen, kommen)<br>• ihr <b>-t</b> (lernt, kommt)<br>• sie/Sie <b>-en</b> (lernen, kommen)<br>⚠️ Động từ đặc biệt: <i>sein</i> (bin, bist, ist, sind, seid, sind), <i>haben</i> (habe, hast, hat, haben, habt, haben).",
+    "source": "Goethe-Zertifikat A1 Standard",
+    "topic": "Präsens & Verben",
+    "instruction": "Chia động từ trong ngoặc ở thì hiện tại phù hợp với chủ ngữ:",
+    "grammar_rule": "• Đuôi động từ thường: ich <b>-e</b>, du <b>-st</b>, er/sie/es <b>-t</b>, wir <b>-en</b>, ihr <b>-t</b>, sie/Sie <b>-en</b><br>• Động từ sein: <i>bin, bist, ist, sind, seid, sind</i><br>• Động từ haben: <i>habe, hast, hat, haben, habt, haben</i>",
     "dialogues": [
       {
-        "section_num": "1",
-        "section_title": "Phần 1: Chia động từ thường & Động từ cốt lõi",
+        "section_num": 1,
+        "section_title": "Phần 1: Động từ thường & sein / haben",
         "topicId": "praesens",
         "objectiveId": "LO_PRAE_01",
-        "context_vi": "Hội thoại làm quen và giới thiệu bản thân",
+        "context_vi": "Giới thiệu bản thân và nghề nghiệp",
         "lines": [
           {
             "speaker": "Nico",
-            "text_template": "Hallo! Ich {blank_prae1} Nico. Woher {blank_prae2} du? (heißen, kommen)",
+            "text_template": "Ich {b_prae_01} Nico und ich {b_prae_02} aus Spanien.",
+            "translation_vi": "Tôi là Nico và tôi đến từ Tây Ban Nha.",
             "blanks": [
               {
-                "id": "blank_prae1",
-                "topicId": "praesens",
-                "objectiveId": "LO_PRAE_01",
-                "errorTags": [
-                  "VERB_CONJUGATION_ICH"
-                ],
+                "id": "b_prae_01",
+                "placeholder": "{b_prae_01}",
                 "correct": [
-                  "heiße",
-                  "heisse"
+                  "bin",
+                  "heiße"
                 ],
-                "hint": "ich heiße (ngôi ich đuôi -e)"
+                "answer": "bin",
+                "hint": "bin (động từ sein chia ở ngôi ich)",
+                "topicId": "praesens",
+                "objectiveId": "LO_PRAE_02",
+                "errorTag": "VERB_CONJUGATION"
               },
               {
-                "id": "blank_prae2",
+                "id": "b_prae_02",
+                "placeholder": "{b_prae_02}",
+                "correct": [
+                  "komme"
+                ],
+                "answer": "komme",
+                "hint": "komme (kommen chia ở ngôi ich -> đuôi -e)",
                 "topicId": "praesens",
                 "objectiveId": "LO_PRAE_01",
-                "errorTags": [
-                  "VERB_CONJUGATION_DU"
-                ],
-                "correct": [
-                  "kommst"
-                ],
-                "hint": "du kommst (ngôi du đuôi -st)"
+                "errorTag": "VERB_CONJUGATION"
               }
             ]
           },
           {
             "speaker": "Emma",
-            "text_template": "Ich {blank_prae3} aus Spanien. Wir {blank_prae4} jetzt Deutsch. (kommen, lernen)",
+            "text_template": "Wo {b_prae_03} du und was {b_prae_04} du von Beruf?",
+            "translation_vi": "Bạn sống ở đâu và bạn làm nghề gì?",
             "blanks": [
               {
-                "id": "blank_prae3",
+                "id": "b_prae_03",
+                "placeholder": "{b_prae_03}",
+                "correct": [
+                  "wohnst",
+                  "lebst"
+                ],
+                "answer": "wohnst",
+                "hint": "wohnst (wohnen chia ở ngôi du -> đuôi -st)",
                 "topicId": "praesens",
                 "objectiveId": "LO_PRAE_01",
-                "errorTags": [
-                  "VERB_CONJUGATION_ICH"
-                ],
-                "correct": [
-                  "komme"
-                ],
-                "hint": "ich komme"
+                "errorTag": "VERB_CONJUGATION"
               },
               {
-                "id": "blank_prae4",
-                "topicId": "praesens",
-                "objectiveId": "LO_PRAE_01",
-                "errorTags": [
-                  "VERB_CONJUGATION_WIR"
-                ],
+                "id": "b_prae_04",
+                "placeholder": "{b_prae_04}",
                 "correct": [
-                  "lernen"
+                  "bist"
                 ],
-                "hint": "wir lernen (ngôi wir nguyên thể)"
-              }
-            ]
-          }
-        ]
-      },
-      {
-        "section_num": "2",
-        "section_title": "Phần 2: Đổi nguyên âm gốc (Vokalwechsel: e->i/ie, a->ä)",
-        "topicId": "praesens",
-        "objectiveId": "LO_PRAE_03",
-        "context_vi": "Kể về thói quen ăn uống và đi lại",
-        "lines": [
-          {
-            "speaker": "Max",
-            "text_template": "Was {blank_prae5} du gern zum Frühstück? - Nico {blank_prae6} gern Brötchen. (essen)",
-            "blanks": [
-              {
-                "id": "blank_prae5",
+                "answer": "bist",
+                "hint": "bist (sein chia ở ngôi du)",
                 "topicId": "praesens",
-                "objectiveId": "LO_PRAE_03",
-                "errorTags": [
-                  "VOKALWECHSEL_E_I"
-                ],
-                "correct": [
-                  "isst"
-                ],
-                "hint": "du isst (essen đổi e -> i)"
-              },
-              {
-                "id": "blank_prae6",
-                "topicId": "praesens",
-                "objectiveId": "LO_PRAE_03",
-                "errorTags": [
-                  "VOKALWECHSEL_E_I"
-                ],
-                "correct": [
-                  "isst"
-                ],
-                "hint": "er isst (essen đổi e -> i)"
+                "objectiveId": "LO_PRAE_02",
+                "errorTag": "VERB_CONJUGATION"
               }
             ]
           },
           {
-            "speaker": "Max",
-            "text_template": "{blank_prae7} du mit dem Bus nach Hause? (fahren)",
+            "speaker": "Nico",
+            "text_template": "Er {b_prae_05} Deutsch und {b_prae_06} ein Buch.",
+            "translation_vi": "Anh ấy học tiếng Đức và đọc một cuốn sách.",
             "blanks": [
               {
-                "id": "blank_prae7",
+                "id": "b_prae_05",
+                "placeholder": "{b_prae_05}",
+                "correct": [
+                  "lernt",
+                  "spricht"
+                ],
+                "answer": "lernt",
+                "hint": "lernt (lernen chia ở ngôi er -> đuôi -t)",
+                "topicId": "praesens",
+                "objectiveId": "LO_PRAE_01",
+                "errorTag": "VERB_CONJUGATION"
+              },
+              {
+                "id": "b_prae_06",
+                "placeholder": "{b_prae_06}",
+                "correct": [
+                  "liest"
+                ],
+                "answer": "liest",
+                "hint": "liest (lesen đổi nguyên âm e -> ie ở ngôi er)",
                 "topicId": "praesens",
                 "objectiveId": "LO_PRAE_03",
-                "errorTags": [
-                  "VOKALWECHSEL_A_AE"
-                ],
-                "correct": [
-                  "Fährst",
-                  "fährst"
-                ],
-                "hint": "du fährst (fahren đổi a -> ä)"
+                "errorTag": "VOWEL_CHANGE"
               }
             ]
           }
@@ -257,123 +254,606 @@
     ]
   },
   {
-    "id": "ex_unit_akkusativ_03",
-    "topicId": "akkusativ",
-    "unit_title": "Kapitel 3: Cách Akkusativ (Đối cách tân ngữ trực tiếp)",
+    "id": "unit_w_fragen",
+    "topicId": "w_fragen",
+    "unit_title": "Bài 03: Từ để hỏi & Trật tự từ V2 (W-Fragen & Satzbau)",
     "level": "A1",
-    "source": "Cornelsen Grammatik aktiv A1-B1 (Trang 44)",
-    "topic": "Akkusativ",
-    "instruction": "Điền mạo từ hoặc quán từ thích hợp ở cách Akkusativ (den, einen, keinen, die, das...).",
-    "grammar_rule": "<b>Quy tắc Cách Akkusativ:</b><br>• Đóng vai trò là <b>Tân ngữ trực tiếp</b> trả lời câu hỏi <i>Wen?</i> (Ai?) hoặc <i>Was?</i> (Cái gì?).<br>• <b>Chỉ có Giống Đực (Maskulin) bị biến đổi:</b> <i>der ➔ <b>den</b></i>, <i>ein ➔ <b>einen</b></i>, <i>kein ➔ <b>keinen</b></i>.<br>• Giống cái (die/eine), giống trung (das/ein) và số nhiều (die/keine) <b>GIỮ NGUYÊN</b>!<br>• <b>Giới từ luôn đi với Akkusativ:</b> <i>für</i> (cho), <i>ohne</i> (không có), <i>durch</i> (xuyên qua), <i>gegen</i> (chống lại), <i>um</i> (xung quanh).",
+    "source": "Goethe-Zertifikat A1 Standard",
+    "topic": "W-Fragen & Satzbau",
+    "instruction": "Chọn từ để hỏi thích hợp hoặc sắp xếp động từ ở đúng vị trí V2 / V1:",
+    "grammar_rule": "• Câu hỏi có từ để hỏi (W-Frage): W-Wort (Vị trí 1) + <b>Verb (Vị trí 2)</b> + Subjekt...<br>• Câu hỏi có/không (Ja/Nein-Frage): <b>Verb (Vị trí 1)</b> + Subjekt...<br>• Câu trần thuật (Aussagesatz): Subjekt/Angabe + <b>Verb (Vị trí 2)</b>...",
     "dialogues": [
       {
-        "section_num": "1",
-        "section_title": "Phần 1: Biến đổi mạo từ giống đực (der -> den, ein -> einen)",
-        "topicId": "akkusativ",
-        "objectiveId": "LO_AKK_02",
-        "context_vi": "Mua sắm đồ điện tử và dụng cụ gia đình",
+        "section_num": 1,
+        "section_title": "Phần 1: W-Fragen và Ja/Nein-Fragen",
+        "topicId": "w_fragen",
+        "objectiveId": "LO_W_01",
+        "context_vi": "Hỏi đường và thông tin cá nhân",
         "lines": [
           {
-            "speaker": "Kunde",
-            "text_template": "Ich suche {blank_akk1} Laptop (m). Haben Sie {blank_akk2} neuen Laptop da?",
+            "speaker": "Tourist",
+            "text_template": "{b_w_01} ist der Hauptbahnhof? - Geradeaus.",
+            "translation_vi": "Nhà ga chính ở đâu? - Đi thẳng.",
             "blanks": [
               {
-                "id": "blank_akk1",
-                "topicId": "akkusativ",
-                "objectiveId": "LO_AKK_03",
-                "errorTags": [
-                  "AKKUSATIV_INDEFINITE_MASCULINE",
-                  "NOMINATIV_AKKUSATIV_CONFUSION"
+                "id": "b_w_01",
+                "placeholder": "{b_w_01}",
+                "correct": [
+                  "Wo"
                 ],
+                "answer": "Wo",
+                "hint": "Wo (hỏi vị trí ở đâu)",
+                "topicId": "w_fragen",
+                "objectiveId": "LO_W_01",
+                "errorTag": "QUESTION_WORD_CONFUSION"
+              }
+            ]
+          },
+          {
+            "speaker": "Polizist",
+            "text_template": "{b_w_02} Sie einen Ausweis dabei?",
+            "translation_vi": "Ngài có mang theo chứng minh thư không? (Ja/Nein-Frage)",
+            "blanks": [
+              {
+                "id": "b_w_02",
+                "placeholder": "{b_w_02}",
+                "correct": [
+                  "Haben"
+                ],
+                "answer": "Haben",
+                "hint": "Haben (Ja/Nein-Frage: Động từ đứng ở vị trí 1)",
+                "topicId": "w_fragen",
+                "objectiveId": "LO_W_03",
+                "errorTag": "WORD_ORDER"
+              }
+            ]
+          },
+          {
+            "speaker": "Nico",
+            "text_template": "Heute {b_w_03} ich nach Berlin.",
+            "translation_vi": "Hôm nay tôi đi đến Berlin. (Quy tắc V2)",
+            "blanks": [
+              {
+                "id": "b_w_03",
+                "placeholder": "{b_w_03}",
+                "correct": [
+                  "fahre",
+                  "reise",
+                  "gehe"
+                ],
+                "answer": "fahre",
+                "hint": "fahre (Heute đứng vị trí 1 -> Động từ fahre đứng vị trí 2)",
+                "topicId": "w_fragen",
+                "objectiveId": "LO_W_02",
+                "errorTag": "V2_WORD_ORDER"
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "unit_akkusativ",
+    "topicId": "akkusativ",
+    "unit_title": "Bài 04: Đối cách Akkusativ (Cách 4)",
+    "level": "A1",
+    "source": "Goethe-Zertifikat A1 Standard",
+    "topic": "Akkusativ",
+    "instruction": "Biến đổi mạo từ và danh từ theo cách 4 Akkusativ:",
+    "grammar_rule": "• Chỉ mạo từ giống đực thay đổi: <b>der -> den</b>, <b>ein -> einen</b>, <b>kein -> keinen</b><br>• Giống cái (die/eine), giống trung (das/ein) và số nhiều (die/keine) GIỮ NGUYÊN.<br>• Giới từ Akkusativ: <i>für, ohne, durch, gegen, um</i> (FODGU)",
+    "dialogues": [
+      {
+        "section_num": 1,
+        "section_title": "Phần 1: Mạo từ xác định và không xác định ở Akkusativ",
+        "topicId": "akkusativ",
+        "objectiveId": "LO_AKK_02",
+        "context_vi": "Mua sắm đồ dùng học tập",
+        "lines": [
+          {
+            "speaker": "Lisa",
+            "text_template": "Ich kaufe {b_akk_01} Rucksack und {b_akk_02} Schere.",
+            "translation_vi": "Tôi mua cái ba lô (đực) và cái kéo (cái).",
+            "blanks": [
+              {
+                "id": "b_akk_01",
+                "placeholder": "{b_akk_01}",
+                "correct": [
+                  "den",
+                  "einen"
+                ],
+                "answer": "den",
+                "hint": "den (der Rucksack -> den Rucksack ở Akkusativ)",
+                "topicId": "akkusativ",
+                "objectiveId": "LO_AKK_02",
+                "errorTag": "NOMINATIV_AKKUSATIV"
+              },
+              {
+                "id": "b_akk_02",
+                "placeholder": "{b_akk_02}",
+                "correct": [
+                  "die",
+                  "eine"
+                ],
+                "answer": "die",
+                "hint": "die (die Schere giữ nguyên ở Akkusativ)",
+                "topicId": "akkusativ",
+                "objectiveId": "LO_AKK_01",
+                "errorTag": "ARTICLE_CASE_CONFUSION"
+              }
+            ]
+          },
+          {
+            "speaker": "Nico",
+            "text_template": "Ich brauche {b_akk_03} Bleistift, aber ich habe {b_akk_04} Radiergummi.",
+            "translation_vi": "Tôi cần một cây bút chì, nhưng tôi không có cục tẩy nào.",
+            "blanks": [
+              {
+                "id": "b_akk_03",
+                "placeholder": "{b_akk_03}",
                 "correct": [
                   "einen"
                 ],
-                "hint": "suchen + Akkusativ: der Laptop ➔ einen Laptop"
+                "answer": "einen",
+                "hint": "einen (ein Bleistift -> einen Bleistift ở Akkusativ)",
+                "topicId": "akkusativ",
+                "objectiveId": "LO_AKK_03",
+                "errorTag": "NOMINATIV_AKKUSATIV"
               },
               {
-                "id": "blank_akk2",
-                "topicId": "akkusativ",
-                "objectiveId": "LO_AKK_02",
-                "errorTags": [
-                  "AKKUSATIV_DEFINITE_MASCULINE",
-                  "NOMINATIV_AKKUSATIV_CONFUSION"
+                "id": "b_akk_04",
+                "placeholder": "{b_akk_04}",
+                "correct": [
+                  "keinen"
                 ],
+                "answer": "keinen",
+                "hint": "keinen (kein Radiergummi -> keinen ở Akkusativ)",
+                "topicId": "akkusativ",
+                "objectiveId": "LO_AKK_04",
+                "errorTag": "NOMINATIV_AKKUSATIV"
+              }
+            ]
+          },
+          {
+            "speaker": "Lisa",
+            "text_template": "Das Geschenk ist {b_akk_05} meinen Bruder.",
+            "translation_vi": "Món quà này dành cho anh trai tôi.",
+            "blanks": [
+              {
+                "id": "b_akk_05",
+                "placeholder": "{b_akk_05}",
+                "correct": [
+                  "für"
+                ],
+                "answer": "für",
+                "hint": "für (giới từ luôn đi với Akkusativ)",
+                "topicId": "akkusativ",
+                "objectiveId": "LO_AKK_05",
+                "errorTag": "PREPOSITION_CASE"
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "unit_modalverben",
+    "topicId": "modalverben",
+    "unit_title": "Bài 05: Động từ khuyết thiếu & Khung câu (Modalverben)",
+    "level": "A1",
+    "source": "Goethe-Zertifikat A1 Standard",
+    "topic": "Modalverben & Satzklammer",
+    "instruction": "Chia động từ khuyết thiếu ở vị trí V2 và đặt động từ nguyên thể ở cuối câu:",
+    "grammar_rule": "• Cấu trúc khung câu Satzklammer: Subjekt + <b>Modalverb (V2)</b> + ... + <b>Infinitiv (cuối câu)</b>.<br>• Ngôi ich và er/sie/es giống hệt nhau và không có đuôi (ich kann, er kann).",
+    "dialogues": [
+      {
+        "section_num": 1,
+        "section_title": "Phần 1: Modalverben & Động từ tách",
+        "topicId": "modalverben",
+        "objectiveId": "LO_MOD_01",
+        "context_vi": "Kế hoạch cuối tuần và thói quen sinh hoạt",
+        "lines": [
+          {
+            "speaker": "Max",
+            "text_template": "{b_mod_01} du am Samstag schwimmen {b_mod_02}?",
+            "translation_vi": "Bạn có thể đi bơi vào thứ Bảy không?",
+            "blanks": [
+              {
+                "id": "b_mod_01",
+                "placeholder": "{b_mod_01}",
+                "correct": [
+                  "Kannst"
+                ],
+                "answer": "Kannst",
+                "hint": "Kannst (können chia ở ngôi du)",
+                "topicId": "modalverben",
+                "objectiveId": "LO_MOD_01",
+                "errorTag": "VERB_CONJUGATION"
+              },
+              {
+                "id": "b_mod_02",
+                "placeholder": "{b_mod_02}",
+                "correct": [
+                  "gehen"
+                ],
+                "answer": "gehen",
+                "hint": "gehen (động từ nguyên thể đứng ở cuối câu)",
+                "topicId": "modalverben",
+                "objectiveId": "LO_MOD_02",
+                "errorTag": "SATZKLAMMER_ORDER"
+              }
+            ]
+          },
+          {
+            "speaker": "Anna",
+            "text_template": "Ich {b_mod_03} jeden Morgen um 6 Uhr {b_mod_04}.",
+            "translation_vi": "Tôi thức dậy mỗi sáng lúc 6 giờ.",
+            "blanks": [
+              {
+                "id": "b_mod_03",
+                "placeholder": "{b_mod_03}",
+                "correct": [
+                  "stehe"
+                ],
+                "answer": "stehe",
+                "hint": "stehe (phần gốc của aufstehen chia theo ich)",
+                "topicId": "modalverben",
+                "objectiveId": "LO_MOD_03",
+                "errorTag": "TRENNBARE_VERB"
+              },
+              {
+                "id": "b_mod_04",
+                "placeholder": "{b_mod_04}",
+                "correct": [
+                  "auf"
+                ],
+                "answer": "auf",
+                "hint": "auf (tiền tố tách đứng ở cuối câu)",
+                "topicId": "modalverben",
+                "objectiveId": "LO_MOD_03",
+                "errorTag": "TRENNBARE_VERB"
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "unit_dativ",
+    "topicId": "dativ",
+    "unit_title": "Bài 06: Tặng cách Dativ (Cách 3)",
+    "level": "A1",
+    "source": "Goethe-Zertifikat A1 Standard",
+    "topic": "Dativ",
+    "instruction": "Biến đổi mạo từ, đại từ và sử dụng giới từ đi kèm Dativ:",
+    "grammar_rule": "• Biến đổi mạo từ Dativ: <b>der/das -> dem</b>, <b>die -> der</b>, <b>Plural -> den (+n)</b><br>• Đại từ Dativ: mir, dir, ihm, ihr, uns, euch, ihnen/Ihnen<br>• Giới từ luôn đi với Dativ: <i>aus, bei, mit, nach, seit, von, zu, ab</i>",
+    "dialogues": [
+      {
+        "section_num": 1,
+        "section_title": "Phần 1: Giới từ Dativ & Đại từ Dativ",
+        "topicId": "dativ",
+        "objectiveId": "LO_DAT_02",
+        "context_vi": "Hỏi đường và chỉ dẫn",
+        "lines": [
+          {
+            "speaker": "Nico",
+            "text_template": "Ich fahre {b_dat_01} dem Bus zu {b_dat_02} Bahnhof.",
+            "translation_vi": "Tôi đi xe buýt đến nhà ga.",
+            "blanks": [
+              {
+                "id": "b_dat_01",
+                "placeholder": "{b_dat_01}",
+                "correct": [
+                  "mit"
+                ],
+                "answer": "mit",
+                "hint": "mit (giới từ phương tiện luôn đi với Dativ)",
+                "topicId": "dativ",
+                "objectiveId": "LO_DAT_04",
+                "errorTag": "PREPOSITION_CASE"
+              },
+              {
+                "id": "b_dat_02",
+                "placeholder": "{b_dat_02}",
+                "correct": [
+                  "dem"
+                ],
+                "answer": "dem",
+                "hint": "dem (zu + dem -> zum Bahnhof, giống đực)",
+                "topicId": "dativ",
+                "objectiveId": "LO_DAT_02",
+                "errorTag": "DATIV_AKKUSATIV"
+              }
+            ]
+          },
+          {
+            "speaker": "Emma",
+            "text_template": "Wie geht es {b_dat_03}? - Es geht {b_dat_04} sehr gut!",
+            "translation_vi": "Bạn có khỏe không? - Tôi rất khỏe!",
+            "blanks": [
+              {
+                "id": "b_dat_03",
+                "placeholder": "{b_dat_03}",
+                "correct": [
+                  "dir",
+                  "Ihnen"
+                ],
+                "answer": "dir",
+                "hint": "dir (đại từ Dativ ngôi du sau Wie geht es)",
+                "topicId": "dativ",
+                "objectiveId": "LO_DAT_03",
+                "errorTag": "PRONOUN_CASE"
+              },
+              {
+                "id": "b_dat_04",
+                "placeholder": "{b_dat_04}",
+                "correct": [
+                  "mir"
+                ],
+                "answer": "mir",
+                "hint": "mir (đại từ Dativ ngôi ich sau Es geht)",
+                "topicId": "dativ",
+                "objectiveId": "LO_DAT_03",
+                "errorTag": "PRONOUN_CASE"
+              }
+            ]
+          },
+          {
+            "speaker": "Lisa",
+            "text_template": "Ich helfe {b_dat_05} alten Frau über die Straße.",
+            "translation_vi": "Tôi giúp đỡ người phụ nữ lớn tuổi qua đường (helfen + Dativ).",
+            "blanks": [
+              {
+                "id": "b_dat_05",
+                "placeholder": "{b_dat_05}",
+                "correct": [
+                  "der"
+                ],
+                "answer": "der",
+                "hint": "der (die Frau -> der Frau ở Dativ)",
+                "topicId": "dativ",
+                "objectiveId": "LO_DAT_01",
+                "errorTag": "DATIV_AKKUSATIV"
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "unit_perfekt",
+    "topicId": "perfekt",
+    "unit_title": "Bài 07: Thì quá khứ hoàn thành (Das Perfekt)",
+    "level": "A1",
+    "source": "Goethe-Zertifikat A1 Standard",
+    "topic": "Das Perfekt",
+    "instruction": "Chọn trợ động từ haben/sein và tạo phân từ Partizip II:",
+    "grammar_rule": "• Cấu trúc: <b>haben/sein (V2)</b> + ... + <b>Partizip II (cuối câu)</b><br>• Dùng <b>sein</b>: Động từ chuyển động (gehen, fahren, fliegen, kommen) và đổi trạng thái (aufstehen, einschlafen, werden, sein, bleiben)<br>• Dùng <b>haben</b>: Hầu hết các ngoại động từ còn lại.",
+    "dialogues": [
+      {
+        "section_num": 1,
+        "section_title": "Phần 1: Trợ động từ haben/sein & Partizip II",
+        "topicId": "perfekt",
+        "objectiveId": "LO_PERF_01",
+        "context_vi": "Kể lại chuyến đi cuối tuần",
+        "lines": [
+          {
+            "speaker": "Nico",
+            "text_template": "Gestern {b_perf_01} ich nach Berlin {b_perf_02}.",
+            "translation_vi": "Hôm qua tôi đã đi đến Berlin.",
+            "blanks": [
+              {
+                "id": "b_perf_01",
+                "placeholder": "{b_perf_01}",
+                "correct": [
+                  "bin"
+                ],
+                "answer": "bin",
+                "hint": "bin (fahren là chuyển động nên dùng trợ động từ sein)",
+                "topicId": "perfekt",
+                "objectiveId": "LO_PERF_02",
+                "errorTag": "PERFEKT_AUXILIARY"
+              },
+              {
+                "id": "b_perf_02",
+                "placeholder": "{b_perf_02}",
+                "correct": [
+                  "gefahren",
+                  "gereist"
+                ],
+                "answer": "gefahren",
+                "hint": "gefahren (Partizip II bất quy tắc của fahren)",
+                "topicId": "perfekt",
+                "objectiveId": "LO_PERF_03",
+                "errorTag": "PARTIZIP_II_FORMATION"
+              }
+            ]
+          },
+          {
+            "speaker": "Lisa",
+            "text_template": "Wir {b_perf_03} im Restaurant eine Pizza {b_perf_04}.",
+            "translation_vi": "Chúng tôi đã ăn một chiếc bánh pizza ở nhà hàng.",
+            "blanks": [
+              {
+                "id": "b_perf_03",
+                "placeholder": "{b_perf_03}",
+                "correct": [
+                  "haben"
+                ],
+                "answer": "haben",
+                "hint": "haben (essen là ngoại động từ nên dùng trợ động từ haben)",
+                "topicId": "perfekt",
+                "objectiveId": "LO_PERF_01",
+                "errorTag": "PERFEKT_AUXILIARY"
+              },
+              {
+                "id": "b_perf_04",
+                "placeholder": "{b_perf_04}",
+                "correct": [
+                  "gegessen"
+                ],
+                "answer": "gegessen",
+                "hint": "gegessen (Partizip II của essen)",
+                "topicId": "perfekt",
+                "objectiveId": "LO_PERF_03",
+                "errorTag": "PARTIZIP_II_FORMATION"
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "unit_wechsel",
+    "topicId": "wechselpraepositionen",
+    "unit_title": "Bài 08: Giới từ 2 chiều (Wechselpräpositionen)",
+    "level": "A2",
+    "source": "Goethe-Zertifikat A2 Standard",
+    "topic": "Wechselpräpositionen",
+    "instruction": "Xác định câu hỏi Wo? (vị trí -> Dativ) hay Wohin? (hướng di chuyển -> Akkusativ):",
+    "grammar_rule": "• 9 Giới từ: <i>an, auf, hinter, in, neben, über, unter, vor, zwischen</i><br>• <b>Wo? (Ở đâu? Vị trí tĩnh) ➔ DATIV</b><br>• <b>Wohin? (Đi đâu? Di chuyển định hướng) ➔ AKKUSATIV</b>",
+    "dialogues": [
+      {
+        "section_num": 1,
+        "section_title": "Phần 1: Phân biệt Wo (Dativ) vs Wohin (Akkusativ)",
+        "topicId": "wechselpraepositionen",
+        "objectiveId": "LO_WECH_01",
+        "context_vi": "Sắp xếp đồ đạc trong phòng",
+        "lines": [
+          {
+            "speaker": "Max",
+            "text_template": "Das Buch liegt {b_wech_01} {b_wech_02} Tisch (Wo?).",
+            "translation_vi": "Cuốn sách đang nằm trên bàn (vị trí tĩnh -> Dativ).",
+            "blanks": [
+              {
+                "id": "b_wech_01",
+                "placeholder": "{b_wech_01}",
+                "correct": [
+                  "auf"
+                ],
+                "answer": "auf",
+                "hint": "auf (tiếp xúc mặt trên)",
+                "topicId": "wechselpraepositionen",
+                "objectiveId": "LO_WECH_01",
+                "errorTag": "PREPOSITION_USAGE"
+              },
+              {
+                "id": "b_wech_02",
+                "placeholder": "{b_wech_02}",
+                "correct": [
+                  "dem"
+                ],
+                "answer": "dem",
+                "hint": "dem (der Tisch -> dem Tisch ở Dativ vì hỏi Wo?)",
+                "topicId": "wechselpraepositionen",
+                "objectiveId": "LO_WECH_02",
+                "errorTag": "WECHSEL_CASE_CONFUSION"
+              }
+            ]
+          },
+          {
+            "speaker": "Anna",
+            "text_template": "Ich lege das Buch auf {b_wech_03} Tisch (Wohin?).",
+            "translation_vi": "Tôi đặt cuốn sách lên trên bàn (hành động di chuyển -> Akkusativ).",
+            "blanks": [
+              {
+                "id": "b_wech_03",
+                "placeholder": "{b_wech_03}",
                 "correct": [
                   "den"
                 ],
-                "hint": "haben + Akkusativ: der Laptop ➔ den Laptop"
+                "answer": "den",
+                "hint": "den (der Tisch -> den Tisch ở Akkusativ vì hỏi Wohin?)",
+                "topicId": "wechselpraepositionen",
+                "objectiveId": "LO_WECH_03",
+                "errorTag": "WECHSEL_CASE_CONFUSION"
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "unit_adjektiv",
+    "topicId": "adjektivdeklination",
+    "unit_title": "Bài 09: Chia đuôi tính từ (Adjektivdeklination)",
+    "level": "A2",
+    "source": "Goethe-Zertifikat A2 Standard",
+    "topic": "Adjektivdeklination",
+    "instruction": "Thêm đuôi tính từ phù hợp theo loại mạo từ và cách của danh từ:",
+    "grammar_rule": "• Sau mạo từ xác định: Thường là <b>-e</b> ở Nominativ số ít, các trường hợp Akkusativ đực, Dativ và Plural luôn là <b>-en</b>.<br>• Sau mạo từ không xác định (ein/eine): <i>ein alt<b>er</b> Mann, eine schön<b>e</b> Frau, ein neu<b>es</b> Auto</i>.",
+    "dialogues": [
+      {
+        "section_num": 1,
+        "section_title": "Phần 1: Đuôi tính từ sau mạo từ xác định & không xác định",
+        "topicId": "adjektivdeklination",
+        "objectiveId": "LO_ADJ_01",
+        "context_vi": "Mua sắm quần áo và xe hơi",
+        "lines": [
+          {
+            "speaker": "Käufer",
+            "text_template": "Ich möchte das blau{b_adj_01} Hemd und einen neu{b_adj_02} Pullover kaufen.",
+            "translation_vi": "Tôi muốn mua chiếc áo sơ mi màu xanh và một chiếc áo len mới.",
+            "blanks": [
+              {
+                "id": "b_adj_01",
+                "placeholder": "{b_adj_01}",
+                "correct": [
+                  "e"
+                ],
+                "answer": "e",
+                "hint": "e (das blaue Hemd - giống trung ở Akkusativ sau mạo từ xác định)",
+                "topicId": "adjektivdeklination",
+                "objectiveId": "LO_ADJ_01",
+                "errorTag": "ADJECTIVE_ENDINGS"
+              },
+              {
+                "id": "b_adj_02",
+                "placeholder": "{b_adj_02}",
+                "correct": [
+                  "en"
+                ],
+                "answer": "en",
+                "hint": "en (einen neuen Pullover - giống đực ở Akkusativ sau ein)",
+                "topicId": "adjektivdeklination",
+                "objectiveId": "LO_ADJ_02",
+                "errorTag": "ADJECTIVE_ENDINGS"
               }
             ]
           },
           {
             "speaker": "Verkäufer",
-            "text_template": "Ja, wir haben {blank_akk3} Laptop (m) und auch {blank_akk4} Kaffeemaschine (f).",
+            "text_template": "Hier ist ein schön{b_adj_03} Wagen mit groß{b_adj_04} Rädern.",
+            "translation_vi": "Đây là một chiếc xe đẹp với những bánh xe lớn.",
             "blanks": [
               {
-                "id": "blank_akk3",
-                "topicId": "akkusativ",
-                "objectiveId": "LO_AKK_02",
-                "errorTags": [
-                  "AKKUSATIV_DEFINITE_MASCULINE"
-                ],
+                "id": "b_adj_03",
+                "placeholder": "{b_adj_03}",
                 "correct": [
-                  "den"
+                  "er"
                 ],
-                "hint": "den Laptop (m - Akkusativ)"
+                "answer": "er",
+                "hint": "er (ein schöner Wagen - giống đực Nominativ sau ein)",
+                "topicId": "adjektivdeklination",
+                "objectiveId": "LO_ADJ_02",
+                "errorTag": "ADJECTIVE_ENDINGS"
               },
               {
-                "id": "blank_akk4",
-                "topicId": "akkusativ",
-                "objectiveId": "LO_AKK_01",
-                "errorTags": [
-                  "AKKUSATIV_FEMININE_UNCHANGED"
-                ],
+                "id": "b_adj_04",
+                "placeholder": "{b_adj_04}",
                 "correct": [
-                  "die",
-                  "eine"
+                  "en"
                 ],
-                "hint": "die Kaffeemaschine (f - giống cái giữ nguyên)"
-              }
-            ]
-          }
-        ]
-      },
-      {
-        "section_num": "2",
-        "section_title": "Phần 2: Giới từ Akkusativ (für, ohne, durch, gegen, um)",
-        "topicId": "akkusativ",
-        "objectiveId": "LO_AKK_05",
-        "context_vi": "Tặng quà và chuẩn bị đồ uống",
-        "lines": [
-          {
-            "speaker": "Anna",
-            "text_template": "Das Geschenk ist für {blank_akk5} Vater (m). Ich trinke Kaffee ohne {blank_akk6} Zucker (m).",
-            "blanks": [
-              {
-                "id": "blank_akk5",
-                "topicId": "akkusativ",
-                "objectiveId": "LO_AKK_05",
-                "errorTags": [
-                  "AKKUSATIV_PREPOSITION_FUER",
-                  "NOMINATIV_AKKUSATIV_CONFUSION"
-                ],
-                "correct": [
-                  "den",
-                  "meinen"
-                ],
-                "hint": "für + Akkusativ: der Vater ➔ den Vater"
-              },
-              {
-                "id": "blank_akk6",
-                "topicId": "akkusativ",
-                "objectiveId": "LO_AKK_05",
-                "errorTags": [
-                  "AKKUSATIV_PREPOSITION_OHNE"
-                ],
-                "correct": [
-                  "den"
-                ],
-                "hint": "ohne + Akkusativ: der Zucker ➔ den Zucker"
+                "answer": "en",
+                "hint": "en (mit großen Rädern - số nhiều ở Dativ luôn có đuôi -en)",
+                "topicId": "adjektivdeklination",
+                "objectiveId": "LO_ADJ_03",
+                "errorTag": "ADJECTIVE_ENDINGS"
               }
             ]
           }
@@ -382,172 +862,82 @@
     ]
   },
   {
-    "id": "ex_unit_modalverben_04",
-    "topicId": "modalverben",
-    "unit_title": "Kapitel 4: Động Từ Khuyết Thiếu (Modalverben)",
-    "level": "A1",
-    "source": "Cornelsen Grammatik aktiv A1-B1 (Trang 38)",
-    "topic": "Modalverben",
-    "instruction": "Điền dạng chia đúng của động từ khuyết thiếu (können, müssen, wollen, dürfen, sollen).",
-    "grammar_rule": "<b>Quy tắc Modalverben & Khung câu Satzklammer:</b><br>• Ngôi <b>ich</b> và <b>er/sie/es</b> luôn có dạng giống nhau và không có đuôi -t!<br>• Động từ khuyết thiếu chia ở <b>vị trí số 2 (V2)</b>, động từ chính ở dạng <b>nguyên thể (Infinitiv)</b> bị đẩy về <b>CUỐI CÂU</b>!",
+    "id": "unit_nebensaetze",
+    "topicId": "nebensaetze",
+    "unit_title": "Bài 10: Mệnh đề phụ (Nebensätze mit weil, dass, wenn, obwohl)",
+    "level": "A2",
+    "source": "Goethe-Zertifikat A2 / B1 Standard",
+    "topic": "Nebensätze",
+    "instruction": "Sử dụng liên từ phụ thuộc và đẩy động từ chia về cuối mệnh đề phụ:",
+    "grammar_rule": "• Các liên từ phụ thuộc: <i>weil (vì), dass (rằng), wenn (nếu/khi), obwohl (mặc dù)</i><br>• Cấu trúc: Hauptsatz, + <b>Konjunktion + Subjekt + ... + Verb (cuối câu)</b>.",
     "dialogues": [
       {
-        "section_num": "1",
-        "section_title": "Phần 1: Chia động từ müssen & können",
-        "topicId": "modalverben",
-        "objectiveId": "LO_MOD_01",
-        "context_vi": "Phân chia công việc nhà và nghĩa vụ",
+        "section_num": 1,
+        "section_title": "Phần 1: Mệnh đề nguyên nhân (weil) & điều kiện (wenn)",
+        "topicId": "nebensaetze",
+        "objectiveId": "LO_NEB_01",
+        "context_vi": "Giải thích lý do và điều kiện",
         "lines": [
           {
-            "speaker": "Mutter",
-            "text_template": "Es gibt viel Arbeit. Frank, du {blank_mod1} einkaufen. Nico {blank_mod2} sehr gut kochen. (müssen, können)",
+            "speaker": "Lisa",
+            "text_template": "Ich lerne Deutsch, {b_neb_01} ich in Deutschland studieren {b_neb_02}.",
+            "translation_vi": "Tôi học tiếng Đức vì tôi muốn học đại học tại Đức.",
             "blanks": [
               {
-                "id": "blank_mod1",
-                "topicId": "modalverben",
-                "objectiveId": "LO_MOD_01",
-                "errorTags": [
-                  "MODALVERB_CONJUGATION_DU"
-                ],
+                "id": "b_neb_01",
+                "placeholder": "{b_neb_01}",
                 "correct": [
-                  "musst"
+                  "weil"
                 ],
-                "hint": "du musst (ngôi du)"
+                "answer": "weil",
+                "hint": "weil (liên từ chỉ nguyên nhân)",
+                "topicId": "nebensaetze",
+                "objectiveId": "LO_NEB_02",
+                "errorTag": "CONJUNCTION_USAGE"
               },
               {
-                "id": "blank_mod2",
-                "topicId": "modalverben",
-                "objectiveId": "LO_MOD_01",
-                "errorTags": [
-                  "MODALVERB_CONJUGATION_ER"
-                ],
+                "id": "b_neb_02",
+                "placeholder": "{b_neb_02}",
                 "correct": [
-                  "kann"
+                  "möchte",
+                  "will"
                 ],
-                "hint": "er kann (ngôi er giống ich, không có -t)"
+                "answer": "möchte",
+                "hint": "möchte (động từ chia đứng ở vị trí cuối cùng của mệnh đề phụ)",
+                "topicId": "nebensaetze",
+                "objectiveId": "LO_NEB_01",
+                "errorTag": "NEBENSATZ_VERB_ORDER"
               }
             ]
           },
           {
-            "speaker": "Kinder",
-            "text_template": "Wir {blank_mod3} heute Pizza essen! {blank_mod4} wir fernsehen? (wollen, dürfen)",
-            "blanks": [
-              {
-                "id": "blank_mod3",
-                "topicId": "modalverben",
-                "objectiveId": "LO_MOD_01",
-                "errorTags": [
-                  "MODALVERB_CONJUGATION_WIR"
-                ],
-                "correct": [
-                  "wollen"
-                ],
-                "hint": "wir wollen"
-              },
-              {
-                "id": "blank_mod4",
-                "topicId": "modalverben",
-                "objectiveId": "LO_MOD_01",
-                "errorTags": [
-                  "MODALVERB_CONJUGATION_WIR"
-                ],
-                "correct": [
-                  "Dürfen",
-                  "dürfen"
-                ],
-                "hint": "Dürfen wir (xin phép làm gì)"
-              }
-            ]
-          }
-        ]
-      }
-    ]
-  },
-  {
-    "id": "ex_unit_dativ_05",
-    "topicId": "dativ",
-    "unit_title": "Kapitel 5: Cách Dativ (Tặng cách tân ngữ gián tiếp)",
-    "level": "A1",
-    "source": "Cornelsen Grammatik aktiv A1-B1 (Trang 52)",
-    "topic": "Dativ",
-    "instruction": "Điền mạo từ hoặc đại từ thích hợp ở cách Dativ (dem, der, den, einem, einer, mir, dir...).",
-    "grammar_rule": "<b>Quy tắc Cách Dativ:</b><br>• Đóng vai trò <b>Tân ngữ gián tiếp</b> trả lời câu hỏi <i>Wem?</i> (Cho ai?).<br>• <b>Biến đổi mạo từ:</b><br>  - Giống đực (der) & giống trung (das) ➔ <b>dem / einem / keinem</b>.<br>  - Giống cái (die) ➔ <b>der / einer / keiner</b>.<br>  - Số nhiều (die) ➔ <b>den / keinen + N-en</b>.<br>• <b>Giới từ luôn đi với Dativ:</b> <i>aus, bei, mit, nach, seit, von, zu, ab</i>.<br>• <b>Đại từ Dativ:</b> mir, dir, ihm, ihr, ihm, uns, euch, ihnen/Ihnen.",
-    "dialogues": [
-      {
-        "section_num": "1",
-        "section_title": "Phần 1: Giới từ Dativ (mit, zu, bei, nach)",
-        "topicId": "dativ",
-        "objectiveId": "LO_DAT_04",
-        "context_vi": "Di chuyển bằng phương tiện công cộng và đi làm",
-        "lines": [
-          {
             "speaker": "Nico",
-            "text_template": "Ich fahre jeden Tag mit {blank_dat1} Bus (m) và {blank_dat2} U-Bahn (f) zur Arbeit.",
+            "text_template": "Ich weiß, {b_neb_03} die Prüfung schwer ist, {b_neb_04} ich viel gelernt habe.",
+            "translation_vi": "Tôi biết rằng kỳ thi khó, mặc dù tôi đã học rất nhiều.",
             "blanks": [
               {
-                "id": "blank_dat1",
-                "topicId": "dativ",
-                "objectiveId": "LO_DAT_04",
-                "errorTags": [
-                  "DATIV_PREPOSITION_MIT_MASCULINE",
-                  "DATIV_DEM_CONFUSION"
-                ],
+                "id": "b_neb_03",
+                "placeholder": "{b_neb_03}",
                 "correct": [
-                  "dem"
+                  "dass"
                 ],
-                "hint": "mit + Dativ: der Bus ➔ dem Bus"
+                "answer": "dass",
+                "hint": "dass (liên từ 'rằng')",
+                "topicId": "nebensaetze",
+                "objectiveId": "LO_NEB_03",
+                "errorTag": "CONJUNCTION_USAGE"
               },
               {
-                "id": "blank_dat2",
-                "topicId": "dativ",
-                "objectiveId": "LO_DAT_04",
-                "errorTags": [
-                  "DATIV_PREPOSITION_MIT_FEMININE",
-                  "DATIV_DER_CONFUSION"
-                ],
+                "id": "b_neb_04",
+                "placeholder": "{b_neb_04}",
                 "correct": [
-                  "der"
+                  "obwohl"
                 ],
-                "hint": "mit + Dativ: die U-Bahn ➔ der U-Bahn"
-              }
-            ]
-          }
-        ]
-      },
-      {
-        "section_num": "2",
-        "section_title": "Phần 2: Động từ Dativ & Đại từ Dativ (helfen, danken, gefallen)",
-        "topicId": "dativ",
-        "objectiveId": "LO_DAT_03",
-        "context_vi": "Cảm ơn và giúp đỡ bạn bè",
-        "lines": [
-          {
-            "speaker": "Emma",
-            "text_template": "Kannst du {blank_dat3} (ich) helfen? - Ja, ich helfe {blank_dat4} (du) gern!",
-            "blanks": [
-              {
-                "id": "blank_dat3",
-                "topicId": "dativ",
-                "objectiveId": "LO_DAT_03",
-                "errorTags": [
-                  "DATIV_PRONOUN_MIR"
-                ],
-                "correct": [
-                  "mir"
-                ],
-                "hint": "helfen + Dativ: ich ➔ mir"
-              },
-              {
-                "id": "blank_dat4",
-                "topicId": "dativ",
-                "objectiveId": "LO_DAT_03",
-                "errorTags": [
-                  "DATIV_PRONOUN_DIR"
-                ],
-                "correct": [
-                  "dir"
-                ],
-                "hint": "helfen + Dativ: du ➔ dir"
+                "answer": "obwohl",
+                "hint": "obwohl (liên từ nhượng bộ 'mặc dù')",
+                "topicId": "nebensaetze",
+                "objectiveId": "LO_NEB_03",
+                "errorTag": "CONJUNCTION_USAGE"
               }
             ]
           }
@@ -556,104 +946,94 @@
     ]
   },
   {
-    "id": "ex_unit_perfekt_06",
-    "topicId": "perfekt",
-    "unit_title": "Kapitel 6: Thì Quá Khứ Hoàn Thành (Das Perfekt)",
-    "level": "A1",
-    "source": "Cornelsen Grammatik aktiv A1-B1 (Trang 60)",
-    "topic": "Perfekt",
-    "instruction": "Điền trợ động từ (haben / sein) và dạng Phân từ II (Partizip II) ở cuối câu.",
-    "grammar_rule": "<b>Cấu trúc thì Perfekt:</b><br>• Cấu trúc: <b>haben / sein</b> (chia ở V2) + Tân ngữ + <b>Partizip II</b> (ở cuối câu).<br>• Dùng <b>sein</b> với: động từ chuyển động (gehen, fahren, kommen, fliegen), đổi trạng thái (aufstehen, einschlafen) và <i>sein, bleiben, passieren</i>.<br>• Dùng <b>haben</b> với hầu hết các động từ còn lại.<br>• Quy tắc tạo Partizip II: ge- + gốc động từ + -t (học: gelernt, làm: gemacht); bất quy tắc: ge- + gốc biến đổi + -en (uống: getrunken, đi: gegangen).",
+    "id": "unit_passiv",
+    "topicId": "passiv",
+    "unit_title": "Bài 11: Thể bị động (Das Passiv)",
+    "level": "B1",
+    "source": "Goethe-Zertifikat B1 Standard",
+    "topic": "Das Passiv",
+    "instruction": "Chuyển câu sang thể bị động ở hiện tại (werden) hoặc quá khứ (wurden):",
+    "grammar_rule": "• Bị động hiện tại: <b>werden (chia) + ... + Partizip II</b><br>• Bị động quá khứ Präteritum: <b>wurden (chia) + ... + Partizip II</b><br>• Tác nhân thực hiện hành động: <b>von + Dativ</b>",
     "dialogues": [
       {
-        "section_num": "1",
-        "section_title": "Phần 1: Trợ động từ haben vs sein",
-        "topicId": "perfekt",
-        "objectiveId": "LO_PERF_02",
-        "context_vi": "Kể lại các hoạt động đã làm trong ngày hôm qua",
+        "section_num": 1,
+        "section_title": "Phần 1: Bị động hiện tại & quá khứ",
+        "topicId": "passiv",
+        "objectiveId": "LO_PAS_01",
+        "context_vi": "Báo cáo công việc và tin tức",
         "lines": [
           {
-            "speaker": "Tim",
-            "text_template": "Gestern {blank_perf1} ich nach Berlin gefahren und dort {blank_perf2} ich meine Freunde getroffen. (sein, haben)",
+            "speaker": "Reporter",
+            "text_template": "Das neue Krankenhaus {b_pas_01} heute {b_pas_02}.",
+            "translation_vi": "Bệnh viện mới được khánh thành hôm nay (Bị động hiện tại).",
             "blanks": [
               {
-                "id": "blank_perf1",
-                "topicId": "perfekt",
-                "objectiveId": "LO_PERF_02",
-                "errorTags": [
-                  "PERFEKT_SEIN_MOVEMENT",
-                  "HABEN_SEIN_CONFUSION"
-                ],
+                "id": "b_pas_01",
+                "placeholder": "{b_pas_01}",
                 "correct": [
-                  "bin"
+                  "wird"
                 ],
-                "hint": "fahren (di chuyển) dùng trợ động từ sein: ich bin"
+                "answer": "wird",
+                "hint": "wird (werden chia ở ngôi das Krankenhaus số ít)",
+                "topicId": "passiv",
+                "objectiveId": "LO_PAS_01",
+                "errorTag": "PASSIV_FORMATION"
               },
               {
-                "id": "blank_perf2",
-                "topicId": "perfekt",
-                "objectiveId": "LO_PERF_02",
-                "errorTags": [
-                  "PERFEKT_HABEN_TRANSITIVE",
-                  "HABEN_SEIN_CONFUSION"
-                ],
+                "id": "b_pas_02",
+                "placeholder": "{b_pas_02}",
                 "correct": [
-                  "habe"
+                  "eröffnet",
+                  "gebaut"
                 ],
-                "hint": "treffen (gặp gỡ) dùng trợ động từ haben: ich habe"
+                "answer": "eröffnet",
+                "hint": "eröffnet (Partizip II đứng ở cuối câu)",
+                "topicId": "passiv",
+                "objectiveId": "LO_PAS_01",
+                "errorTag": "PASSIV_FORMATION"
               }
             ]
-          }
-        ]
-      }
-    ]
-  },
-  {
-    "id": "ex_unit_wechsel_07",
-    "topicId": "wechselpraepositionen",
-    "unit_title": "Kapitel 7: Giới Từ 2 Chiều (Wechselpräpositionen)",
-    "level": "A2",
-    "source": "Cornelsen Grammatik aktiv A1-B1 (Trang 74)",
-    "topic": "Wechselpräpositionen",
-    "instruction": "Xác định câu hỏi Wo? (Dativ) hay Wohin? (Akkusativ) để điền mạo từ chính xác.",
-    "grammar_rule": "<b>Quy tắc Wechselpräpositionen (an, auf, in, neben, über, unter, vor, hinter, zwischen):</b><br>• <b>Wo? (Ở đâu? - Vị trí tĩnh):</b> Đi với <b>DATIV</b> (dem, der, dem, den+n). Động từ đi kèm: <i>liegen, stehen, sitzen, hängen</i>.<br>• <b>Wohin? (Đi đâu? - Phương hướng chuyển động):</b> Đi với <b>AKKUSATIV</b> (den, die, das, die). Động từ đi kèm: <i>legen, stellen, setzen, hängen</i>.",
-    "dialogues": [
-      {
-        "section_num": "1",
-        "section_title": "Phần 1: Phân biệt Wo? (Dativ) vs Wohin? (Akkusativ)",
-        "topicId": "wechselpraepositionen",
-        "objectiveId": "LO_WECH_02",
-        "context_vi": "Sắp xếp đồ đạc trong phòng khách",
-        "lines": [
+          },
           {
-            "speaker": "Lisa",
-            "text_template": "Das Buch liegt auf {blank_wech1} Tisch (m). Ich lege das Buch auf {blank_wech2} Tisch (m).",
+            "speaker": "Historiker",
+            "text_template": "Die Mauer {b_pas_03} im Jahr 1989 {b_pas_04} {b_pas_05} den Bürgern geöffnet.",
+            "translation_vi": "Bức tường đã được mở vào năm 1989 bởi người dân (Bị động quá khứ).",
             "blanks": [
               {
-                "id": "blank_wech1",
-                "topicId": "wechselpraepositionen",
-                "objectiveId": "LO_WECH_02",
-                "errorTags": [
-                  "WECHSEL_WO_DATIV",
-                  "DATIV_AKKUSATIV_CONFUSION"
-                ],
+                "id": "b_pas_03",
+                "placeholder": "{b_pas_03}",
                 "correct": [
-                  "dem"
+                  "wurde"
                 ],
-                "hint": "Wo? liegt ➔ Dativ: der Tisch ➔ dem Tisch"
+                "answer": "wurde",
+                "hint": "wurde (wurden chia ở quá khứ ngôi die Mauer)",
+                "topicId": "passiv",
+                "objectiveId": "LO_PAS_02",
+                "errorTag": "PASSIV_TENSE"
               },
               {
-                "id": "blank_wech2",
-                "topicId": "wechselpraepositionen",
-                "objectiveId": "LO_WECH_03",
-                "errorTags": [
-                  "WECHSEL_WOHIN_AKKUSATIV",
-                  "DATIV_AKKUSATIV_CONFUSION"
+                "id": "b_pas_04",
+                "placeholder": "{b_pas_04}",
+                "correct": [
+                  "von"
                 ],
+                "answer": "von",
+                "hint": "von (giới từ chỉ tác nhân người trong câu bị động + Dativ)",
+                "topicId": "passiv",
+                "objectiveId": "LO_PAS_03",
+                "errorTag": "PASSIV_AGENT"
+              },
+              {
+                "id": "b_pas_05",
+                "placeholder": "{b_pas_05}",
                 "correct": [
                   "den"
                 ],
-                "hint": "Wohin? lege ➔ Akkusativ: der Tisch ➔ den Tisch"
+                "answer": "den",
+                "hint": "den (mạo từ Dativ số nhiều sau von)",
+                "topicId": "passiv",
+                "objectiveId": "LO_PAS_03",
+                "errorTag": "DATIV_AKKUSATIV"
               }
             ]
           }
@@ -662,50 +1042,70 @@
     ]
   },
   {
-    "id": "ex_unit_nebensaetze_08",
-    "topicId": "nebensaetze",
-    "unit_title": "Kapitel 8: Mệnh Đề Phụ (Nebensätze với weil, dass, wenn, obwohl)",
-    "level": "A2",
-    "source": "Cornelsen Grammatik aktiv A1-B1 (Trang 90)",
-    "topic": "Nebensätze",
-    "instruction": "Chọn liên từ và hoàn thiện câu với vị trí động từ chia ở cuối mệnh đề phụ.",
-    "grammar_rule": "<b>Quy tắc Mệnh đề phụ (Nebensatz):</b><br>• Trong mệnh đề phụ bắt đầu bằng liên từ <i>weil</i> (vì), <i>dass</i> (rằng), <i>wenn</i> (nếu/khi), <i>obwohl</i> (mặc dù), động từ chia LUÔN bị đẩy về <b>VỊ TRÍ CUỐI CÙNG</b> của mệnh đề!",
+    "id": "unit_konjunktiv2",
+    "topicId": "konjunktiv2",
+    "unit_title": "Bài 12: Thể giả định (Konjunktiv II)",
+    "level": "B1",
+    "source": "Goethe-Zertifikat B1 Standard",
+    "topic": "Konjunktiv II",
+    "instruction": "Sử dụng thể giả định để diễn tả ước muốn hoặc yêu cầu lịch sự trang trọng:",
+    "grammar_rule": "• Ước muốn không có thật: <b>wäre (sein)</b>, <b>hätte (haben)</b><br>• Lịch sự trang trọng: <b>würde + Infinitiv</b><br>• Modalverben giả định: <b>könnte (können)</b>, <b>müsste (müssen)</b>",
     "dialogues": [
       {
-        "section_num": "1",
-        "section_title": "Phần 1: Liên từ weil & wenn",
-        "topicId": "nebensaetze",
-        "objectiveId": "LO_NEB_01",
-        "context_vi": "Giải thích lý do học tập và dự định",
+        "section_num": 1,
+        "section_title": "Phần 1: Giả định ước muốn & Yêu cầu lịch sự",
+        "topicId": "konjunktiv2",
+        "objectiveId": "LO_KONJ_01",
+        "context_vi": "Diễn đạt mong ước và nhờ vả lịch sự",
         "lines": [
           {
-            "speaker": "Nico",
-            "text_template": "Ich lerne Deutsch, {blank_neb1} ich in Deutschland studieren möchte. {blank_neb2} ich Zeit habe, reise ich nach Berlin.",
+            "speaker": "Anna",
+            "text_template": "Wenn ich viel Geld {b_konj_01}, {b_konj_02} ich eine Weltreise machen.",
+            "translation_vi": "Nếu tôi có nhiều tiền, tôi sẽ đi du lịch vòng quanh thế giới.",
             "blanks": [
               {
-                "id": "blank_neb1",
-                "topicId": "nebensaetze",
-                "objectiveId": "LO_NEB_02",
-                "errorTags": [
-                  "NEBENSATZ_CONJUNCTION_WEIL"
-                ],
+                "id": "b_konj_01",
+                "placeholder": "{b_konj_01}",
                 "correct": [
-                  "weil"
+                  "hätte"
                 ],
-                "hint": "liên từ chỉ lý do nguyên nhân: weil"
+                "answer": "hätte",
+                "hint": "hätte (giả định của haben)",
+                "topicId": "konjunktiv2",
+                "objectiveId": "LO_KONJ_01",
+                "errorTag": "KONJUNKTIV_FORMATION"
               },
               {
-                "id": "blank_neb2",
-                "topicId": "nebensaetze",
-                "objectiveId": "LO_NEB_02",
-                "errorTags": [
-                  "NEBENSATZ_CONJUNCTION_WENN"
-                ],
+                "id": "b_konj_02",
+                "placeholder": "{b_konj_02}",
                 "correct": [
-                  "Wenn",
-                  "wenn"
+                  "würde"
                 ],
-                "hint": "liên từ điều kiện: Wenn (Nếu/Khi)"
+                "answer": "würde",
+                "hint": "würde (cấu trúc würde + Infinitiv)",
+                "topicId": "konjunktiv2",
+                "objectiveId": "LO_KONJ_02",
+                "errorTag": "KONJUNKTIV_FORMATION"
+              }
+            ]
+          },
+          {
+            "speaker": "Gast",
+            "text_template": "{b_konj_03} Sie mir bitte die Speisekarte bringen?",
+            "translation_vi": "Ngài có thể làm ơn mang thực đơn cho tôi được không?",
+            "blanks": [
+              {
+                "id": "b_konj_03",
+                "placeholder": "{b_konj_03}",
+                "correct": [
+                  "Könnten",
+                  "Würden"
+                ],
+                "answer": "Könnten",
+                "hint": "Könnten (yêu cầu lịch sự trang trọng với Modalverb)",
+                "topicId": "konjunktiv2",
+                "objectiveId": "LO_KONJ_03",
+                "errorTag": "POLITE_REQUEST"
               }
             ]
           }

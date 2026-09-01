@@ -354,18 +354,25 @@ class ProgressController {
     // Check if this topic has defined Learning Objectives
     const topicDef = (this.learningObjectivesData || []).find(top => top.topicId === key);
     let computedMastery = 0;
+    let computedConfidence = 0;
     
     if (topicDef && topicDef.objectives && topicDef.objectives.length > 0) {
-      let weightedSum = 0;
+      let weightedMasterySum = 0;
+      let weightedConfSum = 0;
       let totalWeight = 0;
       topicDef.objectives.forEach(lo => {
         const objData = this.getObjectiveData(lo.id);
-        const objM = objData.total > 0 ? objData.mastery : (t.recent.length > 0 ? Math.round(recentAcc * 100) : 25);
-        weightedSum += (objM * (lo.weight || 20));
-        totalWeight += (lo.weight || 20);
+        const objM = objData.total > 0 ? objData.mastery : (t.recent.length > 0 ? Math.round((t.correct / t.total) * 100) : 25);
+        const objC = objData.total > 0 ? objData.confidence : (t.total > 0 ? Math.min(100, t.total * 10) : 15);
+        const w = lo.weight || 25;
+        weightedMasterySum += (objM * w);
+        weightedConfSum += (objC * w);
+        totalWeight += w;
       });
-      const objWeightedScore = totalWeight > 0 ? (weightedSum / totalWeight) : 30;
-      computedMastery = Math.round((objWeightedScore * 0.7) + (srsRetention * 100 * 0.3));
+      const objWeightedScore = totalWeight > 0 ? (weightedMasterySum / totalWeight) : 30;
+      const objWeightedConf = totalWeight > 0 ? (weightedConfSum / totalWeight) : 20;
+      computedMastery = Math.round((objWeightedScore * 0.75) + (srsRetention * 100 * 0.25));
+      computedConfidence = Math.round((objWeightedConf * 0.8) + (Math.min(1.0, relatedCardsCount / 10) * 100 * 0.2));
     } else {
       computedMastery = Math.round(
         (recentAcc * 30) +
@@ -373,17 +380,16 @@ class ProgressController {
         (srsRetention * 30) +
         (coverageFactor * 20)
       );
+      const sampleFactor = Math.min(1.0, t.total / 15);
+      const srsFactor = Math.min(1.0, relatedCardsCount / 10);
+      const consistencyFactor = t.recent.length >= 5 ? 0.9 : 0.6;
+      computedConfidence = Math.round((sampleFactor * 60) + (srsFactor * 20) + (consistencyFactor * 20));
     }
 
-    // Multi-factor Confidence calculation: Sample Size (60%) + SRS Evidence (20%) + Consistency (20%)
-    const sampleFactor = Math.min(1.0, t.total / 18);
-    const srsFactor = Math.min(1.0, relatedCardsCount / 10);
-    const consistencyFactor = t.recent.length >= 5 ? 0.9 : 0.6;
-    t.confidence = Math.round((sampleFactor * 60) + (srsFactor * 20) + (consistencyFactor * 20));
-
     t.mastery = Math.min(100, Math.max(10, computedMastery));
+    t.confidence = Math.min(100, Math.max(10, computedConfidence));
 
-    // Store Evidence Breakdown
+    // Store Granular Evidence Breakdown
     t.evidence = {
       topicId: key,
       topicName: t.name,
@@ -406,12 +412,12 @@ class ProgressController {
 
   getObjectiveData(objId) {
     if (!this.data.objectives || !this.data.objectives[objId]) {
-      return { correct: 0, total: 0, mastery: 0, confidence: 0, status: "unseen" };
+      return { correct: 0, total: 0, mastery: 20, confidence: 15, status: "unseen" };
     }
     const o = this.data.objectives[objId];
     return {
       ...o,
-      status: o.status || (o.total === 0 ? "unseen" : (o.mastery >= 80 && o.confidence >= 60 ? "competent" : (o.mastery >= 50 ? "developing" : "learning")))
+      status: o.status || (o.total === 0 ? "unseen" : (o.mastery >= 85 && o.confidence >= 70 && o.total >= 5 ? "mastered" : (o.mastery >= 80 && o.confidence >= 60 ? "competent" : (o.mastery >= 50 ? "developing" : "learning"))))
     };
   }
 
@@ -491,32 +497,52 @@ class ProgressController {
   // Identifies the single most urgent Learning Objective to reinforce
   getWeakestObjective() {
     if (!this.learningObjectivesData || this.learningObjectivesData.length === 0) return null;
-    let weakest = null;
-    let lowestScore = 999;
-
+    
+    // Check topics sequentially following prerequisite dependencies
     for (const topic of this.learningObjectivesData) {
-      // Check if prerequisites are met (>= 60%)
-      const prereqsMet = (topic.prerequisites || []).every(pr => this.getTopicMastery(pr) >= 60);
-      if (!prereqsMet && topic.prerequisites && topic.prerequisites.length > 0) continue;
-
-      for (const obj of (topic.objectives || [])) {
-        const objData = this.getObjectiveData(obj.id);
-        const m = objData.total > 0 ? objData.mastery : 35;
-        if (m < lowestScore && objData.status !== "mastered") {
-          lowestScore = m;
-          weakest = {
-            id: obj.id,
-            title: obj.title,
-            topicId: topic.topicId,
-            topicTitle: topic.topicName,
-            mastery: m,
-            status: objData.status || (objData.total === 0 ? "unseen" : "learning"),
-            confidence: objData.confidence || 20
+      const prereqs = topic.prerequisites || [];
+      const missingPrereq = prereqs.find(pr => this.getTopicMastery(pr) < 60);
+      
+      if (missingPrereq) {
+        const prMeta = this.learningObjectivesData.find(t => t.topicId === missingPrereq);
+        const prObj = prMeta && prMeta.objectives ? prMeta.objectives.find(o => this.getObjectiveData(o.id).status !== "mastered") : null;
+        if (prObj) {
+          const prObjData = this.getObjectiveData(prObj.id);
+          return {
+            id: prObj.id,
+            title: prObj.title,
+            topicId: missingPrereq,
+            topicTitle: prMeta.topicName,
+            mastery: prObjData.mastery,
+            status: prObjData.status,
+            confidence: prObjData.confidence,
+            isPrerequisiteWarning: true,
+            requiredFor: topic.topicName
           };
         }
       }
+
+      const tMastery = this.getTopicMastery(topic.topicId);
+      if (tMastery < 75) {
+        for (const obj of (topic.objectives || [])) {
+          const objData = this.getObjectiveData(obj.id);
+          if (objData.status !== "mastered") {
+            return {
+              id: obj.id,
+              title: obj.title,
+              topicId: topic.topicId,
+              topicTitle: topic.topicName,
+              mastery: objData.mastery,
+              status: objData.status,
+              confidence: objData.confidence,
+              isPrerequisiteWarning: false
+            };
+          }
+        }
+      }
     }
-    return weakest;
+
+    return null;
   }
 
   getAdaptiveQueue() {
@@ -528,18 +554,22 @@ class ProgressController {
     // Highest Priority: Target Weakest Learning Objective
     const weakestObj = this.getWeakestObjective();
     if (weakestObj) {
+      const whyText = weakestObj.isPrerequisiteWarning 
+        ? `Chủ điểm "${weakestObj.requiredFor}" yêu cầu nắm vững tiền đề "${weakestObj.topicTitle}" (${weakestObj.mastery}%). Hãy củng cố mục tiêu "${weakestObj.title}" trước!`
+        : `Mục tiêu "${weakestObj.title}" hiện đạt mức độ làm chủ ${weakestObj.mastery}% (${weakestObj.status}). Hãy luyện tập ngay để đạt mức thành thạo!`;
+
       queue.push({
         id: "q_weakest_lo",
         priority: "highest",
         icon: "🎯",
         title: `Mục tiêu cần củng cố: ${weakestObj.title}`,
-        desc: `${weakestObj.topicTitle} • Mastery: ${weakestObj.mastery}% (${weakestObj.status})`,
+        desc: `${weakestObj.topicTitle} • Mastery: ${weakestObj.mastery}% (Độ tin cậy: ${weakestObj.confidence}%)`,
         timeEst: "~3 phút",
         tab: "grammar",
         topicId: weakestObj.topicId,
         objectiveId: weakestObj.id,
-        why: `Hệ thống phân tích bạn đang yếu ở mục tiêu "${weakestObj.title}" (${weakestObj.mastery}%). Hãy luyện tập củng cố ngay để mở khóa các chủ điểm tiếp theo!`,
-        badge: "Cấp thiết"
+        why: whyText,
+        badge: weakestObj.isPrerequisiteWarning ? "Tiền đề bắt buộc" : "Cần củng cố"
       });
     }
 
@@ -639,6 +669,45 @@ class ProgressController {
     if (!modal || !contentEl) return;
 
     const ev = stat.evidence || {};
+    const topicDef = (this.learningObjectivesData || []).find(top => top.topicId === key);
+
+    let objectivesHtml = "";
+    if (topicDef && topicDef.objectives && topicDef.objectives.length > 0) {
+      objectivesHtml = `
+        <div class="space-y-2 pt-2">
+          <h4 class="text-xs font-bold text-gray-700 dark:text-gray-300 uppercase tracking-wider">🎯 Phân tích chi tiết từng Learning Objective:</h4>
+          <div class="space-y-2">
+            ${topicDef.objectives.map(lo => {
+              const oData = this.getObjectiveData(lo.id);
+              const statusBadge = oData.status === "mastered" 
+                ? '<span class="px-2 py-0.5 rounded-full text-[10px] font-bold bg-emerald-100 text-emerald-800 dark:bg-emerald-900/50 dark:text-emerald-300">✓ Mastered</span>'
+                : oData.status === "competent"
+                ? '<span class="px-2 py-0.5 rounded-full text-[10px] font-bold bg-blue-100 text-blue-800 dark:bg-blue-900/50 dark:text-blue-300">Competent</span>'
+                : oData.status === "developing"
+                ? '<span class="px-2 py-0.5 rounded-full text-[10px] font-bold bg-amber-100 text-amber-800 dark:bg-amber-900/50 dark:text-amber-300">Developing</span>'
+                : '<span class="px-2 py-0.5 rounded-full text-[10px] font-bold bg-gray-100 text-gray-600 dark:bg-gray-800 dark:text-gray-400">Learning</span>';
+
+              return `
+                <div class="p-3 bg-gray-50 dark:bg-gray-900/50 rounded-2xl border border-gray-200 dark:border-gray-700/60 space-y-1.5 text-xs">
+                  <div class="flex items-center justify-between gap-2">
+                    <span class="font-bold text-gray-900 dark:text-gray-100">${lo.title}</span>
+                    ${statusBadge}
+                  </div>
+                  <div class="flex items-center justify-between text-[11px] text-gray-500 dark:text-gray-400 font-mono">
+                    <span>Trọng số: ${lo.weight}%</span>
+                    <span>Mastery: <b class="text-blue-600 dark:text-blue-400">${oData.mastery}%</b> (Độ tin cậy: ${oData.confidence}%)</span>
+                  </div>
+                  <div class="w-full h-1.5 bg-gray-200 dark:bg-gray-700 rounded-full overflow-hidden">
+                    <div class="h-full bg-blue-600 rounded-full" style="width: ${oData.mastery}%;"></div>
+                  </div>
+                </div>
+              `;
+            }).join("")}
+          </div>
+        </div>
+      `;
+    }
+
     contentEl.innerHTML = `
       <div class="p-4 rounded-2xl bg-blue-50/60 dark:bg-blue-950/30 border border-blue-100 dark:border-blue-900/50 space-y-3">
         <div class="flex items-center justify-between">
@@ -651,33 +720,13 @@ class ProgressController {
         </div>
       </div>
 
-      <div class="space-y-2 pt-2">
-        <h4 class="text-xs font-bold text-gray-400 uppercase tracking-wider">Chi tiết 4 thành phần cấu thành Mastery:</h4>
-        
-        <div class="p-3 bg-gray-50 dark:bg-gray-900/50 rounded-xl space-y-1.5 text-xs">
-          <div class="flex justify-between">
-            <span class="text-gray-600 dark:text-gray-400">1. Độ chính xác 15 câu gần đây (30% trọng số):</span>
-            <span class="font-bold text-gray-900 dark:text-white font-mono">${ev.recentAccuracy || stat.mastery}%</span>
-          </div>
-          <div class="flex justify-between">
-            <span class="text-gray-600 dark:text-gray-400">2. Độ chính xác lịch sử (20% trọng số):</span>
-            <span class="font-bold text-gray-900 dark:text-white font-mono">${ev.overallAccuracy || stat.mastery}%</span>
-          </div>
-          <div class="flex justify-between">
-            <span class="text-gray-600 dark:text-gray-400">3. Tỷ lệ nhớ thẻ SRS (30% trọng số):</span>
-            <span class="font-bold text-gray-900 dark:text-white font-mono">${ev.srsRetentionPct || 50}%</span>
-          </div>
-          <div class="flex justify-between">
-            <span class="text-gray-600 dark:text-gray-400">4. Độ phủ bài tập (20% trọng số):</span>
-            <span class="font-bold text-gray-900 dark:text-white font-mono">${ev.coveragePct || 40}%</span>
-          </div>
-        </div>
+      ${objectivesHtml}
 
-        <div class="p-3 bg-gray-50 dark:bg-gray-900/50 rounded-xl space-y-1 text-xs">
-          <span class="font-bold text-gray-700 dark:text-gray-300">📊 Bằng chứng mẫu dữ liệu thực tế:</span>
-          <p class="text-gray-500">• <b>${stat.total}</b> câu đã thực hiện (${stat.correct} đúng, ${stat.total - stat.correct} sai)</p>
-          <p class="text-gray-500">• <b>${ev.srsCardCount || 0}</b> thẻ nhớ từ vựng liên quan trong bộ thẻ SRS</p>
-        </div>
+      <div class="p-3 bg-gray-50 dark:bg-gray-900/50 rounded-2xl border border-gray-200 dark:border-gray-700/60 space-y-1 text-xs">
+        <span class="font-bold text-gray-700 dark:text-gray-300">📊 Bằng chứng mẫu dữ liệu thực tế:</span>
+        <p class="text-gray-500">• <b>${stat.total}</b> câu đã thực hiện (${stat.correct} đúng, ${stat.total - stat.correct} sai)</p>
+        <p class="text-gray-500">• <b>${ev.srsCardCount || 0}</b> thẻ nhớ từ vựng liên quan trong bộ thẻ SRS (Tỷ lệ nhớ: ${ev.srsRetentionPct || 50}%)</p>
+      </div>
       </div>
     `;
 

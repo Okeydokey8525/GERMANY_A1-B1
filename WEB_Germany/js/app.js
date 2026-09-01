@@ -281,6 +281,10 @@ class AppController {
     const btnClose = document.getElementById("btn-close-beginner-guide");
     const btnStart = document.getElementById("btn-start-learning-now");
     const modal = document.getElementById("beginner-guide-modal");
+    const tabSteps = document.getElementById("btn-modal-tab-steps");
+    const tab7Days = document.getElementById("btn-modal-tab-7days");
+    const viewSteps = document.getElementById("modal-view-steps");
+    const view7Days = document.getElementById("modal-view-7days");
 
     if (btnOpen && modal) {
       btnOpen.addEventListener("click", () => modal.classList.remove("hidden"));
@@ -293,6 +297,22 @@ class AppController {
         modal.classList.add("hidden");
         this.switchTab("roadmap");
         this.showToast("Bắt đầu Chặng 1: Bảng chữ cái & Luyện phát âm 🚀");
+      });
+    }
+
+    if (tabSteps && tab7Days && viewSteps && view7Days) {
+      tabSteps.addEventListener("click", () => {
+        tabSteps.className = "flex-1 py-1.5 rounded-xl bg-white dark:bg-gray-800 text-emerald-700 dark:text-emerald-300 shadow-2xs font-bold";
+        tab7Days.className = "flex-1 py-1.5 rounded-xl text-gray-500 hover:text-gray-800 dark:hover:text-gray-200 font-semibold";
+        viewSteps.classList.remove("hidden");
+        view7Days.classList.add("hidden");
+      });
+
+      tab7Days.addEventListener("click", () => {
+        tab7Days.className = "flex-1 py-1.5 rounded-xl bg-white dark:bg-gray-800 text-emerald-700 dark:text-emerald-300 shadow-2xs font-bold";
+        tabSteps.className = "flex-1 py-1.5 rounded-xl text-gray-500 hover:text-gray-800 dark:hover:text-gray-200 font-semibold";
+        view7Days.classList.remove("hidden");
+        viewSteps.classList.add("hidden");
       });
     }
   }

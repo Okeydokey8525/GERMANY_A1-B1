@@ -100,38 +100,73 @@ class PlacementController {
   finishTest() {
     this.isTestRunning = false;
     let correctCount = 0;
-    let a1Correct = 0, a2Correct = 0, b1Correct = 0;
+    
+    const skillMap = {
+      grammar: { correct: 0, total: 0 },
+      vocab: { correct: 0, total: 0 },
+      reading: { correct: 0, total: 0 },
+      listening: { correct: 0, total: 0 }
+    };
 
     this.questions.forEach((q, idx) => {
       const isCorrect = this.userAnswers[idx] === q.answer;
+      const sk = q.skill || "grammar";
+      if (!skillMap[sk]) skillMap[sk] = { correct: 0, total: 0 };
+      skillMap[sk].total++;
+
       if (isCorrect) {
         correctCount++;
-        if (q.level === "A1") a1Correct++;
-        else if (q.level === "A2") a2Correct++;
-        else if (q.level === "B1") b1Correct++;
+        skillMap[sk].correct++;
       }
     });
 
+    const calcSkillLevel = (sk) => {
+      const s = skillMap[sk];
+      if (!s || s.total === 0) return "A1.1";
+      const rate = s.correct / s.total;
+      if (rate >= 0.85) return "B1.1";
+      if (rate >= 0.65) return "A2.2";
+      if (rate >= 0.45) return "A2.1";
+      if (rate >= 0.25) return "A1.2";
+      return "A1.1";
+    };
+
     let estLevel = "A1";
     let subLevel = "A1.1";
-    let desc = "Bạn phù hợp bắt đầu từ giai đoạn nền tảng: Phát âm, Chào hỏi và Động từ cơ bản.";
+    let confidence = "Trung bình";
+    let desc = "Bạn phù hợp bắt đầu từ chặng số 0: Phát âm, Chào hỏi, Số đếm và Động từ cơ bản.";
+    let recommendation = "Khuyến nghị: Bắt đầu từ Chặng A1-01 và luyện phát âm hàng ngày.";
 
     if (correctCount >= 14) {
       estLevel = "B1";
       subLevel = "B1.1";
-      desc = "Kiến thức nền tảng của bạn rất vững chắc! Bạn có thể học ngay các chủ điểm B1 nâng cao.";
-    } else if (correctCount >= 11) {
+      confidence = "Cao";
+      desc = "Nền tảng ngữ pháp và từ vựng A1–A2 của bạn rất vững chắc!";
+      recommendation = "Khuyến nghị: Chuyển thẳng sang lộ trình B1 (Bị động, Giả định Konjunktiv II & Viết luận).";
+    } else if (correctCount >= 12) {
       estLevel = "A2";
-      subLevel = "A2.2";
-      desc = "Bạn đã nắm chắc ngữ pháp A1 và phần lớn A2, sẵn sàng chuyển tiếp lên B1.";
-    } else if (correctCount >= 8) {
+      subLevel = "A2.2 / B1.1 (Biên độ chuyển tiếp)";
+      confidence = "Khá";
+      desc = "Bạn đã nắm chắc hầu hết ngữ pháp A2 và một phần cấu trúc B1.";
+      recommendation = "Khuyến nghị: Ôn tập củng cố Mệnh đề phụ (Nebensätze) trước khi bước sang B1.";
+    } else if (correctCount >= 9) {
       estLevel = "A2";
       subLevel = "A2.1";
-      desc = "Bạn đã hiểu cơ bản A1, nên bắt đầu ôn tập và thực hành các chủ điểm Akkusativ/Dativ A2.";
-    } else if (correctCount >= 5) {
+      confidence = "Khá";
+      desc = "Bạn đã hoàn thành tốt trình độ A1 và sẵn sàng học các chủ điểm A2.";
+      recommendation = "Khuyến nghị: Tập trung vào Dativ, Giới từ 2 chiều (Wechselpräpositionen) và Quá khứ Perfekt.";
+    } else if (correctCount >= 6) {
       estLevel = "A1";
-      subLevel = "A1.2";
-      desc = "Bạn đã biết một số từ vựng cơ bản, nên tập trung hoàn thiện mạo từ và cách Akkusativ A1.";
+      subLevel = "A1.2 / A2.1 (Biên độ chuyển tiếp)";
+      confidence = "Trung bình";
+      desc = "Bạn đã có vốn từ cơ bản, nhưng cần củng cố lại mạo từ và cách Akkusativ/Dativ.";
+      recommendation = "Khuyến nghị: Hoàn thành bài tập Akkusativ và Trật tự từ V2 trước khi chuyển sang A2.";
+    } else {
+      estLevel = "A1";
+      subLevel = "A1.1";
+      confidence = "Cao";
+      desc = "Bạn mới bắt đầu học tiếng Đức hoặc cần xây dựng lại nền tảng từ đầu.";
+      recommendation = "Khuyến nghị: Làm quen với Bảng chữ cái, 6 Bước cho người mới và bài học Nicos Weg A1.";
     }
 
     const testView = document.getElementById("placement-test-view");
@@ -142,24 +177,64 @@ class PlacementController {
     const btnApply = document.getElementById("placement-btn-apply");
 
     if (testView) testView.classList.add("hidden");
-    if (resultView) resultView.classList.remove("hidden");
+    if (resultView) {
+      resultView.classList.remove("hidden");
+      resultView.innerHTML = `
+        <div class="w-16 h-16 rounded-3xl bg-emerald-100 text-emerald-600 mx-auto flex items-center justify-center text-3xl shadow-md">
+          🏆
+        </div>
+        <div class="space-y-2 text-center">
+          <span class="text-xs font-bold text-gray-400 uppercase tracking-wider">Ước tính trình độ tham khảo:</span>
+          <h4 class="text-2xl font-black text-blue-600 dark:text-blue-400">${subLevel}</h4>
+          <p class="text-sm font-bold text-gray-700 dark:text-gray-300 font-mono">${correctCount} / ${this.questions.length} câu đúng • Độ tin cậy: <b class="text-emerald-600">${confidence}</b></p>
+          <p class="text-xs text-gray-500 dark:text-gray-400 max-w-sm mx-auto pt-1 leading-relaxed">${desc}</p>
+        </div>
 
-    if (levelTitle) levelTitle.textContent = `${subLevel} (${estLevel})`;
-    if (scoreText) scoreText.textContent = `${correctCount} / ${this.questions.length} câu đúng`;
-    if (descText) descText.textContent = desc;
+        <!-- Detailed Skill Breakdown Grid -->
+        <div class="grid grid-cols-2 gap-2.5 p-3.5 rounded-2xl bg-gray-50 dark:bg-gray-900/50 border border-gray-200 dark:border-gray-700 text-left text-xs">
+          <div>
+            <span class="text-gray-400 font-medium">📊 Ngữ pháp (Grammar):</span>
+            <div class="font-bold text-gray-900 dark:text-white font-mono text-sm">${calcSkillLevel("grammar")} (${skillMap.grammar.correct}/${skillMap.grammar.total})</div>
+          </div>
+          <div>
+            <span class="text-gray-400 font-medium">📚 Từ vựng (Vocabulary):</span>
+            <div class="font-bold text-gray-900 dark:text-white font-mono text-sm">${calcSkillLevel("vocab")} (${skillMap.vocab.correct}/${skillMap.vocab.total})</div>
+          </div>
+          <div>
+            <span class="text-gray-400 font-medium">📖 Đọc hiểu (Reading):</span>
+            <div class="font-bold text-gray-900 dark:text-white font-mono text-sm">${calcSkillLevel("reading")} (${skillMap.reading.correct}/${skillMap.reading.total})</div>
+          </div>
+          <div>
+            <span class="text-gray-400 font-medium">🎧 Nghe hiểu (Listening):</span>
+            <div class="font-bold text-gray-900 dark:text-white font-mono text-sm">${calcSkillLevel("listening")} (${skillMap.listening.correct}/${skillMap.listening.total})</div>
+          </div>
+        </div>
 
-    if (btnApply) {
-      btnApply.onclick = () => {
-        if (window.appCtrl) {
-          window.appCtrl.syncGlobalLevel(estLevel);
-          const lvlSelect = document.getElementById("global-level-select");
-          if (lvlSelect) lvlSelect.value = estLevel;
-          window.appCtrl.switchTab("roadmap");
-          window.appCtrl.showToast(`Đã thiết lập cấp độ: ${subLevel}! Chúc bạn học tốt 🎉`);
-        }
-        const modal = document.getElementById("placement-modal");
-        if (modal) modal.classList.add("hidden");
-      };
+        <div class="p-3 bg-blue-50 dark:bg-blue-950/40 rounded-xl border border-blue-100 dark:border-blue-900/40 text-xs text-blue-800 dark:text-blue-200 text-left">
+          💡 <b>${recommendation}</b>
+        </div>
+
+        <p class="text-[10px] text-gray-400 italic text-center max-w-xs mx-auto">
+          ⚠️ Kết quả trên mang tính chất chẩn đoán tham khảo theo hệ thống bài học của DeutschMaster, không thay thế cho chứng chỉ khảo thí chính thức của Viện Goethe / telc.
+        </p>
+
+        <button id="placement-btn-apply" class="w-full py-3.5 bg-emerald-600 hover:bg-emerald-700 text-white font-extrabold text-sm rounded-2xl shadow-lg shadow-emerald-500/25 transition-all">
+          Áp Dụng Cấp Độ (${estLevel}) & Bắt Đầu Học 🚀
+        </button>
+      `;
+
+      const newBtnApply = document.getElementById("placement-btn-apply");
+      if (newBtnApply) {
+        newBtnApply.addEventListener("click", () => {
+          if (window.appCtrl) {
+            window.appCtrl.syncGlobalLevel(estLevel);
+            window.appCtrl.switchTab("roadmap");
+            window.appCtrl.showToast(`Đã thiết lập lộ trình học theo trình độ ${estLevel}! 🚀`);
+          }
+          const modal = document.getElementById("placement-modal");
+          if (modal) modal.classList.add("hidden");
+        });
+      }
     }
   }
 }

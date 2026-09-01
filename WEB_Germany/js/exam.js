@@ -312,11 +312,11 @@ class ExamController {
     if (badgeEl) {
       if (isPassed) {
         badgeEl.className = "px-4 py-2 rounded-2xl bg-emerald-100 dark:bg-emerald-900/50 text-emerald-800 dark:text-emerald-200 font-extrabold text-sm border border-emerald-300";
-        badgeEl.textContent = "🏆 ĐẠT (BESTANDEN)";
+        badgeEl.textContent = "🏆 ĐẠT NGƯỠNG THAM KHẢO (≥ 60%)";
         if (window.speechCtrl) window.speechCtrl.playCorrectSound();
       } else {
         badgeEl.className = "px-4 py-2 rounded-2xl bg-rose-100 dark:bg-rose-900/50 text-rose-800 dark:text-rose-200 font-extrabold text-sm border border-rose-300";
-        badgeEl.textContent = "❌ CHƯA ĐẠT (NICHT BESTANDEN)";
+        badgeEl.textContent = "❌ CHƯA ĐẠT NGƯỠNG THAM KHẢO (< 60%)";
         if (window.speechCtrl) window.speechCtrl.playComboSound(1);
       }
     }
