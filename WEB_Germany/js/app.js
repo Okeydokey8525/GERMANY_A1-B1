@@ -148,6 +148,13 @@ class AppController {
   }
 
   async loadAllDatasets() {
+    // Failsafe timeout to prevent infinite spinner on any network issue
+    const failsafeTimer = setTimeout(() => {
+      const loader = document.getElementById("app-global-loader");
+      if (loader) loader.classList.add("hidden");
+      this.isLoading = false;
+    }, 2000);
+
     try {
       const [vocabTopics, vocab, grammar, grammarExercises, lessons, mockExams] = await Promise.all([
         fetch("./data/vocab_topics.json").then(r => r.json()).catch(() => []),
@@ -158,20 +165,22 @@ class AppController {
         fetch("./data/mock_exams.json").then(r => r.json()).catch(() => ({ A1: [], A2: [], B1: [] }))
       ]);
 
-      // Distribute to controllers
-      if (window.flashcardCtrl) window.flashcardCtrl.setData(vocab);
-      if (window.quizCtrl) window.quizCtrl.setData(vocab);
-      if (window.grammarCtrl) window.grammarCtrl.setData(grammar);
-      if (window.grammarExCtrl) window.grammarExCtrl.setData(grammarExercises);
-      if (window.lessonsCtrl) window.lessonsCtrl.setData(lessons);
-      if (window.examCtrl) window.examCtrl.setData(mockExams);
+      // Distribute to controllers with try/catch isolation
+      try { if (window.flashcardCtrl) window.flashcardCtrl.setData(vocab); } catch (e) { console.warn(e); }
+      try { if (window.quizCtrl) window.quizCtrl.setData(vocab); } catch (e) { console.warn(e); }
+      try { if (window.grammarCtrl) window.grammarCtrl.setData(grammar); } catch (e) { console.warn(e); }
+      try { if (window.grammarExCtrl) window.grammarExCtrl.setData(grammarExercises); } catch (e) { console.warn(e); }
+      try { if (window.lessonsCtrl) window.lessonsCtrl.setData(lessons); } catch (e) { console.warn(e); }
+      try { if (window.examCtrl) window.examCtrl.setData(mockExams); } catch (e) { console.warn(e); }
 
+    } catch (e) {
+      console.error("Critical error loading datasets:", e);
+      this.showToast("Đã tải dữ liệu dự phòng!");
+    } finally {
+      clearTimeout(failsafeTimer);
       this.isLoading = false;
       const loader = document.getElementById("app-global-loader");
       if (loader) loader.classList.add("hidden");
-    } catch (e) {
-      console.error("Critical error loading datasets:", e);
-      this.showToast("Không thể tải dữ liệu. Vui lòng kiểm tra kết nối mạng!");
     }
   }
 
