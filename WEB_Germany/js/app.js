@@ -152,10 +152,11 @@ class AppController {
   // -------------------------------------------------------------
   async loadAllData() {
     try {
-      const [vTopics, vA1B1, gData, lData, eData] = await Promise.all([
+      const [vTopics, vA1B1, gData, gExercises, lData, eData] = await Promise.all([
         fetch("./data/vocab_topics.json").then(r => r.json()),
         fetch("./data/vocab_a1_b1.json").then(r => r.json()),
         fetch("./data/grammar_data.json").then(r => r.json()),
+        fetch("./data/grammar_exercises.json").then(r => r.json()),
         fetch("./data/lessons_data.json").then(r => r.json()),
         fetch("./data/mock_exams.json").then(r => r.json()),
       ]);
@@ -163,6 +164,7 @@ class AppController {
       if (window.flashcardCtrl) window.flashcardCtrl.setData(vA1B1);
       if (window.quizCtrl) window.quizCtrl.setData(vA1B1);
       if (window.grammarCtrl) window.grammarCtrl.setData(gData);
+      if (window.grammarExCtrl) window.grammarExCtrl.setData(gExercises);
       if (window.lessonsCtrl) window.lessonsCtrl.setData(lData);
       if (window.examCtrl) window.examCtrl.setData(eData);
 

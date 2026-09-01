@@ -1,4 +1,4 @@
-// WEB_Germany Nicos Weg 228 Lessons Module
+// WEB_Germany Nicos Weg 228 Lessons Module (Clean Chat Dialogues & Audio)
 
 class LessonsController {
   constructor() {
@@ -6,6 +6,7 @@ class LessonsController {
     this.currentLevel = "A1";
     this.searchQuery = "";
     this.completedLessons = new Set();
+    this.currentPlayingIndex = -1;
 
     this.initElements();
     this.loadCompletedState();
@@ -85,10 +86,10 @@ class LessonsController {
     const list = this.lessonsData[this.currentLevel] || [];
     const filtered = list.filter(item => {
       if (!this.searchQuery) return true;
-      const matchTitle = item.title.toLowerCase().includes(this.searchQuery);
+      const matchTitle = (item.title || "").toLowerCase().includes(this.searchQuery);
       const matchNum = `${item.number}`.includes(this.searchQuery);
-      const matchDialogue = (item.dialogue || "").toLowerCase().includes(this.searchQuery);
-      return matchTitle || matchNum || matchDialogue;
+      const matchSummary = (item.summary_vi || "").toLowerCase().includes(this.searchQuery);
+      return matchTitle || matchNum || matchSummary;
     });
 
     if (countEl) countEl.textContent = `${filtered.length} bài học`;
@@ -106,33 +107,58 @@ class LessonsController {
     filtered.forEach(lesson => {
       const isDone = this.completedLessons.has(lesson.id);
       const card = document.createElement("div");
-      card.className = `p-4 sm:p-5 rounded-2xl border-2 transition-all duration-200 ${
+      card.className = `p-4 sm:p-5 rounded-3xl border-2 transition-all duration-200 ${
         isDone
-          ? "border-emerald-500/40 bg-emerald-50/40 dark:bg-emerald-950/20 shadow-sm"
-          : "border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-800/80 hover:border-blue-500 dark:hover:border-blue-400 shadow-sm"
-      } flex flex-col justify-between`;
+          ? "border-emerald-500/40 bg-emerald-50/30 dark:bg-emerald-950/20 shadow-sm"
+          : "border-gray-200/90 dark:border-gray-800 bg-white dark:bg-gray-800/90 hover:border-blue-500 dark:hover:border-blue-400 shadow-sm hover:shadow-md"
+      } flex flex-col justify-between space-y-3`;
+
+      const vocabTagsHtml = (lesson.key_vocab || []).slice(0, 4).map(v => 
+        `<span class="px-2 py-0.5 rounded-md text-[10px] font-mono bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-300">${v}</span>`
+      ).join(" ");
 
       card.innerHTML = `
-        <div>
-          <div class="flex items-center justify-between gap-2 mb-2">
-            <span class="px-2.5 py-0.5 rounded-full text-xs font-mono font-bold bg-blue-100 dark:bg-blue-900/40 text-blue-700 dark:text-blue-300">
-              ${this.currentLevel} - Bài ${lesson.number}
-            </span>
-            <button class="lesson-check-btn p-1 rounded-lg ${isDone ? 'text-emerald-600 dark:text-emerald-400 font-bold' : 'text-gray-400 hover:text-gray-600'}" title="Đánh dấu hoàn thành">
+        <div class="space-y-2">
+          <!-- Top Row: Badge & Checkbox -->
+          <div class="flex items-center justify-between gap-2">
+            <div class="flex items-center gap-1.5">
+              <span class="px-2.5 py-0.5 rounded-full text-xs font-mono font-bold bg-blue-100 dark:bg-blue-900/40 text-blue-700 dark:text-blue-300">
+                ${this.currentLevel} • Bài ${lesson.number}
+              </span>
+              <span class="text-xs font-bold text-gray-400">|</span>
+              <span class="text-xs font-semibold text-gray-500 dark:text-gray-400 truncate max-w-[120px]">${lesson.grammar_focus || 'Giao tiếp'}</span>
+            </div>
+            <button class="lesson-check-btn px-2.5 py-1 rounded-xl text-xs font-bold transition-all ${
+              isDone ? 'bg-emerald-100 dark:bg-emerald-900/40 text-emerald-700 dark:text-emerald-300' : 'bg-gray-100 dark:bg-gray-700 text-gray-500 hover:text-gray-800 dark:hover:text-gray-200'
+            }" title="Đánh dấu hoàn thành">
               ${isDone ? '✓ Đã học' : '○ Chưa học'}
             </button>
           </div>
-          <h3 class="font-bold text-base sm:text-lg text-gray-900 dark:text-white mb-1.5">${lesson.title}</h3>
-          <p class="text-xs sm:text-sm text-gray-600 dark:text-gray-300 line-clamp-2 mb-4">${lesson.summary}</p>
+
+          <!-- Title -->
+          <h3 class="font-extrabold text-base sm:text-lg text-gray-900 dark:text-white leading-tight">
+            ${lesson.title}
+          </h3>
+
+          <!-- Summary in Vietnamese -->
+          <p class="text-xs sm:text-sm text-gray-600 dark:text-gray-300 leading-relaxed line-clamp-2">
+            ${lesson.summary_vi}
+          </p>
+
+          <!-- Key Vocab Tags -->
+          <div class="flex items-center gap-1 flex-wrap pt-1">
+            ${vocabTagsHtml}
+          </div>
         </div>
 
-        <button class="btn-open-lesson w-full py-2 px-3 rounded-xl bg-gray-100 dark:bg-gray-700 hover:bg-blue-600 hover:text-white dark:hover:bg-blue-600 font-semibold text-xs sm:text-sm text-gray-800 dark:text-gray-200 transition-all flex items-center justify-center gap-2">
+        <!-- Open Lesson Button -->
+        <button class="btn-open-lesson w-full py-2.5 px-3 rounded-2xl bg-blue-50 dark:bg-blue-950/40 hover:bg-blue-600 hover:text-white dark:hover:bg-blue-600 text-blue-700 dark:text-blue-300 font-bold text-xs sm:text-sm transition-all duration-200 flex items-center justify-center gap-2 shadow-xs group">
           <span>Xem kịch bản & Luyện nghe</span>
-          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
+          <svg class="w-4 h-4 group-hover:translate-x-0.5 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
         </button>
       `;
 
-      // Checkbox toggle
+      // Checkbox click
       const checkBtn = card.querySelector(".lesson-check-btn");
       if (checkBtn) {
         checkBtn.addEventListener("click", (e) => {
@@ -148,7 +174,7 @@ class LessonsController {
         });
       }
 
-      // Open modal button
+      // Open Modal
       const openBtn = card.querySelector(".btn-open-lesson");
       if (openBtn) {
         openBtn.addEventListener("click", () => this.openLessonModal(lesson));
@@ -162,48 +188,69 @@ class LessonsController {
     const modal = document.getElementById("lesson-reader-modal");
     const titleEl = document.getElementById("lesson-modal-title");
     const subTitleEl = document.getElementById("lesson-modal-subtitle");
+    const grammarBadgeEl = document.getElementById("lesson-modal-grammar");
     const bodyEl = document.getElementById("lesson-modal-dialogue");
     const btnPlayAll = document.getElementById("btn-play-all-dialogue");
 
     if (!modal) return;
 
-    if (titleEl) titleEl.textContent = `${this.currentLevel} - Bài ${lesson.number}: ${lesson.title}`;
-    if (subTitleEl) subTitleEl.textContent = lesson.summary;
+    if (titleEl) titleEl.textContent = `${this.currentLevel} • Bài ${lesson.number}: ${lesson.title}`;
+    if (subTitleEl) subTitleEl.textContent = lesson.summary_vi;
+    if (grammarBadgeEl) grammarBadgeEl.textContent = `Trọng tâm: ${lesson.grammar_focus || 'Hội thoại & Mẫu câu'}`;
 
     if (bodyEl) {
       bodyEl.innerHTML = "";
-      const lines = (lesson.dialogue || "").splitlines ? lesson.dialogue.splitlines() : (lesson.dialogue || "").split("\n");
+      const turns = lesson.dialogue || [];
       
-      lines.forEach(line => {
-        const trimmed = line.trim();
-        if (!trimmed) return;
+      if (turns.length === 0) {
+        bodyEl.innerHTML = `<div class="text-center py-8 text-gray-400">Đoạn hội thoại đang được cập nhật...</div>`;
+      } else {
+        turns.forEach((turn, idx) => {
+          const row = document.createElement("div");
+          row.className = "flex items-start gap-3 p-3 rounded-2xl hover:bg-blue-50/70 dark:hover:bg-blue-950/40 transition-colors group cursor-pointer border border-transparent hover:border-blue-100 dark:hover:border-blue-900/50";
+          row.setAttribute("data-line-idx", idx);
 
-        const row = document.createElement("div");
-        row.className = "p-2.5 rounded-xl hover:bg-blue-50 dark:hover:bg-blue-950/40 text-xs sm:text-sm text-gray-800 dark:text-gray-200 cursor-pointer transition-colors flex items-start justify-between gap-3 group";
-        
-        row.innerHTML = `
-          <div class="flex-1 leading-relaxed">${trimmed}</div>
-          <button class="opacity-0 group-hover:opacity-100 p-1 text-blue-600 dark:text-blue-400 hover:scale-110 transition-all" title="Nghe câu này">
-            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.536 8.464a5 5 0 010 7.072m2.828-9.9a9 9 0 010 12.728M5.586 15H4a1 1 0 01-1-1v-4a1 1 0 011-1h1.586l4.707-4.707C10.923 3.663 12 4.109 12 5v14c0 .891-1.077 1.337-1.707.707L5.586 15z"></path></svg>
-          </button>
-        `;
+          row.innerHTML = `
+            <!-- Avatar -->
+            <div class="w-9 h-9 rounded-2xl bg-gray-100 dark:bg-gray-800 flex items-center justify-center text-lg shrink-0 shadow-xs border border-gray-200/50 dark:border-gray-700">
+              ${turn.avatar || '🗣️'}
+            </div>
 
-        row.addEventListener("click", () => {
-          if (window.speechCtrl) {
-            // Remove speaker prefix (e.g. "Nico: ") before speaking
-            const cleanText = trimmed.replace(/^[^:]+:\s*/, '');
-            window.speechCtrl.speak(cleanText);
-          }
+            <!-- Dialogue Bubble -->
+            <div class="flex-1 space-y-1">
+              <div class="flex items-center justify-between">
+                <span class="text-xs font-bold text-gray-900 dark:text-white">${turn.speaker}</span>
+                <button class="line-speak-btn p-1 text-gray-400 group-hover:text-blue-600 dark:group-hover:text-blue-400 hover:scale-110 transition-all" title="Nghe câu này">
+                  <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.536 8.464a5 5 0 010 7.072m2.828-9.9a9 9 0 010 12.728M5.586 15H4a1 1 0 01-1-1v-4a1 1 0 011-1h1.586l4.707-4.707C10.923 3.663 12 4.109 12 5v14c0 .891-1.077 1.337-1.707.707L5.586 15z"></path></svg>
+                </button>
+              </div>
+              <p class="text-xs sm:text-sm font-semibold text-gray-800 dark:text-gray-100 leading-relaxed">
+                ${turn.text_de}
+              </p>
+              ${turn.text_vi ? `<p class="text-xs text-gray-500 dark:text-gray-400 italic">${turn.text_vi}</p>` : ''}
+            </div>
+          `;
+
+          // Click anywhere on bubble to pronounce
+          row.addEventListener("click", () => {
+            if (window.speechCtrl) {
+              window.speechCtrl.speak(turn.text_de);
+            }
+          });
+
+          bodyEl.appendChild(row);
         });
-
-        bodyEl.appendChild(row);
-      });
+      }
     }
 
+    // Play All functionality
     if (btnPlayAll) {
       btnPlayAll.onclick = () => {
-        if (window.speechCtrl && lesson.dialogue) {
-          window.speechCtrl.speak(lesson.dialogue, 0.85);
+        if (!lesson.dialogue || lesson.dialogue.length === 0) return;
+        const allText = lesson.dialogue.map(t => `${t.speaker}: ${t.text_de}`).join(". ");
+        if (window.speechCtrl) {
+          window.speechCtrl.speak(allText, 0.85);
+          if (window.appCtrl) window.appCtrl.showToast("Đang phát toàn bộ bài hội thoại...");
         }
       };
     }
@@ -216,6 +263,9 @@ class LessonsController {
     const modal = document.getElementById("lesson-reader-modal");
     if (modal) modal.classList.add("hidden");
     document.body.style.overflow = "";
+    if (window.speechCtrl && window.speechCtrl.synth) {
+      window.speechCtrl.synth.cancel();
+    }
   }
 }
 

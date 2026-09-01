@@ -94,14 +94,14 @@ body {
 
 /* Glassmorphism */
 .glass-panel {
-  background: rgba(255, 255, 255, 0.85);
+  background: rgba(255, 255, 255, 0.88);
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
   border: 1px solid rgba(255, 255, 255, 0.3);
 }
 
 .dark .glass-panel {
-  background: rgba(17, 24, 39, 0.85);
+  background: rgba(17, 24, 39, 0.88);
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
   border: 1px solid rgba(255, 255, 255, 0.08);
@@ -110,7 +110,7 @@ body {
 /* Pulse Glow Keyframes */
 @keyframes pulse-gentle {
   0%, 100% { transform: scale(1); opacity: 1; }
-  50% { transform: scale(1.04); opacity: 0.92; }
+  50% { transform: scale(1.03); opacity: 0.94; }
 }
 .animate-gentle-pulse {
   animation: pulse-gentle 2s infinite ease-in-out;
@@ -159,4 +159,13 @@ body {
 @keyframes toast-in {
   from { opacity: 0; transform: translateY(20px) scale(0.95); }
   to { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+/* Grammar Fill-in Input Styles */
+.grammar-input {
+  transition: all 0.15s ease-in-out;
+  outline: none;
+}
+.grammar-input:focus {
+  transform: scale(1.03);
 }

@@ -1,4 +1,4 @@
-// WEB_Germany Grammar & Verb Lookup Module
+// WEB_Germany Grammar & Verb Lookup Module (Theory + Exercises Integration)
 
 class GrammarController {
   constructor() {
@@ -6,11 +6,19 @@ class GrammarController {
     this.currentCase = "nominativ";
     this.verbSearchQuery = "";
     this.verbLevelFilter = "ALL";
+    this.currentSubTab = "practice"; // 'practice' (Luyện tập điền từ) or 'theory' (Tra cứu lý thuyết)
 
     this.initElements();
   }
 
   initElements() {
+    // Sub-tab toggles: Practice (Luyện tập) vs Theory (Lý thuyết)
+    const btnSubPractice = document.getElementById("btn-subtab-grammar-practice");
+    const btnSubTheory = document.getElementById("btn-subtab-grammar-theory");
+
+    if (btnSubPractice) btnSubPractice.addEventListener("click", () => this.switchSubTab("practice"));
+    if (btnSubTheory) btnSubTheory.addEventListener("click", () => this.switchSubTab("theory"));
+
     // Case Switcher tabs
     ["nominativ", "akkusativ", "dativ", "genitiv"].forEach(c => {
       const btn = document.getElementById(`btn-case-${c}`);
@@ -43,6 +51,28 @@ class GrammarController {
         this.renderVerbTable();
       });
     });
+  }
+
+  switchSubTab(tab) {
+    this.currentSubTab = tab;
+
+    const btnSubPractice = document.getElementById("btn-subtab-grammar-practice");
+    const btnSubTheory = document.getElementById("btn-subtab-grammar-theory");
+    const viewPractice = document.getElementById("grammar-view-practice");
+    const viewTheory = document.getElementById("grammar-view-theory");
+
+    if (btnSubPractice && btnSubTheory) {
+      if (tab === "practice") {
+        btnSubPractice.className = "px-4 py-2 rounded-xl text-xs sm:text-sm font-bold bg-blue-600 text-white shadow-md shadow-blue-500/20 transition-all";
+        btnSubTheory.className = "px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700 transition-all";
+      } else {
+        btnSubTheory.className = "px-4 py-2 rounded-xl text-xs sm:text-sm font-bold bg-blue-600 text-white shadow-md shadow-blue-500/20 transition-all";
+        btnSubPractice.className = "px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700 transition-all";
+      }
+    }
+
+    if (viewPractice) viewPractice.classList.toggle("hidden", tab !== "practice");
+    if (viewTheory) viewTheory.classList.toggle("hidden", tab !== "theory");
   }
 
   setData(data) {

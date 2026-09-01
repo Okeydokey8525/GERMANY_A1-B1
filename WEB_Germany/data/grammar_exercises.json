@@ -1,0 +1,412 @@
+[
+  {
+    "id": "cornelsen_modal_01",
+    "unit": "Kapitel 1: Modalverben",
+    "title": "Chia Động Từ Khuyết Thiếu: müssen, wollen, dürfen, sollen",
+    "level": "A1-A2",
+    "source": "Cornelsen Grammatik aktiv A1-B1 (Trang 38)",
+    "description": "Điền dạng chia đúng của động từ khuyết thiếu trong ngoặc vào chỗ trống trong đoạn hội thoại gia đình.",
+    "grammar_rule": "<b>Quy tắc chia Modalverben:</b><br>• <i>müssen</i>: ich muss, du musst, er/sie/es muss, wir müssen, ihr müsst, sie/Sie müssen.<br>• <i>wollen</i>: ich will, du willst, er/sie/es will, wir wollen, ihr wollt, sie/Sie wollen.<br>• <i>dürfen</i>: ich darf, du darfst, er/sie/es darf, wir dürfen, ihr dürft, sie/Sie dürfen.<br>• <i>sollen</i>: ich soll, du sollst, er/sie/es soll, wir sollen, ihr sollt, sie/Sie sollen.<br>⚠️ Lưu ý: Ngôi <b>ich</b> và <b>er/sie/es</b> luôn có dạng giống nhau và không có đuôi -t!",
+    "dialogues": [
+      {
+        "section_num": "3",
+        "verb_target": "müssen",
+        "title": "Hội thoại 3: müssen (bắt buộc / phải làm gì)",
+        "lines": [
+          {
+            "speaker": "Mutter",
+            "text_template": "Es gibt viel Arbeit. Alle {blank_1} helfen. Frank, du {blank_2} einkaufen.",
+            "blanks": [
+              {
+                "id": "blank_1",
+                "correct": [
+                  "müssen"
+                ],
+                "hint": "müssen (chủ ngữ: Alle = số nhiều)"
+              },
+              {
+                "id": "blank_2",
+                "correct": [
+                  "musst"
+                ],
+                "hint": "müssen (chủ ngữ: du)"
+              }
+            ]
+          },
+          {
+            "speaker": "Mutter",
+            "text_template": "Und ihr, Kinder, ihr {blank_3} putzen.",
+            "blanks": [
+              {
+                "id": "blank_3",
+                "correct": [
+                  "müsst"
+                ],
+                "hint": "müssen (chủ ngữ: ihr)"
+              }
+            ]
+          },
+          {
+            "speaker": "Annika und Juliane",
+            "text_template": "Wir {blank_4} putzen! Und Papa {blank_5} nur einkaufen! Das ist nicht fair!",
+            "blanks": [
+              {
+                "id": "blank_4",
+                "correct": [
+                  "müssen"
+                ],
+                "hint": "müssen (chủ ngữ: Wir)"
+              },
+              {
+                "id": "blank_5",
+                "correct": [
+                  "muss"
+                ],
+                "hint": "müssen (chủ ngữ: Papa = er)"
+              }
+            ]
+          },
+          {
+            "speaker": "Mutter",
+            "text_template": "Nicht fair! Nicht fair! Ich {blank_6} Wäsche waschen und die Wohnung aufräumen. Das ist nicht fair!",
+            "blanks": [
+              {
+                "id": "blank_6",
+                "correct": [
+                  "muss"
+                ],
+                "hint": "müssen (chủ ngữ: Ich)"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "section_num": "4",
+        "verb_target": "wollen",
+        "title": "Hội thoại 4: wollen (muốn / dự định làm gì)",
+        "lines": [
+          {
+            "speaker": "Eltern",
+            "text_template": "Wo {blank_7} ihr Urlaub machen?",
+            "blanks": [
+              {
+                "id": "blank_7",
+                "correct": [
+                  "wollt"
+                ],
+                "hint": "wollen (chủ ngữ: ihr)"
+              }
+            ]
+          },
+          {
+            "speaker": "Annika und Juliane",
+            "text_template": "Wir {blank_8} zu Oma fahren!",
+            "blanks": [
+              {
+                "id": "blank_8",
+                "correct": [
+                  "wollen"
+                ],
+                "hint": "wollen (chủ ngữ: Wir)"
+              }
+            ]
+          },
+          {
+            "speaker": "Eltern",
+            "text_template": "Juliane, {blank_9} du nicht im Urlaub schwimmen?",
+            "blanks": [
+              {
+                "id": "blank_9",
+                "correct": [
+                  "willst"
+                ],
+                "hint": "wollen (chủ ngữ: du)"
+              }
+            ]
+          },
+          {
+            "speaker": "Juliane",
+            "text_template": "Doch, ich {blank_10} schwimmen. Aber Annika {blank_11} zu Oma fahren.",
+            "blanks": [
+              {
+                "id": "blank_10",
+                "correct": [
+                  "will"
+                ],
+                "hint": "wollen (chủ ngữ: ich)"
+              },
+              {
+                "id": "blank_11",
+                "correct": [
+                  "will"
+                ],
+                "hint": "wollen (chủ ngữ: Annika = sie)"
+              }
+            ]
+          },
+          {
+            "speaker": "Vater",
+            "text_template": "Die Kinder {blank_12} zu Oma fahren. Das ist gut. Das kostet nicht viel.",
+            "blanks": [
+              {
+                "id": "blank_12",
+                "correct": [
+                  "wollen"
+                ],
+                "hint": "wollen (chủ ngữ: Die Kinder = số nhiều)"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "section_num": "5",
+        "verb_target": "dürfen",
+        "title": "Hội thoại 5: dürfen (được phép làm gì)",
+        "lines": [
+          {
+            "speaker": "Mutter",
+            "text_template": "Annika, du {blank_13} jetzt nicht Computer spielen!",
+            "blanks": [
+              {
+                "id": "blank_13",
+                "correct": [
+                  "darfst"
+                ],
+                "hint": "dürfen (chủ ngữ: du)"
+              }
+            ]
+          },
+          {
+            "speaker": "Annika",
+            "text_template": "Warum {blank_14} ich nicht?",
+            "blanks": [
+              {
+                "id": "blank_14",
+                "correct": [
+                  "darf"
+                ],
+                "hint": "dürfen (chủ ngữ: ich)"
+              }
+            ]
+          },
+          {
+            "speaker": "Mutter",
+            "text_template": "Du musst Hausaufgaben machen.",
+            "blanks": []
+          },
+          {
+            "speaker": "Annika",
+            "text_template": "{blank_15} Juliane Computer spielen?",
+            "blanks": [
+              {
+                "id": "blank_15",
+                "correct": [
+                  "Darf",
+                  "darf"
+                ],
+                "hint": "dürfen (chủ ngữ: Juliane = sie, đầu câu viết hoa)"
+              }
+            ]
+          },
+          {
+            "speaker": "Mutter",
+            "text_template": "Nein, ihr {blank_16} nicht Computer spielen und ihr {blank_17} auch nicht fernsehen.",
+            "blanks": [
+              {
+                "id": "blank_16",
+                "correct": [
+                  "dürft"
+                ],
+                "hint": "dürfen (chủ ngữ: ihr)"
+              },
+              {
+                "id": "blank_17",
+                "correct": [
+                  "dürft"
+                ],
+                "hint": "dürfen (chủ ngữ: ihr)"
+              }
+            ]
+          },
+          {
+            "speaker": "Juliane",
+            "text_template": "Wir {blank_18} nicht fernsehen? Dann {blank_19} Oma und Opa auch nicht fernsehen!",
+            "blanks": [
+              {
+                "id": "blank_18",
+                "correct": [
+                  "dürfen"
+                ],
+                "hint": "dürfen (chủ ngữ: Wir)"
+              },
+              {
+                "id": "blank_19",
+                "correct": [
+                  "dürfen"
+                ],
+                "hint": "dürfen (chủ ngữ: Oma und Opa = số nhiều)"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "section_num": "6",
+        "verb_target": "sollen",
+        "title": "Hội thoại 6: sollen (nên / được dặn phải làm gì)",
+        "lines": [
+          {
+            "speaker": "Mutter",
+            "text_template": "Der Arzt sagt, ich {blank_20} nicht arbeiten.",
+            "blanks": [
+              {
+                "id": "blank_20",
+                "correct": [
+                  "soll"
+                ],
+                "hint": "sollen (chủ ngữ: ich)"
+              }
+            ]
+          },
+          {
+            "speaker": "Vater",
+            "text_template": "Du {blank_21} nicht arbeiten? Wer {blank_22} dann den Garten machen?",
+            "blanks": [
+              {
+                "id": "blank_21",
+                "correct": [
+                  "sollst"
+                ],
+                "hint": "sollen (chủ ngữ: Du)"
+              },
+              {
+                "id": "blank_22",
+                "correct": [
+                  "soll"
+                ],
+                "hint": "sollen (chủ ngữ: Wer = ngôi 3 số ít)"
+              }
+            ]
+          },
+          {
+            "speaker": "Mutter",
+            "text_template": "{blank_23} wir deine Eltern fragen?",
+            "blanks": [
+              {
+                "id": "blank_23",
+                "correct": [
+                  "Sollen",
+                  "sollen"
+                ],
+                "hint": "sollen (chủ ngữ: wir, đầu câu viết hoa)"
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "cornelsen_artikel_02",
+    "unit": "Kapitel 4: Artikel & Kasus",
+    "title": "Biến Cách Quán Từ: Akkusativ & Dativ",
+    "level": "A1-A2",
+    "source": "Cornelsen Grammatik aktiv A1-B1",
+    "description": "Điền quán từ thích hợp (den, dem, die, das, einen, einem...) theo cách ngữ pháp tương ứng.",
+    "grammar_rule": "<b>Quy tắc biến cách mạo từ:</b><br>• <b>Akkusativ (Tân ngữ trực tiếp):</b> der ➔ <b>den / einen</b>; die ➔ die / eine; das ➔ das / ein.<br>• <b>Dativ (Tân ngữ gián tiếp / Sau giới từ Dativ mit, bei, nach, aus, zu):</b> der/das ➔ <b>dem / einem</b>; die ➔ <b>der / einer</b>; Plural ➔ <b>den / keinen + N-en</b>.",
+    "dialogues": [
+      {
+        "section_num": "1",
+        "verb_target": "Akkusativ",
+        "title": "Bài tập 1: Mạo từ trong câu Akkusativ (haben, kaufen, suchen...)",
+        "lines": [
+          {
+            "speaker": "Tim",
+            "text_template": "Ich kaufe {blank_ak1} neuen Laptop (m) und {blank_ak2} Kaffeemaschine (f).",
+            "blanks": [
+              {
+                "id": "blank_ak1",
+                "correct": [
+                  "einen",
+                  "den"
+                ],
+                "hint": "mạo từ giống đực (Maskulin) ở cách Akkusativ"
+              },
+              {
+                "id": "blank_ak2",
+                "correct": [
+                  "eine",
+                  "die"
+                ],
+                "hint": "mạo từ giống cái (Feminin) ở cách Akkusativ"
+              }
+            ]
+          },
+          {
+            "speaker": "Lisa",
+            "text_template": "Hast du {blank_ak3} Schlüssel (m) für {blank_ak4} Wohnung (f) gefunden?",
+            "blanks": [
+              {
+                "id": "blank_ak3",
+                "correct": [
+                  "den",
+                  "einen"
+                ],
+                "hint": "der Schlüssel ➔ den Schlüssel (Akkusativ)"
+              },
+              {
+                "id": "blank_ak4",
+                "correct": [
+                  "die"
+                ],
+                "hint": "für + Akkusativ: die Wohnung"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "section_num": "2",
+        "verb_target": "Dativ",
+        "title": "Bài tập 2: Mạo từ trong câu Dativ (helfen, danken, mit, nach...)",
+        "lines": [
+          {
+            "speaker": "Nico",
+            "text_template": "Ich fahre jeden Tag mit {blank_da1} Bus (m) và {blank_da2} U-Bahn (f) zur Arbeit.",
+            "blanks": [
+              {
+                "id": "blank_da1",
+                "correct": [
+                  "dem"
+                ],
+                "hint": "mit + Dativ: der Bus ➔ dem Bus"
+              },
+              {
+                "id": "blank_da2",
+                "correct": [
+                  "der"
+                ],
+                "hint": "mit + Dativ: die U-Bahn ➔ der U-Bahn"
+              }
+            ]
+          },
+          {
+            "speaker": "Emma",
+            "text_template": "Kannst du {blank_da3} Mann (m) dort drüben helfen?",
+            "blanks": [
+              {
+                "id": "blank_da3",
+                "correct": [
+                  "dem"
+                ],
+                "hint": "helfen + Dativ: der Mann ➔ dem Mann"
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+]
