@@ -1,0 +1,116 @@
+[
+  {
+    "id": "read_a1_01",
+    "level": "A1",
+    "type": "sign_and_notice",
+    "title": "Thông báo giờ mở cửa thư viện (Bibliothek)",
+    "context": "Bạn đọc một thông báo dán trước cửa Thư viện thành phố Berlin.",
+    "text": "Stadtbibliothek Berlin\n\nÖffnungszeiten:\nMontag - Freitag: 09:00 - 19:00 Uhr\nSamstag: 10:00 - 14:00 Uhr\nSonntag und an Feiertagen: Geschlossen\n\nAchtung: Die Rückgabe von Büchern ist auch außerhalb der Öffnungszeiten am Automaten möglich.",
+    "vocab": [
+      { "de": "die Öffnungszeiten", "vi": "giờ mở cửa" },
+      { "de": "geschlossen", "vi": "đóng cửa" },
+      { "de": "die Rückgabe", "vi": "việc trả lại (sách)" },
+      { "de": "außerhalb", "vi": "bên ngoài, ngoài giờ" }
+    ],
+    "questions": [
+      {
+        "q": "Vào ngày Chủ nhật (Sonntag), thư viện mở cửa lúc mấy giờ?",
+        "options": ["Thư viện đóng cửa cả ngày", "Từ 10:00 đến 14:00", "Từ 09:00 đến 19:00", "Chỉ mở buổi sáng"],
+        "answer": 0,
+        "explanation": "Thông báo ghi rõ: 'Sonntag und an Feiertagen: Geschlossen' (Chủ nhật và ngày lễ: Đóng cửa)."
+      },
+      {
+        "q": "Bạn có thể trả sách ngoài giờ mở cửa bằng cách nào?",
+        "options": ["Qua máy trả sách tự động (am Automaten)", "Gửi bưu điện", "Đưa cho bảo vệ", "Không thể trả sách"],
+        "answer": 0,
+        "explanation": "'Die Rückgabe von Büchern ist auch außerhalb der Öffnungszeiten am Automaten möglich.'"
+      }
+    ]
+  },
+  {
+    "id": "read_a1_02",
+    "level": "A1",
+    "type": "personal_email",
+    "title": "Email mời sinh nhật từ người bạn Jonas",
+    "context": "Bạn nhận được một email từ Jonas mời tham dự tiệc sinh nhật vào cuối tuần.",
+    "text": "Liebe Freunde,\n\nich habe am Samstag Geburtstag und möchte euch herzlich zu meiner Party einladen!\n\nWann: Samstag, 18. Oktober, ab 19:00 Uhr\nWo: Bei mir zu Hause (Goethestraße 12, 3. Stock)\n\nEs gibt Pizza, Salate und kühle Getränke. Wenn ihr möchtet, könnt ihr gerne Musik oder Spiele mitbringen.\n\nBitte gebt mir bis Donnerstag Bescheid, ob ihr kommen könnt.\n\nViele Grüße,\nJonas",
+    "vocab": [
+      { "de": "einladen", "vi": "mời" },
+      { "de": "die Party", "vi": "bữa tiệc" },
+      { "de": "mitbringen", "vi": "mang theo" },
+      { "de": "Bescheid geben", "vi": "thông báo, báo lại" }
+    ],
+    "questions": [
+      {
+        "q": "Bữa tiệc sinh nhật của Jonas bắt đầu lúc mấy giờ?",
+        "options": ["Từ 19:00 giờ tối thứ Bảy", "Lúc 18:00 giờ thứ Năm", "Lúc 12:00 giờ trưa", "Cả ngày thứ Bảy"],
+        "answer": 0,
+        "explanation": "Nội dung ghi: 'Samstag, 18. Oktober, ab 19:00 Uhr' (Thứ Bảy từ 19:00)."
+      },
+      {
+        "q": "Khách mời cần thông báo xác nhận tham gia trước ngày nào?",
+        "options": ["Trước thứ Năm (Donnerstag)", "Trước thứ Bảy", "Vào ngày sinh nhật", "Không cần báo trước"],
+        "answer": 0,
+        "explanation": "'Bitte gebt mir bis Donnerstag Bescheid, ob ihr kommen könnt.'"
+      }
+    ]
+  },
+  {
+    "id": "read_a2_01",
+    "level": "A2",
+    "type": "housing_ad",
+    "title": "Thông báo cho thuê căn hộ tại München",
+    "context": "Bạn đang tìm phòng trọ sinh viên và đọc thông báo trên bảng tin đại học.",
+    "text": "Schönes 2-Zimmer-Apartment in München-Schwabing zu vermieten!\n\nGröße: 52 m² mit Balkon und Einbauküche.\nLage: Sehr zentral, nur 3 Minuten zu Fuß zur U-Bahn-Station (U3/U6).\n\nKosten:\n• Kaltmiete: 750 Euro / Monat\n• Nebenkosten: 180 Euro (inkl. Heizung und Wasser)\n• Kaution: 2 Monatskaltmieten (1.500 Euro)\n\nVerfügbar ab: 01. Dezember. Nichtraucher bevorzugt. Haustiere sind leider nicht erlaubt.\n\nKontakt: Herr Weber (E-Mail: weber.wohnung@mail.de)",
+    "vocab": [
+      { "de": "zu vermieten", "vi": "cho thuê" },
+      { "de": "die Einbauküche", "vi": "bếp lắp sẵn" },
+      { "de": "die Kaltmiete", "vi": "tiền thuê nhà gốc (chưa phụ phí)" },
+      { "de": "die Nebenkosten", "vi": "chi phí phụ (điện sưởi, nước, rác)" },
+      { "de": "die Kaution", "vi": "tiền đặt cọc" }
+    ],
+    "questions": [
+      {
+        "q": "Tổng số tiền thuê trọn gói mỗi tháng (Warmmiete) là bao nhiêu?",
+        "options": ["930 Euro (750 + 180)", "750 Euro", "1.500 Euro", "520 Euro"],
+        "answer": 0,
+        "explanation": "Kaltmiete 750 Euro + Nebenkosten 180 Euro = 930 Euro / tháng."
+      },
+      {
+        "q": "Quy định nào sau đây là ĐÚNG về căn hộ?",
+        "options": ["Không được phép nuôi thú cưng (Haustiere nicht erlaubt)", "Được phép hút thuốc trong phòng", "Cách ga tàu điện 30 phút", "Chưa có bếp"],
+        "answer": 0,
+        "explanation": "Bài ghi rõ: 'Haustiere sind leider nicht erlaubt' (Rất tiếc không được nuôi thú cưng)."
+      }
+    ]
+  },
+  {
+    "id": "read_b1_01",
+    "level": "B1",
+    "type": "opinion_article",
+    "title": "Homeoffice: Cơ hội hay Thách thức trong công việc hiện đại?",
+    "context": "Đoạn trích từ tạp chí kinh tế xã hội Đức bàn luận về xu hướng làm việc từ xa.",
+    "text": "Immer mehr Unternehmen in Deutschland bieten ihren Mitarbeitern die Möglichkeit, von zu Hause aus zu arbeiten (Homeoffice). Diese Arbeitsform bringt zahlreiche Vorteile mit sich: Die Beschäftigten sparen täglich wertvolle Zeit, da der Weg zur Arbeit entfällt. Zudem können Familie und Beruf oft flexibler miteinander vereinbart werden.\n\nAllerdings warnen Arbeitspsychologen auch vor den Schattenseiten des Homeoffice. Viele Arbeitnehmer berichten von einer Verschmelzung von Freizeit und Arbeitszeit, da der Computer im Wohnzimmer stets griffbereit steht. Der fehlende direkte Kontakt zu Kollegen kann langfristig zu sozialer Isolation führen.\n\nExperten empfehlen daher ein 'hybrides Modell': Zwei bis drei Tage Präsenz im Büro und die restliche Zeit im Homeoffice bilden für die meisten Arbeitnehmer die ideale Balance.",
+    "vocab": [
+      { "de": "die Arbeitsform", "vi": "hình thức làm việc" },
+      { "de": "zeitsparend", "vi": "tiết kiệm thời gian" },
+      { "de": "die Schattenseite", "vi": "mặt tối, mặt bất lợi" },
+      { "de": "die soziale Isolation", "vi": "sự cô lập xã hội" },
+      { "de": "das hybride Modell", "vi": "mô hình kết hợp (lai)" }
+    ],
+    "questions": [
+      {
+        "q": "Một lợi ích lớn nhất của Homeoffice được nhắc đến trong đoạn 1 là gì?",
+        "options": ["Tiết kiệm thời gian đi lại và kết hợp linh hoạt công việc với gia đình", "Được trả lương cao hơn", "Không cần sử dụng máy tính", "Được nghỉ phép nhiều hơn"],
+        "answer": 0,
+        "explanation": "'Die Beschäftigten sparen täglich wertvolle Zeit, da der Weg zur Arbeit entfällt. Zudem können Familie und Beruf flexibler vereinbart werden.'"
+      },
+      {
+        "q": "Các chuyên gia khuyến nghị giải pháp nào để cân bằng tốt nhất?",
+        "options": ["Mô hình kết hợp (Làm ở văn phòng 2-3 ngày và thời gian còn lại làm tại nhà)", "Làm việc tại nhà 100%", "Làm việc tại văn phòng cả tuần", "Cấm làm việc tại nhà"],
+        "answer": 0,
+        "explanation": "Đoạn cuối: 'Experten empfehlen daher ein hybrides Modell: Zwei bis drei Tage Präsenz im Büro...'"
+      }
+    ]
+  }
+]

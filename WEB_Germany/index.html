@@ -124,6 +124,12 @@
         <button class="nav-tab-btn px-3.5 py-1.5 rounded-xl text-xs font-semibold text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800 transition-all" data-tab="grammar">
           <span>📊</span> <span>Ngữ pháp & Tra từ</span>
         </button>
+        <button class="nav-tab-btn px-3.5 py-1.5 rounded-xl text-xs font-semibold text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800 transition-all" data-tab="reading">
+          <span>📚</span> <span>Đọc hiểu</span>
+        </button>
+        <button class="nav-tab-btn px-3.5 py-1.5 rounded-xl text-xs font-semibold text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800 transition-all" data-tab="writing">
+          <span>📝</span> <span>Luyện viết</span>
+        </button>
         <button class="nav-tab-btn px-3.5 py-1.5 rounded-xl text-xs font-semibold text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800 transition-all" data-tab="speaking">
           <span>🗣️</span> <span>Luyện nói</span>
         </button>
@@ -182,6 +188,26 @@
         <button id="dash-resume-btn" class="px-5 py-2.5 rounded-2xl bg-blue-600 hover:bg-blue-700 text-white font-bold text-xs sm:text-sm shadow-md shadow-blue-500/20 transition-all self-stretch sm:self-center shrink-0 flex items-center justify-center gap-1.5">
           <span>Tiếp tục học</span> <span>→</span>
         </button>
+      </div>
+
+      <!-- Beginner Fast-Track Starter Card -->
+      <div class="p-5 rounded-3xl border-2 border-emerald-200 dark:border-emerald-900/50 bg-gradient-to-r from-emerald-50/70 via-teal-50/40 to-white dark:from-emerald-950/30 dark:to-gray-800 shadow-sm flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+        <div class="space-y-1">
+          <div class="flex items-center gap-2">
+            <span class="px-2.5 py-0.5 rounded-full text-[10px] font-black bg-emerald-100 text-emerald-800 dark:bg-emerald-900/60 dark:text-emerald-200">🚀 Dành cho người mới</span>
+            <span class="text-xs font-bold text-emerald-900 dark:text-emerald-300">Bắt đầu học từ số 0</span>
+          </div>
+          <h3 class="text-sm font-bold text-gray-900 dark:text-gray-100">6 bước nền tảng cốt lõi: Phát âm → Chào hỏi → Số đếm → Động từ sein/haben → Mạo từ → V2</h3>
+          <p class="text-xs text-gray-500 dark:text-gray-400">Không biết bắt đầu từ đâu? Xem hướng dẫn từng bước và làm bài phân loại trình độ miễn phí.</p>
+        </div>
+        <div class="flex items-center gap-2 self-stretch sm:self-center shrink-0">
+          <button id="btn-open-beginner-guide" class="px-4 py-2.5 rounded-2xl bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs shadow-md transition-all">
+            6 Bước cho người mới 📖
+          </button>
+          <button id="btn-open-placement-test" class="px-4 py-2.5 rounded-2xl bg-white dark:bg-gray-800 border-2 border-emerald-600 text-emerald-600 dark:text-emerald-400 hover:bg-emerald-50 dark:hover:bg-emerald-950/30 font-bold text-xs shadow-xs transition-all">
+            Thi phân loại 🎯
+          </button>
+        </div>
       </div>
 
       <!-- Today's Learning Grid (3 Metrics) -->
@@ -333,6 +359,9 @@
           </div>
         </div>
       </div>
+
+      <!-- Weekly Learning Review Section -->
+      <div id="dash-weekly-review-container"></div>
     </section>
 
     <!-- ========================================================= -->
@@ -842,6 +871,127 @@
     </section>
 
     <!-- ========================================================= -->
+    <!-- TAB: READING LAB (Đọc hiểu - Leseverstehen A1-B1)          -->
+    <!-- ========================================================= -->
+    <section id="tab-reading" class="tab-content space-y-5">
+      <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+        <div>
+          <h2 class="text-xl sm:text-2xl font-extrabold text-gray-900 dark:text-white">Phòng Luyện Đọc Hiểu (Leseverstehen)</h2>
+          <p class="text-xs sm:text-sm text-gray-500 dark:text-gray-400">Các bài đọc thực tế: Biển báo, thông báo, thư từ, bài báo theo chuẩn CEFR A1–B1</p>
+        </div>
+
+        <div class="flex items-center gap-2">
+          <select id="reading-article-select" class="p-2.5 rounded-2xl bg-white dark:bg-gray-800 border-2 border-gray-200 dark:border-gray-700 text-xs font-bold text-gray-800 dark:text-gray-200 cursor-pointer shadow-2xs"></select>
+          <button id="btn-reading-audio" class="p-2.5 rounded-2xl bg-blue-50 dark:bg-blue-950/40 text-blue-600 dark:text-blue-400 hover:scale-105 active:scale-95 transition-all text-xs font-bold flex items-center gap-1 shadow-2xs" title="Nghe giọng đọc bản ngữ">
+            <span>🔊 Nghe</span>
+          </button>
+        </div>
+      </div>
+
+      <div class="p-6 rounded-3xl border-2 border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 shadow-sm space-y-4">
+        <div class="border-b border-gray-100 dark:border-gray-700/60 pb-3 flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+          <div>
+            <h3 id="reading-title" class="text-lg font-extrabold text-gray-900 dark:text-white"></h3>
+            <p id="reading-context" class="text-xs text-gray-500 dark:text-gray-400 mt-0.5 italic"></p>
+          </div>
+          <button id="btn-reading-toggle-vocab" class="px-3 py-1.5 rounded-xl bg-amber-50 dark:bg-amber-950/40 text-amber-700 dark:text-amber-300 hover:bg-amber-100 text-xs font-bold transition-all self-start sm:self-center">
+            Xem từ vựng quan trọng 💡
+          </button>
+        </div>
+
+        <!-- Hidden Vocabulary Box -->
+        <div id="reading-vocab-box" class="hidden p-4 rounded-2xl bg-amber-50/40 dark:bg-amber-950/20 border border-amber-200 dark:border-amber-900/40 space-y-2">
+          <span class="text-xs font-black text-amber-800 dark:text-amber-200 uppercase tracking-wider">Từ vựng then chốt trong bài đọc:</span>
+          <div id="reading-vocab-list" class="grid grid-cols-1 sm:grid-cols-2 gap-2"></div>
+        </div>
+
+        <!-- Main Reading Passage Body -->
+        <div id="reading-text-body" class="p-5 rounded-2xl bg-gray-50/60 dark:bg-gray-900/40 border border-gray-100 dark:border-gray-800/80 space-y-3 font-serif"></div>
+      </div>
+
+      <!-- Reading Comprehension Questions Container -->
+      <div class="space-y-3">
+        <h4 class="text-sm font-extrabold text-gray-900 dark:text-white">Câu Hỏi Đọc Hiểu & Trả Lời:</h4>
+        <div id="reading-questions-container" class="space-y-4"></div>
+      </div>
+      <div id="reading-score-box" class="hidden"></div>
+    </section>
+
+    <!-- ========================================================= -->
+    <!-- TAB: WRITING STUDIO (Luyện viết - Schreiben A1-B1)         -->
+    <!-- ========================================================= -->
+    <section id="tab-writing" class="tab-content space-y-5">
+      <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+        <div>
+          <h2 class="text-xl sm:text-2xl font-extrabold text-gray-900 dark:text-white">Xưởng Luyện Viết (Schreiben Studio)</h2>
+          <p class="text-xs sm:text-sm text-gray-500 dark:text-gray-400">Rèn luyện kỹ năng viết theo chuẩn đề thi Goethe/telc với bài mẫu & tiêu chí tự chấm</p>
+        </div>
+
+        <select id="writing-task-select" class="p-2.5 rounded-2xl bg-white dark:bg-gray-800 border-2 border-gray-200 dark:border-gray-700 text-xs font-bold text-gray-800 dark:text-gray-200 cursor-pointer shadow-2xs"></select>
+      </div>
+
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-5">
+        <!-- Left: Prompt & Useful phrases -->
+        <div class="lg:col-span-5 space-y-4">
+          <div class="p-5 rounded-3xl border-2 border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 shadow-sm space-y-3">
+            <div class="flex items-center justify-between">
+              <span class="px-2.5 py-0.5 rounded-full text-xs font-bold bg-purple-100 dark:bg-purple-900/40 text-purple-800 dark:text-purple-300 font-mono">Đề bài</span>
+              <span id="writing-target-words" class="text-xs font-bold text-gray-500 dark:text-gray-400 font-mono">Mục tiêu: 30-45 từ</span>
+            </div>
+            <h3 id="writing-task-title" class="text-base font-extrabold text-gray-900 dark:text-white"></h3>
+            <p id="writing-task-context" class="text-xs text-gray-500 dark:text-gray-400 italic"></p>
+            <div id="writing-task-prompt" class="p-3.5 rounded-2xl bg-purple-50/50 dark:bg-purple-950/30 border border-purple-100 dark:border-purple-900/40 text-xs text-purple-900 dark:text-purple-200 font-medium whitespace-pre-line leading-relaxed"></div>
+          </div>
+
+          <!-- Useful phrases -->
+          <div class="p-5 rounded-3xl border-2 border-indigo-100 dark:border-indigo-950/40 bg-white dark:bg-gray-800 shadow-sm space-y-2.5">
+            <div class="flex items-center justify-between">
+              <span class="text-xs font-black text-indigo-700 dark:text-indigo-300 uppercase tracking-wider">Mẫu câu gợi ý (Redemittel):</span>
+              <span class="text-[10px] text-gray-400">Nhấp để chèn</span>
+            </div>
+            <div id="writing-phrases-container" class="space-y-1.5 max-h-60 overflow-y-auto pr-1"></div>
+          </div>
+        </div>
+
+        <!-- Right: Textarea & Self-review Checklist -->
+        <div class="lg:col-span-7 space-y-4">
+          <div class="p-5 rounded-3xl border-2 border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 shadow-sm space-y-3">
+            <div class="flex items-center justify-between">
+              <span class="text-xs font-bold text-gray-700 dark:text-gray-300">Khung soạn thảo bài viết:</span>
+              <span id="writing-word-count" class="px-2.5 py-0.5 rounded-full text-xs font-bold bg-blue-100 dark:bg-blue-900/40 text-blue-800 dark:text-blue-200 font-mono">0 từ</span>
+            </div>
+
+            <textarea id="writing-user-input" rows="8" placeholder="Nhập bài viết bằng tiếng Đức tại đây... (Sử dụng các mẫu câu gợi ý bên trái)" class="w-full p-4 rounded-2xl border-2 border-gray-200 dark:border-gray-700 bg-gray-50/50 dark:bg-gray-900/50 focus:bg-white dark:focus:bg-gray-800 focus:border-blue-600 text-sm leading-relaxed text-gray-900 dark:text-white transition-all resize-none shadow-inner outline-none"></textarea>
+
+            <div class="space-y-2 pt-1">
+              <span class="text-xs font-bold text-gray-700 dark:text-gray-300">Checklist tiêu chí tự kiểm tra (Self-Review):</span>
+              <div id="writing-checklist-container" class="space-y-1.5"></div>
+            </div>
+
+            <div class="flex items-center gap-2 pt-2">
+              <button id="btn-writing-submit" class="flex-1 py-3 rounded-2xl bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white font-extrabold text-xs sm:text-sm shadow-md shadow-blue-500/25 transition-all">
+                Hoàn Thành & Đối Chiếu Bài Mẫu 🚀
+              </button>
+              <button id="btn-writing-show-model" class="px-4 py-3 rounded-2xl bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-200 hover:bg-gray-200 font-bold text-xs transition-all">
+                Xem bài mẫu 💡
+              </button>
+            </div>
+          </div>
+
+          <!-- Model Answer Box (Revealed upon submit or button click) -->
+          <div id="writing-model-answer-box" class="hidden p-5 rounded-3xl border-2 border-emerald-200 dark:border-emerald-900/50 bg-emerald-50/40 dark:bg-emerald-950/20 shadow-sm space-y-3">
+            <div class="flex items-center justify-between border-b border-emerald-200 dark:border-emerald-900/50 pb-2">
+              <span class="text-xs font-black text-emerald-800 dark:text-emerald-200 uppercase tracking-wider">🏆 Bài Viết Mẫu Chuẩn Điểm Tối Đa (Musterlösung):</span>
+              <span class="text-[10px] font-bold text-emerald-600 font-mono">CEFR Chuẩn</span>
+            </div>
+            <div id="writing-model-text" class="p-4 rounded-2xl bg-white dark:bg-gray-800 border border-emerald-100 dark:border-emerald-900/40 text-xs sm:text-sm text-gray-900 dark:text-gray-100 leading-relaxed font-serif"></div>
+            <div id="writing-model-breakdown" class="text-xs text-gray-600 dark:text-gray-300 leading-relaxed space-y-1"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========================================================= -->
     <!-- TAB 8: MOCK EXAM (Thi thử Goethe & Telc)                  -->
     <!-- ========================================================= -->
     <section id="tab-exam" class="tab-content space-y-5">
@@ -1132,6 +1282,123 @@
     </div>
   </div>
 
+  <!-- ========================================================= -->
+  <!-- QUICK CEFR PLACEMENT TEST MODAL                           -->
+  <!-- ========================================================= -->
+  <div id="placement-modal" class="hidden fixed inset-0 z-50 bg-black/70 backdrop-blur-xs flex items-center justify-center p-4 overflow-y-auto">
+    <div class="bg-white dark:bg-gray-800 w-full max-w-lg rounded-3xl shadow-2xl border-2 border-blue-500 p-6 space-y-5 animate-gentle-pulse">
+      <div class="flex items-center justify-between border-b border-gray-100 dark:border-gray-700 pb-3">
+        <div class="flex items-center gap-2">
+          <span class="text-xl">🎯</span>
+          <h3 class="font-extrabold text-base text-gray-900 dark:text-white">Bài Thi Phân Loại Trình Độ CEFR (15 Câu)</h3>
+        </div>
+        <button id="btn-close-placement" class="p-1.5 rounded-xl text-gray-400 hover:text-gray-900 text-sm">✕</button>
+      </div>
+
+      <!-- Intro View -->
+      <div id="placement-intro-view" class="space-y-4 text-center">
+        <div class="w-16 h-16 rounded-3xl bg-blue-100 dark:bg-blue-900/40 text-blue-600 dark:text-blue-300 mx-auto flex items-center justify-center text-3xl shadow-md">
+          📝
+        </div>
+        <div class="space-y-1">
+          <h4 class="text-lg font-bold text-gray-900 dark:text-white">Đánh Giá Nhanh Năng Lực Khởi Điểm</h4>
+          <p class="text-xs text-gray-500 dark:text-gray-400 max-w-sm mx-auto">
+            15 câu hỏi trắc nghiệm từ A1 đến B1 giúp xác định chính xác bạn nên bắt đầu từ chặng nào mà không bị quá dễ hay quá khó.
+          </p>
+        </div>
+        <button id="btn-start-placement" class="w-full py-3.5 bg-blue-600 hover:bg-blue-700 text-white font-extrabold text-sm rounded-2xl shadow-lg shadow-blue-500/25 transition-all">
+          Bắt Đầu Bài Test (~3 phút) 🚀
+        </button>
+      </div>
+
+      <!-- Test Question View -->
+      <div id="placement-test-view" class="hidden space-y-4">
+        <div class="space-y-1.5">
+          <div class="flex justify-between items-center text-xs">
+            <span id="placement-q-count" class="font-bold text-gray-500">Câu 1 / 15</span>
+            <span id="placement-q-level" class="px-2.5 py-0.5 rounded-full text-xs font-bold bg-emerald-100 text-emerald-800">A1</span>
+          </div>
+          <div class="w-full h-2 bg-gray-100 dark:bg-gray-700 rounded-full overflow-hidden">
+            <div id="placement-progress-bar" class="h-full bg-blue-600 rounded-full transition-all duration-300" style="width: 7%;"></div>
+          </div>
+        </div>
+
+        <div id="placement-q-text" class="text-sm sm:text-base font-bold text-gray-900 dark:text-white min-h-[48px]"></div>
+        <div id="placement-options-container" class="space-y-2"></div>
+      </div>
+
+      <!-- Result View -->
+      <div id="placement-result-view" class="hidden text-center space-y-4">
+        <div class="w-16 h-16 rounded-3xl bg-emerald-100 text-emerald-600 mx-auto flex items-center justify-center text-3xl shadow-md">
+          🏆
+        </div>
+        <div class="space-y-1">
+          <span class="text-xs font-bold text-gray-400 uppercase tracking-wider">Ước tính trình độ tham khảo:</span>
+          <h4 id="placement-result-level" class="text-2xl font-black text-blue-600 dark:text-blue-400">A1.2 (A1)</h4>
+          <p id="placement-result-score" class="text-sm font-bold text-gray-700 dark:text-gray-300 font-mono"></p>
+          <p id="placement-result-desc" class="text-xs text-gray-500 dark:text-gray-400 max-w-sm mx-auto pt-1"></p>
+        </div>
+        <button id="placement-btn-apply" class="w-full py-3.5 bg-emerald-600 hover:bg-emerald-700 text-white font-extrabold text-sm rounded-2xl shadow-lg shadow-emerald-500/25 transition-all">
+          Áp Dụng Cấp Độ & Xem Lộ Trình 🚀
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ========================================================= -->
+  <!-- 6-STEP BEGINNER STARTER GUIDE MODAL                       -->
+  <!-- ========================================================= -->
+  <div id="beginner-guide-modal" class="hidden fixed inset-0 z-50 bg-black/70 backdrop-blur-xs flex items-center justify-center p-4 overflow-y-auto">
+    <div class="bg-white dark:bg-gray-800 w-full max-w-xl rounded-3xl shadow-2xl border-2 border-emerald-500 p-6 sm:p-8 space-y-5 animate-gentle-pulse">
+      <div class="flex items-center justify-between border-b border-gray-100 dark:border-gray-700 pb-3">
+        <div class="flex items-center gap-2">
+          <span class="text-2xl">🌱</span>
+          <div>
+            <h3 class="font-extrabold text-base sm:text-lg text-gray-900 dark:text-white">Lộ Trình 6 Bước Cho Người Mới Bắt Đầu</h3>
+            <p class="text-xs text-gray-500 dark:text-gray-400">Từ số 0 đến tự tin giao tiếp cơ bản A1</p>
+          </div>
+        </div>
+        <button id="btn-close-beginner-guide" class="p-1.5 rounded-xl text-gray-400 hover:text-gray-900 text-sm">✕</button>
+      </div>
+
+      <div class="space-y-3 max-h-[60vh] overflow-y-auto pr-1 text-xs">
+        <div class="p-3.5 rounded-2xl bg-emerald-50/60 dark:bg-emerald-950/30 border border-emerald-100 dark:border-emerald-900/40 space-y-1">
+          <div class="font-bold text-emerald-900 dark:text-emerald-200 text-sm">Bước 1: Bảng chữ cái & Luyện phát âm (Pronunciation Lab)</div>
+          <p class="text-gray-600 dark:text-gray-300">Nắm vững các âm đặc trưng: Biến âm <b>ä, ö, ü</b>, tổ hợp phụ âm <b>ch, sch, sp, st, ß</b> và nguyên âm đôi <b>ei, ie, eu</b>.</p>
+        </div>
+
+        <div class="p-3.5 rounded-2xl bg-blue-50/60 dark:bg-blue-950/30 border border-blue-100 dark:border-blue-900/40 space-y-1">
+          <div class="font-bold text-blue-900 dark:text-blue-200 text-sm">Bước 2: Chào hỏi & Làm quen (Grüße & Vorstellen)</div>
+          <p class="text-gray-600 dark:text-gray-300">Học các câu chào hỏi theo thời gian: <i>Guten Morgen, Guten Tag, Hallo</i> và tự giới thiệu: <i>Ich heiße..., Ich komme aus...</i></p>
+        </div>
+
+        <div class="p-3.5 rounded-2xl bg-indigo-50/60 dark:bg-indigo-950/30 border border-indigo-100 dark:border-indigo-900/40 space-y-1">
+          <div class="font-bold text-indigo-900 dark:text-indigo-200 text-sm">Bước 3: Số đếm 0-100 & Thời gian (Zahlen & Uhrzeit)</div>
+          <p class="text-gray-600 dark:text-gray-300">Quy tắc đọc số hàng đơn vị trước hàng chục (ví dụ: 25 = <i>fünfundzwanzig</i>) và cách hỏi giờ <i>Wie spät ist es?</i></p>
+        </div>
+
+        <div class="p-3.5 rounded-2xl bg-purple-50/60 dark:bg-purple-950/30 border border-purple-100 dark:border-purple-900/40 space-y-1">
+          <div class="font-bold text-purple-900 dark:text-purple-200 text-sm">Bước 4: Đại từ nhân xưng & Động từ cốt lõi (sein & haben)</div>
+          <p class="text-gray-600 dark:text-gray-300">Thuộc bảng chia <i>ich bin, du bist, er ist</i> và <i>ich habe, du hast, er hat</i>.</p>
+        </div>
+
+        <div class="p-3.5 rounded-2xl bg-amber-50/60 dark:bg-amber-950/30 border border-amber-200 dark:border-amber-900/40 space-y-1">
+          <div class="font-bold text-amber-900 dark:text-amber-200 text-sm">Bước 5: Mạo từ & Giống của danh từ (Der / Die / Das)</div>
+          <p class="text-gray-600 dark:text-gray-300">Luôn học từ vựng kèm mạo từ xác định. Giống đực (der - xanh), giống cái (die - đỏ), giống trung (das - xanh lá).</p>
+        </div>
+
+        <div class="p-3.5 rounded-2xl bg-rose-50/60 dark:bg-rose-950/30 border border-rose-100 dark:border-rose-900/40 space-y-1">
+          <div class="font-bold text-rose-900 dark:text-rose-200 text-sm">Bước 6: Quy tắc trật tự câu V2 (Verb Position 2)</div>
+          <p class="text-gray-600 dark:text-gray-300">Nền tảng vàng của tiếng Đức: Trong câu trần thuật, động từ đã chia luôn đứng ở vị trí số 2.</p>
+        </div>
+      </div>
+
+      <button id="btn-start-learning-now" class="w-full py-3.5 bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-700 hover:to-teal-700 text-white font-extrabold text-sm rounded-2xl shadow-lg shadow-emerald-500/25 transition-all">
+        Bắt Đầu Học Ngay Chặng A1-01 🚀
+      </button>
+    </div>
+  </div>
+
   <!-- Scripts Execution Order -->
   <script src="js/speech.js"></script>
   <script src="js/progress.js"></script>
@@ -1150,6 +1417,9 @@
   <script src="js/pronunciation.js"></script>
   <script src="js/lessons.js"></script>
   <script src="js/exam.js"></script>
+  <script src="js/reading.js"></script>
+  <script src="js/writing.js"></script>
+  <script src="js/placement.js"></script>
   <script src="js/app.js"></script>
 
 </body>

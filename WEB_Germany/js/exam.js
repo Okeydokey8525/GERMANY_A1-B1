@@ -1,4 +1,4 @@
-// WEB_Germany Exam & Mock Test Room Module
+// WEB_Germany Exam & Mock Test Room Module (Supports Exam Simulation & Learning Mode)
 
 class ExamController {
   constructor() {
@@ -9,6 +9,7 @@ class ExamController {
     this.timerInterval = null;
     this.secondsRemaining = 0;
     this.isExamActive = false;
+    this.examMode = "exam"; // 'exam' (Bấm giờ nghiêm ngặt) or 'learning' (Luyện tập có giải thích)
 
     this.initElements();
   }
@@ -22,6 +23,13 @@ class ExamController {
       }
     });
 
+    // Exam Mode Toggles
+    const btnModeExam = document.getElementById("btn-exam-mode-exam");
+    const btnModeLearn = document.getElementById("btn-exam-mode-learn");
+
+    if (btnModeExam) btnModeExam.addEventListener("click", () => this.setMode("exam"));
+    if (btnModeLearn) btnModeLearn.addEventListener("click", () => this.setMode("learning"));
+
     // Start Exam button
     const btnStart = document.getElementById("btn-start-exam");
     if (btnStart) btnStart.addEventListener("click", () => this.startExam());
@@ -33,6 +41,22 @@ class ExamController {
     // Close result modal
     const btnCloseResult = document.getElementById("btn-close-exam-result");
     if (btnCloseResult) btnCloseResult.addEventListener("click", () => this.closeResultModal());
+  }
+
+  setMode(mode) {
+    this.examMode = mode;
+    const btnModeExam = document.getElementById("btn-exam-mode-exam");
+    const btnModeLearn = document.getElementById("btn-exam-mode-learn");
+
+    if (btnModeExam && btnModeLearn) {
+      if (mode === "exam") {
+        btnModeExam.className = "px-4 py-2 rounded-xl text-xs sm:text-sm font-bold bg-blue-600 text-white shadow-md shadow-blue-500/20 transition-all";
+        btnModeLearn.className = "px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700 transition-all";
+      } else {
+        btnModeLearn.className = "px-4 py-2 rounded-xl text-xs sm:text-sm font-bold bg-blue-600 text-white shadow-md shadow-blue-500/20 transition-all";
+        btnModeExam.className = "px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700 transition-all";
+      }
+    }
   }
 
   setData(data) {
@@ -62,6 +86,12 @@ class ExamController {
     });
 
     this.renderExamLobby();
+  }
+
+  switchLevel(lvl) {
+    if (["A1", "A2", "B1"].includes(lvl)) {
+      this.selectExamLevel(lvl);
+    }
   }
 
   renderExamLobby() {
@@ -94,22 +124,29 @@ class ExamController {
 
     if (lobbyView) lobbyView.classList.add("hidden");
     if (activeView) activeView.classList.remove("hidden");
-    if (examHeaderTitle) examHeaderTitle.textContent = this.currentExam.title;
+    if (examHeaderTitle) examHeaderTitle.textContent = `${this.currentExam.title} (${this.examMode === 'exam' ? 'Chế độ Thi Thử' : 'Chế độ Luyện Thi'})`;
 
-    this.startTimer();
+    if (this.examMode === "exam") {
+      this.startTimer();
+    } else {
+      const timerEl = document.getElementById("exam-timer-display");
+      if (timerEl) timerEl.textContent = "⏱️ Luyện tập (Tự do)";
+    }
+
     this.renderExamQuestions();
-    window.scrollTo({ top: 0, behavior: 'smooth' });
   }
 
   startTimer() {
-    this.stopTimer();
     this.updateTimerDisplay();
+    if (this.timerInterval) clearInterval(this.timerInterval);
+
     this.timerInterval = setInterval(() => {
       this.secondsRemaining--;
       this.updateTimerDisplay();
+
       if (this.secondsRemaining <= 0) {
         this.stopTimer();
-        alert("Hết giờ làm bài! Hệ thống sẽ tự động nộp bài và tính điểm.");
+        alert("Hết giờ làm bài! Hệ thống đang tự động nộp bài thi của bạn.");
         this.submitExam();
       }
     }, 1000);
@@ -123,19 +160,12 @@ class ExamController {
   }
 
   updateTimerDisplay() {
-    const timerEl = document.getElementById("exam-countdown-timer");
+    const timerEl = document.getElementById("exam-timer-display");
     if (!timerEl) return;
 
     const mins = Math.floor(this.secondsRemaining / 60);
     const secs = this.secondsRemaining % 60;
-    const formatted = `${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
-    timerEl.textContent = formatted;
-
-    if (this.secondsRemaining < 300) {
-      timerEl.className = "px-3 py-1 rounded-lg bg-rose-100 dark:bg-rose-950/40 text-rose-600 dark:text-rose-400 font-mono font-bold text-sm animate-pulse";
-    } else {
-      timerEl.className = "px-3 py-1 rounded-lg bg-blue-100 dark:bg-blue-950/40 text-blue-600 dark:text-blue-400 font-mono font-bold text-sm";
-    }
+    timerEl.textContent = `⏱️ ${String(mins).padStart(2, '0')}:${String(secs).padStart(2, '0')}`;
   }
 
   renderExamQuestions() {
@@ -143,78 +173,80 @@ class ExamController {
     if (!container || !this.currentExam) return;
 
     container.innerHTML = "";
-    let questionIndex = 1;
 
-    this.currentExam.sections.forEach(section => {
-      const secCard = document.createElement("div");
-      secCard.className = "p-5 sm:p-6 rounded-2xl bg-white dark:bg-gray-800 border-2 border-gray-100 dark:border-gray-700 shadow-sm space-y-5";
+    this.currentExam.sections.forEach((sec, secIdx) => {
+      const secEl = document.createElement("div");
+      secEl.className = "p-5 rounded-3xl border-2 border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 shadow-sm space-y-4";
 
-      secCard.innerHTML = `
-        <div class="border-b border-gray-100 dark:border-gray-700 pb-3">
-          <h3 class="text-base sm:text-lg font-bold text-gray-900 dark:text-white">${section.name}</h3>
-          <p class="text-xs sm:text-sm text-gray-500 dark:text-gray-400 mt-1">${section.instruction}</p>
+      const header = document.createElement("div");
+      header.className = "border-b border-gray-100 dark:border-gray-700/60 pb-3 flex items-center justify-between";
+      header.innerHTML = `
+        <div>
+          <span class="text-xs font-black text-blue-600 dark:text-blue-400 uppercase tracking-wider">Phần ${secIdx + 1}</span>
+          <h3 class="text-base font-extrabold text-gray-900 dark:text-gray-100">${sec.section_title}</h3>
+          <p class="text-xs text-gray-500 dark:text-gray-400">${sec.instruction || ''}</p>
         </div>
-        <div class="space-y-6" id="section-q-${section.id}"></div>
+        <span class="px-2.5 py-1 rounded-xl bg-blue-50 dark:bg-blue-950/40 text-blue-700 dark:text-blue-300 font-bold text-xs font-mono">${sec.points_each} điểm/câu</span>
       `;
+      secEl.appendChild(header);
 
-      const qBox = secCard.querySelector(`#section-q-${section.id}`);
+      if (sec.reading_passage) {
+        const passage = document.createElement("div");
+        passage.className = "p-4 rounded-2xl bg-gray-50 dark:bg-gray-900/50 border border-gray-100 dark:border-gray-800 text-xs sm:text-sm text-gray-800 dark:text-gray-200 leading-relaxed italic";
+        passage.innerHTML = sec.reading_passage.replace(/\n/g, '<br>');
+        secEl.appendChild(passage);
+      }
 
-      section.questions.forEach(q => {
-        const qEl = document.createElement("div");
-        qEl.className = "p-4 rounded-xl bg-gray-50 dark:bg-gray-900/50 border border-gray-200/60 dark:border-gray-700/60 space-y-3";
+      const qList = document.createElement("div");
+      qList.className = "space-y-4 pt-1";
 
-        // Optional context / audio player
-        let mediaHtml = "";
-        if (q.context) {
-          mediaHtml = `<div class="p-3 rounded-lg bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 text-xs sm:text-sm text-gray-700 dark:text-gray-300 italic">${q.context}</div>`;
-        } else if (q.audio_text) {
-          mediaHtml = `
-            <div class="p-3 rounded-lg bg-blue-50 dark:bg-blue-950/30 border border-blue-200 dark:border-blue-800 flex items-center justify-between gap-3">
-              <span class="text-xs sm:text-sm text-blue-800 dark:text-blue-300 font-medium">🎧 Nghe đoạn hội thoại bài thi</span>
-              <button class="btn-play-exam-audio px-3 py-1.5 rounded-lg bg-blue-600 text-white text-xs font-bold flex items-center gap-1.5 hover:bg-blue-700 transition-all">
-                <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z"></path></svg>
-                <span>Phát âm</span>
-              </button>
-            </div>
-          `;
-        }
-
-        // Options
-        const optionsHtml = q.options.map(opt => `
-          <label class="flex items-center gap-3 p-3 rounded-xl border border-gray-200 dark:border-gray-700 hover:bg-blue-50/50 dark:hover:bg-blue-950/30 cursor-pointer transition-all">
-            <input type="radio" name="q_${q.id}" value="${opt.id}" class="w-4 h-4 text-blue-600 focus:ring-blue-500 border-gray-300">
-            <span class="text-xs sm:text-sm text-gray-800 dark:text-gray-200 font-medium"><b>${opt.id}.</b> ${opt.text}</span>
-          </label>
-        `).join("");
-
-        qEl.innerHTML = `
-          <div class="flex items-start gap-2">
-            <span class="w-6 h-6 rounded-full bg-blue-600 text-white text-xs font-bold flex items-center justify-center shrink-0">${questionIndex++}</span>
-            <div class="font-bold text-sm sm:text-base text-gray-900 dark:text-white leading-tight">${q.question}</div>
+      sec.questions.forEach((q) => {
+        const qBox = document.createElement("div");
+        qBox.className = "p-4 rounded-2xl bg-gray-50/50 dark:bg-gray-900/30 border border-gray-100 dark:border-gray-800/80 space-y-2.5";
+        qBox.innerHTML = `
+          <div class="flex items-start gap-2 text-xs sm:text-sm font-bold text-gray-800 dark:text-gray-200">
+            <span class="text-blue-600 dark:text-blue-400 font-mono">${q.id}.</span>
+            <span>${q.question}</span>
           </div>
-          ${mediaHtml}
-          <div class="space-y-2 pt-1">${optionsHtml}</div>
+
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
+            ${q.options.map((opt, oIdx) => {
+              const letter = String.fromCharCode(65 + oIdx);
+              return `
+                <label class="p-3 rounded-xl border border-gray-200 dark:border-gray-700 hover:border-blue-500 bg-white dark:bg-gray-800 text-xs font-semibold text-gray-700 dark:text-gray-300 cursor-pointer flex items-center justify-between transition-all">
+                  <div class="flex items-center gap-2">
+                    <input type="radio" name="q_${q.id}" value="${letter}" class="text-blue-600 focus:ring-blue-500">
+                    <span>${opt}</span>
+                  </div>
+                  <span class="w-5 h-5 rounded-full bg-gray-100 dark:bg-gray-700 text-gray-500 text-[10px] font-bold flex items-center justify-center">${letter}</span>
+                </label>
+              `;
+            }).join("")}
+          </div>
+
+          ${this.examMode === "learning" ? `
+            <div class="pt-1">
+              <button type="button" onclick="this.nextElementSibling.classList.toggle('hidden')" class="text-[11px] text-blue-600 hover:underline font-bold">
+                💡 Xem gợi ý & giải thích
+              </button>
+              <div class="hidden mt-2 p-2.5 rounded-xl bg-blue-50/70 dark:bg-blue-950/40 border border-blue-100 dark:border-blue-900/50 text-[11px] text-blue-900 dark:text-blue-200">
+                Đáp án: <b>${q.answer}</b>. ${q.explanation || ''}
+              </div>
+            </div>
+          ` : ''}
         `;
 
-        // Bind radio change
-        qEl.querySelectorAll(`input[name="q_${q.id}"]`).forEach(radio => {
+        qBox.querySelectorAll(`input[name="q_${q.id}"]`).forEach(radio => {
           radio.addEventListener("change", (e) => {
             this.userAnswers[q.id] = e.target.value;
           });
         });
 
-        // Bind audio button
-        const audioBtn = qEl.querySelector(".btn-play-exam-audio");
-        if (audioBtn && q.audio_text) {
-          audioBtn.addEventListener("click", () => {
-            if (window.speechCtrl) window.speechCtrl.speak(q.audio_text, 0.88);
-          });
-        }
-
-        qBox.appendChild(qEl);
+        qList.appendChild(qBox);
       });
 
-      container.appendChild(secCard);
+      secEl.appendChild(qList);
+      container.appendChild(secEl);
     });
   }
 
@@ -222,69 +254,71 @@ class ExamController {
     this.stopTimer();
     this.isExamActive = false;
 
-    let totalQuestions = 0;
+    if (!this.currentExam) return;
+
+    let totalScore = 0;
+    let maxScore = 0;
     let correctCount = 0;
-    const reviewData = [];
+    let totalQuestions = 0;
 
     this.currentExam.sections.forEach(sec => {
       sec.questions.forEach(q => {
         totalQuestions++;
-        const userChoice = this.userAnswers[q.id] || "Chưa chọn";
-        const isRight = (userChoice === q.correct);
-        if (isRight) correctCount++;
+        maxScore += sec.points_each;
+        const userAns = this.userAnswers[q.id];
+        const isCorrect = userAns === q.answer;
 
-        reviewData.push({
-          section: sec.name,
-          question: q.question,
-          userChoice,
-          correct: q.correct,
-          isRight,
-          explanation: q.explanation
-        });
+        if (isCorrect) {
+          totalScore += sec.points_each;
+          correctCount++;
+        } else if (window.mistakesCtrl) {
+          window.mistakesCtrl.addMistake({
+            id: `exam_${q.id}`,
+            type: "exam",
+            level: this.currentLevel,
+            question: q.question,
+            userAnswer: userAns || "(Chưa chọn)",
+            correctAnswer: q.answer,
+            topic: `${this.currentLevel} Thi thử - ${sec.section_title}`,
+            explanation: q.explanation || `Đáp án đúng là: ${q.answer}`
+          });
+        }
       });
     });
 
-    const scorePercent = Math.round((correctCount / totalQuestions) * 100);
-    const isPassed = scorePercent >= (this.currentExam.pass_score || 60);
+    const isPassed = totalScore >= this.currentExam.pass_score;
 
-    if (window.speechCtrl) {
-      if (isPassed) window.speechCtrl.playCorrectSound();
-      else window.speechCtrl.playWrongSound();
+    // Record Exam completion in progress
+    if (window.progressCtrl) {
+      window.progressCtrl.recordExamAttempt(this.currentLevel, totalScore, isPassed);
     }
 
-    this.showResultModal(scorePercent, correctCount, totalQuestions, isPassed, reviewData);
+    this.showResultModal(totalScore, maxScore, correctCount, totalQuestions, isPassed);
   }
 
-  showResultModal(scorePercent, correctCount, totalQuestions, isPassed, reviewData) {
+  showResultModal(score, maxScore, correct, total, isPassed) {
     const modal = document.getElementById("exam-result-modal");
-    const badgeEl = document.getElementById("exam-result-badge");
-    const scoreEl = document.getElementById("exam-result-score");
-    const summaryEl = document.getElementById("exam-result-summary");
-    const reviewContainer = document.getElementById("exam-review-container");
+    const titleEl = document.getElementById("exam-res-title");
+    const badgeEl = document.getElementById("exam-res-badge");
+    const scoreEl = document.getElementById("exam-res-score");
+    const countEl = document.getElementById("exam-res-count");
 
     if (!modal) return;
 
+    if (titleEl) titleEl.textContent = this.currentExam.title;
+    if (scoreEl) scoreEl.textContent = `${score} / ${maxScore} điểm`;
+    if (countEl) countEl.textContent = `${correct} / ${total} câu đúng`;
+
     if (badgeEl) {
-      badgeEl.className = isPassed
-        ? "inline-block px-4 py-1.5 rounded-full text-sm font-bold bg-emerald-100 text-emerald-800 dark:bg-emerald-900/40 dark:text-emerald-300"
-        : "inline-block px-4 py-1.5 rounded-full text-sm font-bold bg-rose-100 text-rose-800 dark:bg-rose-900/40 dark:text-rose-300";
-      badgeEl.textContent = isPassed ? "ĐẠT (BESTANDEN) 🎉" : "CHƯA ĐẠT (NICHT BESTANDEN) ❌";
-    }
-
-    if (scoreEl) scoreEl.textContent = `${scorePercent}%`;
-    if (summaryEl) summaryEl.textContent = `Bạn đã trả lời đúng ${correctCount} / ${totalQuestions} câu hỏi.`;
-
-    if (reviewContainer) {
-      reviewContainer.innerHTML = reviewData.map((item, idx) => `
-        <div class="p-3.5 rounded-xl border ${item.isRight ? 'border-emerald-200 dark:border-emerald-800 bg-emerald-50/50 dark:bg-emerald-950/20' : 'border-rose-200 dark:border-rose-800 bg-rose-50/50 dark:bg-rose-950/20'} text-xs sm:text-sm space-y-1.5">
-          <div class="font-bold text-gray-900 dark:text-white">Câu ${idx+1}: ${item.question}</div>
-          <div class="flex items-center gap-4 text-xs font-semibold">
-            <span class="${item.isRight ? 'text-emerald-600 dark:text-emerald-400' : 'text-rose-600 dark:text-rose-400'}">Lựa chọn: ${item.userChoice}</span>
-            <span class="text-emerald-600 dark:text-emerald-400">Đáp án chuẩn: ${item.correct}</span>
-          </div>
-          <div class="text-xs text-gray-600 dark:text-gray-400 bg-white/60 dark:bg-gray-800/60 p-2 rounded-lg">💡 Giải thích: ${item.explanation}</div>
-        </div>
-      `).join("");
+      if (isPassed) {
+        badgeEl.className = "px-4 py-2 rounded-2xl bg-emerald-100 dark:bg-emerald-900/50 text-emerald-800 dark:text-emerald-200 font-extrabold text-sm border border-emerald-300";
+        badgeEl.textContent = "🏆 ĐẠT (BESTANDEN)";
+        if (window.speechCtrl) window.speechCtrl.playCorrectSound();
+      } else {
+        badgeEl.className = "px-4 py-2 rounded-2xl bg-rose-100 dark:bg-rose-900/50 text-rose-800 dark:text-rose-200 font-extrabold text-sm border border-rose-300";
+        badgeEl.textContent = "❌ CHƯA ĐẠT (NICHT BESTANDEN)";
+        if (window.speechCtrl) window.speechCtrl.playComboSound(1);
+      }
     }
 
     modal.classList.remove("hidden");

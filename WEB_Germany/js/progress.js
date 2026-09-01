@@ -760,6 +760,95 @@ class ProgressController {
 
     this.renderWeakAreasUI();
     this.renderAdaptiveQueueUI();
+    this.renderWeeklyReviewUI();
+  }
+
+  getWeeklySummary() {
+    const history = this.data.history || {};
+    const now = new Date();
+    let totalMins = Math.round((this.data.today.actualSeconds || 0) / 60);
+    let activeDays = totalMins > 0 ? 1 : 0;
+    let totalItems = (this.data.today.vocabReviewed || 0) + (this.data.today.grammarDone || 0) + (this.data.today.lessonsDone || 0);
+
+    for (let i = 1; i <= 6; i++) {
+      const d = new Date(now);
+      d.setDate(d.getDate() - i);
+      const dStr = this.getLocalDateString(d);
+      if (history[dStr]) {
+        const entry = history[dStr];
+        if (entry.minutes > 0) {
+          activeDays++;
+          totalMins += entry.minutes;
+          totalItems += (entry.itemsCount || 0);
+        }
+      }
+    }
+
+    const srsDeck = window.srsCtrl ? (window.srsCtrl.deck || []) : [];
+    const masteredCards = srsDeck.filter(c => c.state === "mastered").length;
+
+    const skillList = Object.entries(this.data.skills).map(([k, v]) => ({
+      name: k === 'vocab' ? 'Từ vựng' : (k === 'grammar' ? 'Ngữ pháp' : (k === 'listening' ? 'Nghe hiểu' : (k === 'speaking' ? 'Khẩu hình/Nói' : (k === 'reading' ? 'Đọc hiểu' : 'Kỹ năng Viết')))),
+      score: v.skillProgress !== undefined ? v.skillProgress : 20
+    })).sort((a, b) => b.score - a.score);
+
+    const strongest = skillList[0];
+    const weakest = skillList[skillList.length - 1];
+
+    return {
+      activeDays,
+      totalMins,
+      totalItems,
+      masteredCards,
+      strongest: strongest ? strongest.name : "Từ vựng",
+      weakest: weakest ? weakest.name : "Nghe hiểu"
+    };
+  }
+
+  renderWeeklyReviewUI() {
+    const container = document.getElementById("dash-weekly-review-container");
+    if (!container) return;
+
+    const wk = this.getWeeklySummary();
+    container.innerHTML = `
+      <div class="p-5 rounded-3xl border-2 border-indigo-100 dark:border-indigo-950/40 bg-gradient-to-br from-indigo-50/60 via-purple-50/30 to-white dark:from-indigo-950/30 dark:to-gray-800 shadow-sm space-y-3">
+        <div class="flex items-center justify-between">
+          <div class="flex items-center gap-2">
+            <span class="text-lg">📊</span>
+            <h3 class="text-sm font-extrabold text-gray-900 dark:text-white">Báo Cáo Tiến Độ Tuần Này</h3>
+          </div>
+          <span class="px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-indigo-100 dark:bg-indigo-900/50 text-indigo-700 dark:text-indigo-300 font-mono">7 ngày qua</span>
+        </div>
+
+        <div class="grid grid-cols-2 sm:grid-cols-4 gap-2.5 pt-1">
+          <div class="p-3 bg-white dark:bg-gray-800 rounded-2xl border border-gray-100 dark:border-gray-700/60 shadow-2xs">
+            <span class="text-[10px] text-gray-400 font-semibold">Ngày học</span>
+            <div class="text-base font-black text-gray-900 dark:text-white font-mono">${wk.activeDays} / 7 ngày</div>
+          </div>
+          <div class="p-3 bg-white dark:bg-gray-800 rounded-2xl border border-gray-100 dark:border-gray-700/60 shadow-2xs">
+            <span class="text-[10px] text-gray-400 font-semibold">Thời gian học</span>
+            <div class="text-base font-black text-blue-600 dark:text-blue-400 font-mono">${wk.totalMins} phút</div>
+          </div>
+          <div class="p-3 bg-white dark:bg-gray-800 rounded-2xl border border-gray-100 dark:border-gray-700/60 shadow-2xs">
+            <span class="text-[10px] text-gray-400 font-semibold">Bài & Thẻ đã làm</span>
+            <div class="text-base font-black text-indigo-600 dark:text-indigo-400 font-mono">${wk.totalItems} mục</div>
+          </div>
+          <div class="p-3 bg-white dark:bg-gray-800 rounded-2xl border border-gray-100 dark:border-gray-700/60 shadow-2xs">
+            <span class="text-[10px] text-gray-400 font-semibold">Đã thuộc vĩnh viễn</span>
+            <div class="text-base font-black text-emerald-600 dark:text-emerald-400 font-mono">${wk.masteredCards} từ</div>
+          </div>
+        </div>
+
+        <div class="p-3 bg-white/80 dark:bg-gray-800/80 rounded-2xl border border-indigo-100 dark:border-indigo-900/40 text-xs flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2">
+          <div class="flex items-center gap-1.5 text-gray-700 dark:text-gray-300">
+            <span>💪 <b>Mạnh nhất:</b> <span class="text-emerald-600 dark:text-emerald-400 font-bold">${wk.strongest}</span></span>
+            <span class="text-gray-300 dark:text-gray-600">|</span>
+            <span>🎯 <b>Trọng tâm tuần tới:</b> <span class="text-amber-600 dark:text-amber-400 font-bold">${wk.weakest}</span></span>
+          </div>
+          <button onclick="window.appCtrl && window.appCtrl.switchTab('roadmap')" class="text-xs text-blue-600 dark:text-blue-400 font-bold hover:underline self-end sm:self-center">Xem Lộ trình A1–B1 →</button>
+        </div>
+      </div>
+    `;
   }
 
   renderWeakAreasUI() {

@@ -15,6 +15,8 @@ class AppController {
     this.initSettingsModal();
     this.initDailySummaryModal();
     this.initOnboarding();
+    this.initBeginnerGuide();
+    this.initPlacementModal();
     await this.loadAllDatasets();
     this.initResumeBtn();
     this.updateStats();
@@ -132,6 +134,10 @@ class AppController {
       window.roadmapCtrl.renderCanDoChecklist();
     } else if (tabId === "dashboard" && window.progressCtrl) {
       window.progressCtrl.updateUI();
+    } else if (tabId === "reading" && window.readingCtrl) {
+      window.readingCtrl.loadData();
+    } else if (tabId === "writing" && window.writingCtrl) {
+      window.writingCtrl.loadData();
     }
 
     window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -172,6 +178,8 @@ class AppController {
       try { if (window.grammarExCtrl) window.grammarExCtrl.setData(grammarExercises); } catch (e) { console.warn(e); }
       try { if (window.lessonsCtrl) window.lessonsCtrl.setData(lessons); } catch (e) { console.warn(e); }
       try { if (window.examCtrl) window.examCtrl.setData(mockExams); } catch (e) { console.warn(e); }
+      try { if (window.readingCtrl) window.readingCtrl.loadData(); } catch (e) { console.warn(e); }
+      try { if (window.writingCtrl) window.writingCtrl.loadData(); } catch (e) { console.warn(e); }
 
     } catch (e) {
       console.error("Critical error loading datasets:", e);
@@ -261,50 +269,77 @@ class AppController {
   }
 
   initDailySummaryModal() {
+    const btn = document.getElementById("btn-close-summary");
     const modal = document.getElementById("daily-summary-modal");
-    const closeBtn = document.getElementById("btn-close-summary");
-    if (closeBtn && modal) {
-      closeBtn.addEventListener("click", () => modal.classList.add("hidden"));
+    if (btn && modal) {
+      btn.addEventListener("click", () => modal.classList.add("hidden"));
     }
   }
 
-  openSettingsModal() {
-    const modal = document.getElementById("settings-modal");
-    if (!modal) return;
+  initBeginnerGuide() {
+    const btnOpen = document.getElementById("btn-open-beginner-guide");
+    const btnClose = document.getElementById("btn-close-beginner-guide");
+    const btnStart = document.getElementById("btn-start-learning-now");
+    const modal = document.getElementById("beginner-guide-modal");
 
-    if (window.progressCtrl) {
-      const pData = window.progressCtrl.data;
-      const speedSlider = document.getElementById("settings-speech-speed");
-      const speedVal = document.getElementById("settings-speed-val");
-      const dailyGoalSelect = document.getElementById("settings-daily-goal");
-
-      if (speedSlider) speedSlider.value = pData.settings.speechRate || 0.9;
-      if (speedVal) speedVal.textContent = `${(pData.settings.speechRate || 0.9).toFixed(1)}x`;
-      if (dailyGoalSelect) dailyGoalSelect.value = pData.dailyGoalMinutes || 20;
+    if (btnOpen && modal) {
+      btnOpen.addEventListener("click", () => modal.classList.remove("hidden"));
     }
+    if (btnClose && modal) {
+      btnClose.addEventListener("click", () => modal.classList.add("hidden"));
+    }
+    if (btnStart && modal) {
+      btnStart.addEventListener("click", () => {
+        modal.classList.add("hidden");
+        this.switchTab("roadmap");
+        this.showToast("Bắt đầu Chặng 1: Bảng chữ cái & Luyện phát âm 🚀");
+      });
+    }
+  }
 
-    modal.classList.remove("hidden");
+  initPlacementModal() {
+    const btnOpen = document.getElementById("btn-open-placement-test");
+    const modal = document.getElementById("placement-modal");
+    const introView = document.getElementById("placement-intro-view");
+    const testView = document.getElementById("placement-test-view");
+    const resultView = document.getElementById("placement-result-view");
+
+    if (btnOpen && modal) {
+      btnOpen.addEventListener("click", () => {
+        modal.classList.remove("hidden");
+        if (introView) introView.classList.remove("hidden");
+        if (testView) testView.classList.add("hidden");
+        if (resultView) resultView.classList.add("hidden");
+      });
+    }
   }
 
   initOnboarding() {
-    const modal = document.getElementById("onboarding-modal");
-    const startBtn = document.getElementById("btn-start-onboarding");
-    if (startBtn && modal) {
-      startBtn.addEventListener("click", () => {
-        const levelRadio = document.querySelector("input[name='onboard_level']:checked");
+    const btnStart = document.getElementById("btn-start-onboarding");
+    if (btnStart) {
+      btnStart.addEventListener("click", () => {
+        const lvlRadio = document.querySelector("input[name='onboard_level']:checked");
         const goalRadio = document.querySelector("input[name='onboard_goal']:checked");
         const timeRadio = document.querySelector("input[name='onboard_time']:checked");
 
+        const level = lvlRadio ? lvlRadio.value : "A1";
+        const goal = goalRadio ? goalRadio.value : "allgemein";
+        const time = timeRadio ? parseInt(timeRadio.value) : 20;
+
         if (window.progressCtrl) {
-          if (levelRadio) window.progressCtrl.data.currentLevel = levelRadio.value;
-          if (goalRadio) window.progressCtrl.data.targetGoal = goalRadio.value;
-          if (timeRadio) window.progressCtrl.data.dailyGoalMinutes = parseInt(timeRadio.value) || 20;
+          window.progressCtrl.data.currentLevel = level;
+          window.progressCtrl.data.targetGoal = goal;
+          window.progressCtrl.data.dailyGoalMinutes = time;
           window.progressCtrl.saveProgress();
         }
 
+        this.syncGlobalLevel(level);
         localStorage.setItem("deutschmaster_onboarding_seen", "true");
-        modal.classList.add("hidden");
-        this.showToast("Chào mừng bạn đến với DeutschMaster! Chúc bạn học thật tốt 🇩🇪");
+
+        const modal = document.getElementById("onboarding-modal");
+        if (modal) modal.classList.add("hidden");
+
+        this.showToast(`Chào mừng bạn! DeutschMaster đã thiết lập lộ trình ${level} (${time} phút/ngày) 🎉`);
       });
     }
   }
@@ -314,24 +349,31 @@ class AppController {
     if (modal) modal.classList.remove("hidden");
   }
 
-  showToast(message, duration = 3000) {
+  openSettingsModal() {
+    const modal = document.getElementById("settings-modal");
+    if (modal) modal.classList.remove("hidden");
+  }
+
+  showToast(message) {
     const container = document.getElementById("toast-container");
     if (!container) return;
 
     const toast = document.createElement("div");
-    toast.className = "toast max-w-sm px-4 py-3 bg-gray-900/90 dark:bg-white/90 text-white dark:text-gray-900 text-xs sm:text-sm font-semibold rounded-2xl shadow-xl flex items-center gap-2 pointer-events-auto backdrop-blur-md";
+    toast.className = "px-4 py-3 rounded-2xl bg-gray-900/90 dark:bg-white/90 text-white dark:text-gray-900 text-xs sm:text-sm font-bold shadow-xl backdrop-blur-md transition-all duration-300 transform translate-y-2 opacity-0 flex items-center gap-2 pointer-events-auto border border-gray-700/50 dark:border-gray-200/50";
     toast.innerHTML = `<span>🇩🇪</span> <span>${message}</span>`;
 
     container.appendChild(toast);
+
+    requestAnimationFrame(() => {
+      toast.classList.remove("translate-y-2", "opacity-0");
+    });
+
     setTimeout(() => {
-      toast.style.opacity = "0";
-      toast.style.transform = "translateY(10px) scale(0.9)";
-      toast.style.transition = "all 0.3s ease";
+      toast.classList.add("translate-y-2", "opacity-0");
       setTimeout(() => toast.remove(), 300);
-    }, duration);
+    }, 3000);
   }
 }
 
-document.addEventListener("DOMContentLoaded", () => {
-  window.appCtrl = new AppController();
-});
+// Global App Instance
+window.appCtrl = new AppController();

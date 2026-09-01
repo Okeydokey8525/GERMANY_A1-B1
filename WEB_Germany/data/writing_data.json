@@ -1,0 +1,72 @@
+[
+  {
+    "id": "write_a1_01",
+    "level": "A1",
+    "title": "Viết email ngắn làm quen & giới thiệu bản thân",
+    "context": "Bạn đăng ký tham gia một câu lạc bộ tiếng Đức tại thành phố và cần viết một email ngắn (~30 từ) tự giới thiệu bản thân.",
+    "prompt": "Hãy viết một email gồm các thông tin sau:\n1. Họ tên và tuổi của bạn (Name und Alter)\n2. Bạn đến từ đâu và hiện sống ở đâu (Herkunft und Wohnort)\n3. Bạn học tiếng Đức từ khi nào / sở thích của bạn (Sprache / Hobbys)",
+    "wordCountTarget": "30 - 45 từ",
+    "usefulPhrases": [
+      { "de": "Liebe Grüße / Hallo zusammen,", "vi": "Lời chào mở đầu thân mật" },
+      { "de": "Ich heiße ... und ich bin ... Jahre alt.", "vi": "Tôi tên là... và tôi... tuổi." },
+      { "de": "Ich komme aus Vietnam und wohne in...", "vi": "Tôi đến từ Việt Nam và sống ở..." },
+      { "de": "In meiner Freizeit lerne ich Deutsch und spiele Fußball.", "vi": "Trong thời gian rảnh tôi học tiếng Đức và chơi bóng đá." },
+      { "de": "Viele Grüße,", "vi": "Lời chào kết thư" }
+    ],
+    "checklist": [
+      "Có lời chào đầu thư (Hallo / Liebe Grüße) và kết thư (Viele Grüße)",
+      "Đầy đủ 3 nội dung: Tên/Tuổi, Quê quán/Nơi ở, Sở thích",
+      "Động từ chia đúng vị trí số 2 (V2 Rule)",
+      "Độ dài khoảng 30 - 45 từ"
+    ],
+    "modelAnswer": "Hallo zusammen,\n\nich heiße Nam und ich bin 22 Jahre alt. Ich komme aus Vietnam, aber jetzt wohne ich in Berlin. In meiner Freizeit lerne ich gern Deutsch und höre Musik. Ich freue mich auf euch!\n\nViele Grüße,\nNam",
+    "breakdown": "• Mở đầu: 'Hallo zusammen,'\n• Thân bài: Đầy đủ thông tin cá nhân, dùng đúng ngôi 'ich' và động từ 'heiße, bin, komme, wohne, lerne'.\n• Kết thư: 'Viele Grüße, Nam'."
+  },
+  {
+    "id": "write_a2_01",
+    "level": "A2",
+    "title": "Viết email xin phép nghỉ học/nghỉ làm vì bị ốm (Krankmeldung)",
+    "context": "Bạn bị sốt và đau họng, không thể đến lớp học tiếng Đức vào ngày mai. Hãy viết một email gửi cho thầy/cô giáo dạy tiếng Đức (~40-60 từ).",
+    "prompt": "Hãy viết email gồm các ý chính:\n1. Báo lý do vì sao ngày mai bạn vắng mặt (Grund: Krankheit/Fieber)\n2. Bạn đã đi khám bác sĩ và phải nghỉ bao lâu (Arztbesuch / Dauer)\n3. Hỏi về bài tập về nhà để tự học tại nhà (Hausaufgaben nachholen)",
+    "wordCountTarget": "45 - 65 từ",
+    "usefulPhrases": [
+      { "de": "Sehr geehrte Frau ... / Sehr geehrter Herr ...,", "vi": "Kính gửi Cô... / Thầy... (lịch sự trang trọng)" },
+      { "de": "Leider kann ich morgen nicht zum Unterricht kommen, weil ich krank bin.", "vi": "Rất tiếc ngày mai tôi không thể đến lớp vì tôi bị ốm." },
+      { "de": "Ich habe starkes Fieber und muss zum Arzt gehen.", "vi": "Tôi bị sốt cao và phải đi khám bác sĩ." },
+      { "de": "Der Arzt hat mich bis Freitag krankgeschrieben.", "vi": "Bác sĩ cho tôi nghỉ ốm đến thứ Sáu." },
+      { "de": "Könnten Sie mir bitte die Hausaufgaben per E-Mail schicken?", "vi": "Thầy/Cô có thể gửi bài tập về nhà qua email giúp tôi được không?" },
+      { "de": "Mit freundlichen Grüßen,", "vi": "Trân trọng kính chào (lịch sự)" }
+    ],
+    "checklist": [
+      "Sử dụng đại từ lịch sự 'Sie' và lời chào trang trọng 'Sehr geehrte(r)...'",
+      "Trình bày rõ lý do ốm và thời gian vắng mặt",
+      "Sử dụng đúng mệnh đề phụ 'weil ich krank bin' (động từ bin ở cuối)",
+      "Độ dài khoảng 45 - 65 từ"
+    ],
+    "modelAnswer": "Sehr geehrte Frau Müller,\n\nleider kann ich morgen nicht zum Deutschunterricht kommen, weil ich hohes Fieber und Halsschmerzen habe. Der Arzt hat mich bis Freitag krankgeschrieben. \n\nKönnten Sie mir bitte die Hausaufgaben und Materialien per E-Mail schicken? Ich werde den Stoff zu Hause nachholen.\n\nVielen Dank für Ihr Verständnis!\n\nMit freundlichen Grüßen,\nMinh Nguyen",
+    "breakdown": "• Ngữ pháp chuẩn A2: Mệnh đề phụ với liên từ 'weil', thể lịch sự 'Könnten Sie...'\n• Cấu trúc email trang trọng hoàn hảo đạt điểm tối đa kỳ thi Goethe A2."
+  },
+  {
+    "id": "write_b1_01",
+    "level": "B1",
+    "title": "Bày tỏ quan điểm trên diễn đàn: 'Mua sắm trực tuyến (Online-Shopping)'",
+    "context": "Bạn tham gia một diễn đàn thảo luận trực tuyến về chủ đề: 'Nên mua sắm qua mạng hay mua tại cửa hàng truyền thống?'. Hãy viết một bài chia sẻ quan điểm (~80-100 từ).",
+    "prompt": "Bài viết của bạn cần có:\n1. Giới thiệu chủ đề và nêu thực trạng hiện nay (Thema einführen)\n2. Ưu điểm và nhược điểm của việc mua sắm qua mạng (Vor- und Nachteile)\n3. Trải nghiệm cá nhân của bản thân bạn (Eigene Erfahrung)\n4. Lời kết luận / Đánh giá tổng quan (Fazit / Eigene Meinung)",
+    "wordCountTarget": "80 - 110 từ",
+    "usefulPhrases": [
+      { "de": "Ich möchte mich zu diesem Thema äußern.", "vi": "Tôi muốn bày tỏ quan điểm về chủ đề này." },
+      { "de": "Ein großer Vorteil des Online-Shoppings ist, dass...", "vi": "Một ưu điểm lớn của mua sắm online là..." },
+      { "de": "Auf der anderen Seite gibt es auch Nachteile, zum Beispiel...", "vi": "Mặt khác cũng có những nhược điểm, ví dụ như..." },
+      { "de": "Meiner Erfahrung nach ist es sehr bequem, Kleidung online zu bestellen.", "vi": "Theo kinh nghiệm của tôi thì rất tiện khi đặt quần áo qua mạng." },
+      { "de": "Zusammenfassend lässt sich sagen, dass...", "vi": "Tóm lại có thể nói rằng..." }
+    ],
+    "checklist": [
+      "Có cấu trúc 4 phần rõ ràng: Mở bài, Ưu/Nhược điểm, Trải nghiệm bản thân, Kết luận",
+      "Sử dụng từ nối câu B1 đa dạng: 'dass', 'obwohl', 'einerseits... andererseits', 'deshalb'",
+      "Thể hiện rõ quan điểm cá nhân 'Meiner Meinung nach...'",
+      "Độ dài khoảng 80 - 110 từ"
+    ],
+    "modelAnswer": "Ich möchte mich gern zum Thema 'Online-Shopping' äußern, da es heutzutage für viele Menschen unverzichtbar geworden ist.\n\nEin wesentlicher Vorteil ist, dass man rund um die Uhr bequem von zu Hause aus einkaufen kann, ohne weite Wege zurückzulegen. Außerdem sind die Preise im Internet oft günstiger. Auf der anderen Seite gibt es jedoch auch Nachteile: Man kann die Waren vor dem Kauf nicht anprobieren, und die vielen Rücksendungen belasten die Umwelt.\n\nIch persönlich kaufe Bücher und Elektronik meistens online, aber Kleidung probiere ich lieber direkt im Geschäft an.\n\nZusammenfassend bin ich der Meinung, dass Online-Shopping sehr praktisch ist, man es aber bewusst nutzen sollte.",
+    "breakdown": "• Đạt chuẩn tiêu chí B1 Goethe/telc: Có liên từ 'da', 'dass', cấu trúc 'ohne... zu + Infinitiv', từ nối 'jedoch', và phân tích 2 chiều sâu sắc."
+  }
+]

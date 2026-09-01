@@ -1,0 +1,137 @@
+[
+  {
+    "id": "pl_01",
+    "level": "A1",
+    "skill": "vocab",
+    "question": "Cách chào hỏi lịch sự vào buổi sáng bằng tiếng Đức là:",
+    "options": ["Guten Morgen!", "Gute Nacht!", "Tschüss!", "Guten Appetit!"],
+    "answer": 0,
+    "explanation": "'Guten Morgen!' dùng để chào buổi sáng lịch sự."
+  },
+  {
+    "id": "pl_02",
+    "level": "A1",
+    "skill": "grammar",
+    "question": "Điền động từ 'sein': 'Wir ______ Studenten in Berlin.'",
+    "options": ["sind", "seid", "ist", "bin"],
+    "answer": 0,
+    "explanation": "Chia ngôi 'wir' (chúng tôi) đi với 'sind'."
+  },
+  {
+    "id": "pl_03",
+    "level": "A1",
+    "skill": "grammar",
+    "question": "Mạo từ xác định giống đực (Maskulin) ở dạng nguyên thể (Nominativ) là:",
+    "options": ["der", "die", "das", "den"],
+    "answer": 0,
+    "explanation": "der (đực), die (cái), das (trung)."
+  },
+  {
+    "id": "pl_04",
+    "level": "A1",
+    "skill": "grammar",
+    "question": "Chia động từ 'kommen': 'Woher ______ du?'",
+    "options": ["kommst", "kommt", "kommen", "komme"],
+    "answer": 0,
+    "explanation": "Ngôi 'du' thêm đuôi '-st': du kommst."
+  },
+  {
+    "id": "pl_05",
+    "level": "A1",
+    "skill": "grammar",
+    "question": "Trật tự từ trong câu trần thuật tiếng Đức: Động từ chia đứng ở vị trí nào?",
+    "options": ["Vị trí thứ 2 (Position 2)", "Vị trí đầu tiên", "Vị trí cuối câu", "Bất kỳ vị trí nào"],
+    "answer": 0,
+    "explanation": "Quy tắc V2: Trong câu trần thuật, động từ chia luôn đứng ở vị trí thứ hai."
+  },
+  {
+    "id": "pl_06",
+    "level": "A2",
+    "skill": "grammar",
+    "question": "Điền mạo từ Akkusativ: 'Ich kaufe ______ Tisch (der Tisch).'",
+    "options": ["den", "der", "dem", "das"],
+    "answer": 0,
+    "explanation": "Tân ngữ trực tiếp giống đực biến đổi từ 'der' thành 'den' trong Akkusativ."
+  },
+  {
+    "id": "pl_07",
+    "level": "A2",
+    "skill": "grammar",
+    "question": "Điền mạo từ Dativ: 'Ich helfe ______ Frau (die Frau).'",
+    "options": ["der", "die", "den", "dem"],
+    "answer": 0,
+    "explanation": "Động từ 'helfen' đòi hỏi Dativ. Giống cái 'die' chuyển thành 'der' trong Dativ."
+  },
+  {
+    "id": "pl_08",
+    "level": "A2",
+    "skill": "grammar",
+    "question": "Điền động từ khuyết thiếu: 'Hier ______ man nicht rauchen (cấm hút thuốc).'",
+    "options": ["darf", "kann", "muss", "will"],
+    "answer": 0,
+    "explanation": "'nicht dürfen' mang nghĩa bị cấm làm điều gì."
+  },
+  {
+    "id": "pl_09",
+    "level": "A2",
+    "skill": "grammar",
+    "question": "Chọn trợ động từ Perfekt đúng: 'Er ______ gestern nach Berlin gefahren.'",
+    "options": ["ist", "hat", "wird", "war"],
+    "answer": 0,
+    "explanation": "Động từ chuyển động 'fahren' tạo thì quá khứ Perfekt với trợ động từ 'sein' (ist gefahren)."
+  },
+  {
+    "id": "pl_10",
+    "level": "A2",
+    "skill": "vocab",
+    "question": "Từ tiếng Đức nào chỉ 'Cuộc hẹn' (ví dụ với bác sĩ, cơ quan)?",
+    "options": ["der Termin", "die Fahrkarte", "das Gleis", "die Rechnung"],
+    "answer": 0,
+    "explanation": "'der Termin' nghĩa là cuộc hẹn."
+  },
+  {
+    "id": "pl_11",
+    "level": "B1",
+    "skill": "grammar",
+    "question": "Điền Wechselpräposition (chỉ phương hướng Wohin?): 'Ich stelle das Buch auf ______ Tisch (der Tisch).'",
+    "options": ["den", "dem", "der", "das"],
+    "answer": 0,
+    "explanation": "'stellen' là hành động di chuyển đặt vật lên bàn (Wohin?) -> dùng Akkusativ: den Tisch."
+  },
+  {
+    "id": "pl_12",
+    "level": "B1",
+    "skill": "grammar",
+    "question": "Trật tự từ trong mệnh đề phụ với liên từ 'weil' (bởi vì): Động từ chia đứng ở đâu?",
+    "options": ["Cuối mệnh đề phụ (Satzende)", "Vị trí thứ 2", "Ngay sau liên từ weil", "Đầu câu"],
+    "answer": 0,
+    "explanation": "Liên từ phụ thuộc (weil, dass, obwohl, wenn...) luôn đẩy động từ chia về cuối mệnh đề."
+  },
+  {
+    "id": "pl_13",
+    "level": "B1",
+    "skill": "grammar",
+    "question": "Điền thể bị động (Passiv): 'Das Haus ______ im Jahr 2020 gebaut.'",
+    "options": ["wurde", "hat", "ist", "wäre"],
+    "answer": 0,
+    "explanation": "Bị động quá khứ Präteritum: wurde + Partizip II (wurde gebaut)."
+  },
+  {
+    "id": "pl_14",
+    "level": "B1",
+    "skill": "grammar",
+    "question": "Chọn câu giả định ước muốn Konjunktiv II lịch sự:",
+    "options": ["Könnten Sie mir bitte helfen?", "Können Sie mir helfen?", "Helfen Sie mir!", "Sie müssen mir helfen."],
+    "answer": 0,
+    "explanation": "'Könnten Sie...' là thể giả định Konjunktiv II thể hiện sự lịch sự tối đa."
+  },
+  {
+    "id": "pl_15",
+    "level": "B1",
+    "skill": "reading",
+    "question": "'Meiner Meinung nach sollten wir mehr erneuerbare Energien nutzen.' có nghĩa là:",
+    "options": ["Theo ý kiến của tôi, chúng ta nên sử dụng nhiều năng lượng tái tạo hơn.", "Tôi không thích sử dụng năng lượng mặt trời.", "Năng lượng tái tạo rất đắt đỏ.", "Chúng ta bắt buộc phải mua điện."],
+    "answer": 0,
+    "explanation": "'Meiner Meinung nach...' là cụm từ B1 đặc trưng để trình bày quan điểm cá nhân."
+  }
+]

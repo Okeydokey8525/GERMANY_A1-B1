@@ -5,10 +5,22 @@
     "title": "Chào hỏi & Tự giới thiệu",
     "level": "A1",
     "desc": "Các mẫu câu chào hỏi theo thời gian trong ngày và giới thiệu họ tên, quốc tịch.",
+    "vocab": [
+      { "de": "heißen", "vi": "tên là", "pos": "v" },
+      { "de": "kommen aus", "vi": "đến từ", "pos": "v" },
+      { "de": "freuen", "vi": "vui mừng", "pos": "v" },
+      { "de": "kennenlernen", "vi": "làm quen", "pos": "v" }
+    ],
     "phrases": [
-      { "de": "Guten Tag! Ich heiße Minh và ich komme aus Vietnam.", "vi": "Xin chào! Tôi tên là Minh và tôi đến từ Việt Nam." },
+      { "de": "Guten Tag! Ich heiße Minh und ich komme aus Vietnam.", "vi": "Xin chào! Tôi tên là Minh và tôi đến từ Việt Nam." },
       { "de": "Freut mich, Sie kennenzulernen!", "vi": "Rất vui được làm quen với ngài/bạn!" },
       { "de": "Wie geht es Ihnen? - Mir geht es gut, danke!", "vi": "Ngài có khỏe không? - Tôi khỏe, cảm ơn!" }
+    ],
+    "dialogue": [
+      { "speaker": "A", "de": "Hallo! Wie heißt du?", "vi": "Xin chào! Bạn tên là gì?" },
+      { "speaker": "B", "de": "Ich heiße Minh. Und du?", "vi": "Tôi tên là Minh. Còn bạn?" },
+      { "speaker": "A", "de": "Ich bin Anna. Woher kommst du?", "vi": "Tôi là Anna. Bạn đến từ đâu?" },
+      { "speaker": "B", "de": "Ich komme aus Vietnam, aber ich wohne jetzt in Berlin.", "vi": "Tôi đến từ Việt Nam, nhưng hiện tôi sống ở Berlin." }
     ],
     "testQuestion": {
       "question": "Cách chào hỏi lịch sự vào buổi sáng bằng tiếng Đức là gì?",
@@ -23,11 +35,23 @@
     "title": "Tại Nhà Hàng & Quán Ăn",
     "level": "A1",
     "desc": "Cách hỏi bàn trống, xem thực đơn, gọi món và yêu cầu hóa đơn thanh toán.",
+    "vocab": [
+      { "de": "der Tisch", "vi": "bàn ăn", "pos": "n" },
+      { "de": "die Speisekarte", "vi": "thực đơn", "pos": "n" },
+      { "de": "bestellen", "vi": "gọi món", "pos": "v" },
+      { "de": "die Rechnung", "vi": "hóa đơn", "pos": "n" }
+    ],
     "phrases": [
       { "de": "Haben Sie einen Tisch für zwei Personen frei?", "vi": "Quán còn bàn trống cho 2 người không ạ?" },
       { "de": "Ich möchte bitte die Speisekarte sehen.", "vi": "Làm ơn cho tôi xem thực đơn." },
       { "de": "Ich nehme ein Schnitzel und ein Mineralwasser, bitte.", "vi": "Cho tôi một phần thịt chiên Schnitzel và một nước khoáng." },
       { "de": "Zahlen, bitte! / Die Rechnung, bitte!", "vi": "Làm ơn cho tôi thanh toán / Xin hóa đơn!" }
+    ],
+    "dialogue": [
+      { "speaker": "Kellner", "de": "Guten Abend! Was möchten Sie bestellen?", "vi": "Chào buổi tối! Quý khách muốn gọi món gì ạ?" },
+      { "speaker": "Gast", "de": "Ich nehme eine Suppe und ein Bier, bitte.", "vi": "Cho tôi một món súp và một bia, cảm ơn." },
+      { "speaker": "Kellner", "de": "Sehr gern. Kommt sofort!", "vi": "Dạ vâng. Có ngay ạ!" },
+      { "speaker": "Gast", "de": "Zahlen, bitte! Zusammen.", "vi": "Tính tiền giúp tôi! Tính gộp nhé." }
     ],
     "testQuestion": {
       "question": "Khi muốn gọi thanh toán tại quán ăn ở Đức, bạn nói câu nào?",
@@ -42,10 +66,22 @@
     "title": "Mua Sắm Tại Siêu Thị",
     "level": "A1",
     "desc": "Hỏi vị trí quầy hàng, giá tiền, cân rau củ quả và thanh toán bằng tiền mặt/thẻ.",
+    "vocab": [
+      { "de": "kosten", "vi": "có giá là", "pos": "v" },
+      { "de": "das Obst", "vi": "trái cây", "pos": "n" },
+      { "de": "das Gemüse", "vi": "rau củ", "pos": "n" },
+      { "de": "die Kasse", "vi": "quầy thu ngân", "pos": "n" }
+    ],
     "phrases": [
       { "de": "Entschuldigung, wie viel kostet das?", "vi": "Xin lỗi, món này giá bao nhiêu tiền?" },
       { "de": "Wo finde ich frisches Obst und Gemüse?", "vi": "Tôi có thể tìm rau và trái cây tươi ở đâu?" },
       { "de": "Kann ich mit Karte oder bar bezahlen?", "vi": "Tôi có thể trả bằng thẻ hay tiền mặt?" }
+    ],
+    "dialogue": [
+      { "speaker": "Kunde", "de": "Entschuldigung, wo sind die Eier?", "vi": "Xin lỗi, trứng ở dãy nào ạ?" },
+      { "speaker": "Verkäufer", "de": "Gang 3, links neben der Milch.", "vi": "Dãy 3, bên trái cạnh sữa tươi." },
+      { "speaker": "Kassierer", "de": "Das macht 14 Euro 50. Mit Karte?", "vi": "Tổng cộng 14 Euro 50. Trả thẻ chứ ạ?" },
+      { "speaker": "Kunde", "de": "Ja, mit Karte bitte.", "vi": "Vâng, quẹt thẻ giúp tôi." }
     ],
     "testQuestion": {
       "question": "'Wie viel kostet das?' có nghĩa là gì?",
@@ -60,10 +96,22 @@
     "title": "Ga Tàu & Đi Lại Công Cộng",
     "level": "A1",
     "desc": "Mua vé tàu xe buýt, hỏi giờ tàu chạy và tìm sân ga (Gleis).",
+    "vocab": [
+      { "de": "die Fahrkarte", "vi": "vé tàu/xe", "pos": "n" },
+      { "de": "abfahren", "vi": "khởi hành", "pos": "v" },
+      { "de": "das Gleis", "vi": "sân ga / đường ray", "pos": "n" },
+      { "de": "umsteigen", "vi": "chuyển tuyến/tàu", "pos": "v" }
+    ],
     "phrases": [
       { "de": "Eine Fahrkarte nach Berlin, bitte!", "vi": "Làm ơn cho tôi một vé đi Berlin!" },
       { "de": "Wann fährt der nächste Zug nach München ab?", "vi": "Khi nào chuyến tàu tiếp theo đi München khởi hành?" },
       { "de": "Auf welchem Gleis fährt der Zug ab?", "vi": "Chuyến tàu khởi hành ở sân ga số mấy?" }
+    ],
+    "dialogue": [
+      { "speaker": "Reisender", "de": "Guten Tag, ich brauche ein Ticket nach Frankfurt.", "vi": "Chào bạn, tôi cần một vé đi Frankfurt." },
+      { "speaker": "Beamter", "de": "Einfach oder hin und zurück?", "vi": "Vé một chiều hay khứ hồi ạ?" },
+      { "speaker": "Reisender", "de": "Hin und zurück, bitte. Zweite Klasse.", "vi": "Khứ hồi, hạng hai làm ơn." },
+      { "speaker": "Beamter", "de": "Gleis 7, Abfahrt um 10:15 Uhr.", "vi": "Sân ga số 7, xuất phát lúc 10h15." }
     ],
     "testQuestion": {
       "question": "Từ tiếng Đức nào chỉ 'Sân ga / Đường ray' nơi tàu đón khách?",
@@ -78,10 +126,22 @@
     "title": "Hỏi Đường Trong Thành Phố",
     "level": "A1",
     "desc": "Chỉ phương hướng: rẽ trái, rẽ phải, đi thẳng và khoảng cách.",
+    "vocab": [
+      { "de": "geradeaus", "vi": "đi thẳng", "pos": "adv" },
+      { "de": "links", "vi": "bên trái", "pos": "adv" },
+      { "de": "rechts", "vi": "bên phải", "pos": "adv" },
+      { "de": "die Kreuzung", "vi": "ngã tư", "pos": "n" }
+    ],
     "phrases": [
       { "de": "Entschuldigung, wie komme ich zum Bahnhof?", "vi": "Xin lỗi, làm sao để tôi đi đến nhà ga?" },
-      { "de": "Gehen Sie geradeaus và dann nach links / rechts.", "vi": "Bạn hãy đi thẳng rồi sau đó rẽ trái / rẽ phải." },
+      { "de": "Gehen Sie geradeaus und dann nach links / rechts.", "vi": "Bạn hãy đi thẳng rồi sau đó rẽ trái / rẽ phải." },
       { "de": "Ist es weit von hier? - Nein, nur 5 Minuten zu Fuß.", "vi": "Có xa đây không? - Không, chỉ 5 phút đi bộ." }
+    ],
+    "dialogue": [
+      { "speaker": "Tourist", "de": "Entschuldigung, wo ist die Apotheke?", "vi": "Xin lỗi, hiệu thuốc ở đâu ạ?" },
+      { "speaker": "Passant", "de": "Gehen Sie diese Straße geradeaus bis zur Ampel.", "vi": "Hãy đi thẳng đường này đến chỗ đèn giao thông." },
+      { "speaker": "Tourist", "de": "Und dann?", "vi": "Và sau đó?" },
+      { "speaker": "Passant", "de": "An der Ampel biegen Sie rechts ab. Sie ist gleich da.", "vi": "Tại đèn đỏ rẽ phải. Hiệu thuốc ngay đó." }
     ],
     "testQuestion": {
       "question": "'Gehen Sie geradeaus' nghĩa là gì?",
@@ -96,16 +156,144 @@
     "title": "Khám Bệnh & Hiệu Thuốc",
     "level": "A1",
     "desc": "Diễn tả triệu chứng đau ốm và mua thuốc thông dụng.",
+    "vocab": [
+      { "de": "der Arzt", "vi": "bác sĩ", "pos": "n" },
+      { "de": "Kopfschmerzen", "vi": "đau đầu", "pos": "n" },
+      { "de": "das Fieber", "vi": "sốt", "pos": "n" },
+      { "de": "das Medikament", "vi": "thuốc men", "pos": "n" }
+    ],
     "phrases": [
-      { "de": "Ich fühle mich nicht gut, tôi bị đau đầu.", "vi": "Tôi cảm thấy không khỏe, tôi bị đau đầu." },
+      { "de": "Ich fühle mich nicht gut.", "vi": "Tôi cảm thấy không khỏe." },
       { "de": "Ich habe Kopfschmerzen und Fieber.", "vi": "Tôi bị đau đầu và sốt." },
       { "de": "Haben Sie ein Medikament gegen Halsschmerzen?", "vi": "Hiệu thuốc có thuốc trị đau họng không ạ?" }
+    ],
+    "dialogue": [
+      { "speaker": "Apotheker", "de": "Guten Tag, wie kann ich Ihnen helfen?", "vi": "Xin chào, tôi có thể giúp gì cho bạn?" },
+      { "speaker": "Kunde", "de": "Ich habe seit zwei Tagen Halsschmerzen und Husten.", "vi": "Tôi bị đau họng và ho 2 ngày nay." },
+      { "speaker": "Apotheker", "de": "Nehmen Sie diese Tabletten dreimal täglich nach dem Essen.", "vi": "Hãy uống thuốc này ngày 3 lần sau bữa ăn." }
     ],
     "testQuestion": {
       "question": "'Ich habe Kopfschmerzen' nghĩa là gì?",
       "options": ["Tôi bị đau đầu", "Tôi bị đau bụng", "Tôi bị sốt", "Tôi bị cảm lạnh"],
       "answer": "Tôi bị đau đầu",
       "explanation": "Kopf (đầu) + Schmerzen (cơn đau) = Kopfschmerzen (đau đầu)."
+    }
+  },
+  {
+    "id": "surv_07",
+    "icon": "🏨",
+    "title": "Khách Sạn & Đặt Phòng",
+    "level": "A2",
+    "desc": "Check-in, hỏi mật khẩu WiFi, đổi phòng và thủ tục trả phòng.",
+    "vocab": [
+      { "de": "das Einzelzimmer", "vi": "phòng đơn", "pos": "n" },
+      { "de": "das Doppelzimmer", "vi": "phòng đôi", "pos": "n" },
+      { "de": "das Frühstück", "vi": "bữa sáng", "pos": "n" },
+      { "de": "der Schlüssel", "vi": "chìa khóa phòng", "pos": "n" }
+    ],
+    "phrases": [
+      { "de": "Ich habe eine Reservierung auf den Namen Nguyen.", "vi": "Tôi có đặt phòng trước dưới tên Nguyen." },
+      { "de": "Ist das Frühstück im Preis inbegriffen?", "vi": "Bữa sáng đã bao gồm trong giá phòng chưa ạ?" },
+      { "de": "Wie lautet das WLAN-Passwort?", "vi": "Mật khẩu WiFi là gì ạ?" }
+    ],
+    "dialogue": [
+      { "speaker": "Rezeption", "de": "Herzlich willkommen im Hotel Central! Haben Sie gebucht?", "vi": "Chào mừng quý khách đến khách sạn Central! Quý khách đã đặt phòng chưa?" },
+      { "speaker": "Gast", "de": "Ja, ein Doppelzimmer für drei Nächte auf den Namen Tran.", "vi": "Vâng, một phòng đôi cho 3 đêm dưới tên Tran." },
+      { "speaker": "Rezeption", "de": "Hier ist Ihre Zimmerkarte, Zimmer 304 im dritten Stock.", "vi": "Đây là thẻ phòng của quý khách, phòng 304 tầng 3." }
+    ],
+    "testQuestion": {
+      "question": "'Ist das Frühstück im Preis inbegriffen?' có nghĩa là:",
+      "options": ["Bữa sáng đã gồm trong giá phòng chưa?", "Mấy giờ có bữa sáng?", "Bữa sáng ở tầng mấy?", "Tôi không ăn sáng"],
+      "answer": "Bữa sáng đã gồm trong giá phòng chưa?",
+      "explanation": "'inbegriffen' mang nghĩa là đã bao gồm trong giá."
+    }
+  },
+  {
+    "id": "surv_08",
+    "icon": "🏠",
+    "title": "Tìm Thuê Nhà & Căn Hộ",
+    "level": "A2",
+    "desc": "Hỏi tiền thuê phòng (Kaltmiete, Warmmiete, Kaution) và hẹn xem nhà.",
+    "vocab": [
+      { "de": "die Warmmiete", "vi": "tiền thuê bao gồm điện sưởi", "pos": "n" },
+      { "de": "die Kaution", "vi": "tiền đặt cọc", "pos": "n" },
+      { "de": "die Nebenkosten", "vi": "chi phí phụ/dịch vụ", "pos": "n" },
+      { "de": "besichtigen", "vi": "đi xem phòng/nhà", "pos": "v" }
+    ],
+    "phrases": [
+      { "de": "Wie hoch ist die Warmmiete pro Monat?", "vi": "Tiền thuê nhà trọn gói một tháng là bao nhiêu?" },
+      { "de": "Wie hoch ist die Kaution?", "vi": "Tiền đặt cọc là bao nhiêu tháng?" },
+      { "de": "Wann kann ich die Wohnung besichtigen?", "vi": "Khi nào tôi có thể qua xem căn hộ?" }
+    ],
+    "dialogue": [
+      { "speaker": "Vermieter", "de": "Guten Tag! Sie interessieren sich für das 2-Zimmer-Apartment?", "vi": "Xin chào! Bạn quan tâm đến căn hộ 2 phòng?" },
+      { "speaker": "Mieter", "de": "Ja, genau. Sind Haustiere erlaubt?", "vi": "Vâng đúng ạ. Có được nuôi thú cưng không ạ?" },
+      { "speaker": "Vermieter", "de": "Kleine Haustiere sind kein Problem. Die Kaution beträgt 3 Monatsmieten.", "vi": "Thú cưng nhỏ thì không vấn đề. Tiền cọc là 3 tháng tiền nhà." }
+    ],
+    "testQuestion": {
+      "question": "Phân biệt 'Warmmiete' và 'Kaltmiete' ở Đức:",
+      "options": ["Warmmiete đã gồm tiền sưởi và chi phí phụ (Nebenkosten)", "Warmmiete là thuê vào mùa hè", "Kaltmiete đắt hơn Warmmiete", "Hai từ hoàn toàn giống nhau"],
+      "answer": "Warmmiete đã gồm tiền sưởi và chi phí phụ (Nebenkosten)",
+      "explanation": "Kaltmiete = tiền thuê nhà gốc. Warmmiete = Kaltmiete + Nebenkosten (sưởi, nước, rác...)."
+    }
+  },
+  {
+    "id": "surv_09",
+    "icon": "🏢",
+    "title": "Cơ Quan Nhà Nước & Thị Thực",
+    "level": "B1",
+    "desc": "Làm thủ tục đăng ký cư trú (Anmeldung) và gia hạn visa tại Sở Ngoại Kiều (Ausländerbehörde).",
+    "vocab": [
+      { "de": "die Anmeldung", "vi": "đăng ký cư trú", "pos": "n" },
+      { "de": "der Aufenthaltstitel", "vi": "giấy phép cư trú/visa", "pos": "n" },
+      { "de": "der Termin", "vi": "cuộc hẹn", "pos": "n" },
+      { "de": "das Formular", "vi": "mẫu đơn", "pos": "n" }
+    ],
+    "phrases": [
+      { "de": "Ich habe einen Termin um 10:00 Uhr zur Wohnsitzanmeldung.", "vi": "Tôi có lịch hẹn lúc 10h00 để đăng ký địa chỉ cư trú." },
+      { "de": "Ich möchte meinen Aufenthaltstitel verlängern.", "vi": "Tôi muốn xin gia hạn giấy phép cư trú." },
+      { "de": "Welche Unterlagen muss ich mitbringen?", "vi": "Tôi cần mang theo những giấy tờ gì?" }
+    ],
+    "dialogue": [
+      { "speaker": "Sachbearbeiter", "de": "Guten Tag, Ihre Wartenummer bitte.", "vi": "Xin chào, cho tôi xin số thứ tự." },
+      { "speaker": "Antragsteller", "de": "Nummer B42. Hier sind mein Reisepass und die Wohnungsgeberbestätigung.", "vi": "Số B42. Đây là hộ chiếu và giấy xác nhận chủ nhà của tôi." },
+      { "speaker": "Sachbearbeiter", "de": "Sehr gut, alles vollständig. Bitte unterschreiben Sie hier.", "vi": "Rất tốt, giấy tờ đầy đủ. Xin mời ký vào đây." }
+    ],
+    "testQuestion": {
+      "question": "Thủ tục bắt buộc đầu tiên khi chuyển đến nơi ở mới tại Đức là gì?",
+      "options": ["die Wohnsitzanmeldung (Đăng ký cư trú tại Bürgeramt)", "Mua bảo hiểm xe hơi", "Đăng ký kết hôn", "Nộp đơn thôi việc"],
+      "answer": "die Wohnsitzanmeldung (Đăng ký cư trú tại Bürgeramt)",
+      "explanation": "Trong vòng 14 ngày sau khi chuyển nhà, bạn bắt buộc phải làm Anmeldung tại Bürgeramt."
+    }
+  },
+  {
+    "id": "surv_10",
+    "icon": "📞",
+    "title": "Gọi Điện Thoại & Hẹn Lịch",
+    "level": "B1",
+    "desc": "Chào hỏi qua điện thoại, xin lỗi khi đường truyền kém và đặt lịch hẹn (Termin).",
+    "vocab": [
+      { "de": "einen Termin vereinbaren", "vi": "hẹn lịch", "pos": "v" },
+      { "de": "verschieben", "vi": "dời lịch hẹn", "pos": "v" },
+      { "de": "absagen", "vi": "hủy lịch hẹn", "pos": "v" },
+      { "de": "zurückrufen", "vi": "gọi lại", "pos": "v" }
+    ],
+    "phrases": [
+      { "de": "Ich möchte gern einen Termin für nächste Woche vereinbaren.", "vi": "Tôi muốn đặt một lịch hẹn vào tuần tới." },
+      { "de": "Könnten Sie das bitte noch einmal wiederholen?", "vi": "Bạn có thể nhắc lại một lần nữa được không ạ?" },
+      { "de": "Ich rufe später noch einmal an.", "vi": "Tôi sẽ gọi lại sau." }
+    ],
+    "dialogue": [
+      { "speaker": "Praxis", "de": "Praxis Dr. Müller, guten Tag! Was kann ich für Sie tun?", "vi": "Phòng khám BS Müller xin nghe! Tôi có thể giúp gì cho bạn?" },
+      { "speaker": "Patient", "de": "Guten Tag, mein Name ist Vu. Ich brauche einen Kontrolltermin.", "vi": "Xin chào, tôi tên là Vu. Tôi cần hẹn lịch kiểm tra sức khỏe." },
+      { "speaker": "Praxis", "de": "Passt es Ihnen am kommenden Dienstag um 14 Uhr?", "vi": "Thứ ba tuần tới lúc 14h có tiện cho bạn không?" },
+      { "speaker": "Patient", "de": "Ja, Dienstag um 14 Uhr passt mir sehr gut. Vielen Dank!", "vi": "Vâng, thứ ba lúc 14h rất tiện. Cảm ơn bạn!" }
+    ],
+    "testQuestion": {
+      "question": "Cụm từ tiếng Đức nào có nghĩa là 'Đặt một cuộc hẹn'?",
+      "options": ["einen Termin vereinbaren", "einen Termin absagen", "einen Kaffee kochen", "den Zug verpassen"],
+      "answer": "einen Termin vereinbaren",
+      "explanation": "'vereinbaren' = thỏa thuận, 'einen Termin vereinbaren' = hẹn lịch."
     }
   }
 ]
