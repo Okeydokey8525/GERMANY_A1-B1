@@ -3,7 +3,7 @@
 class RoadmapController {
   constructor() {
     this.curriculum = null;
-    this.learningObjectives = [];
+    this.learningObjectives = {};
     this.selectedLevel = "A1";
     this.currentTestingStage = null;
 
@@ -18,7 +18,18 @@ class RoadmapController {
         fetch("./data/learning_objectives.json")
       ]);
       this.curriculum = await curricResp.json();
-      this.learningObjectives = await objResp.json();
+      const rawObj = await objResp.json();
+      
+      // Index learning objectives by id and topicId
+      if (Array.isArray(rawObj)) {
+        rawObj.forEach(t => {
+          if (t.objectives) {
+            t.objectives.forEach(o => {
+              this.learningObjectives[o.id] = { ...o, topicId: t.topicId, topicTitle: t.topicTitle };
+            });
+          }
+        });
+      }
     } catch (e) {
       console.warn("Failed to load curriculum or objectives:", e);
     }
@@ -166,22 +177,34 @@ class RoadmapController {
 
         <p class="text-xs text-gray-600 dark:text-gray-300 mb-2">${stage.desc}</p>
         
-        <!-- Learning Objectives with Individual Progress -->
+        <!-- Learning Objectives with Individual Progress & Status -->
         ${stage.learningObjectives ? `
           <div class="space-y-1.5 py-2">
             <span class="text-[10px] font-bold text-gray-400 uppercase tracking-wider">Mục tiêu học tập (Learning Objectives):</span>
             <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
               ${stage.learningObjectives.map(lo => {
-                const objStat = (window.progressCtrl && window.progressCtrl.data.objectives && window.progressCtrl.data.objectives[lo.id]) || { mastery: Math.min(100, Math.round(dynProgress * 0.95)) };
-                const objMastery = objStat.mastery || 40;
+                const objData = (window.progressCtrl && window.progressCtrl.getObjectiveData) 
+                  ? window.progressCtrl.getObjectiveData(lo.id) 
+                  : { mastery: Math.min(100, Math.round(dynProgress * 0.95)), status: dynProgress >= 80 ? "competent" : "developing" };
+                
+                const objMastery = objData.mastery || 40;
+                const statusBadge = objData.status === "competent" 
+                  ? `<span class="text-[9px] px-1.5 py-0.2 rounded font-bold bg-emerald-100 text-emerald-800 dark:bg-emerald-900/40 dark:text-emerald-300">🟢 Competent</span>`
+                  : (objData.status === "developing" 
+                    ? `<span class="text-[9px] px-1.5 py-0.2 rounded font-bold bg-amber-100 text-amber-800 dark:bg-amber-900/40 dark:text-amber-300">🟡 Developing</span>`
+                    : `<span class="text-[9px] px-1.5 py-0.2 rounded font-bold bg-rose-100 text-rose-800 dark:bg-rose-900/40 dark:text-rose-300">🔴 Learning</span>`);
+
                 return `
                   <div class="p-2.5 rounded-xl bg-gray-50 dark:bg-gray-900/50 border border-gray-100 dark:border-gray-700/50 text-[11px] space-y-1">
                     <div class="flex items-center justify-between">
-                      <span class="font-bold text-gray-800 dark:text-gray-200">${lo.title}</span>
-                      <span class="font-mono font-bold text-blue-600 dark:text-blue-400">${objMastery}%</span>
+                      <span class="font-bold text-gray-800 dark:text-gray-200 truncate pr-1">${lo.title}</span>
+                      <div class="flex items-center gap-1 shrink-0">
+                        ${statusBadge}
+                        <span class="font-mono font-bold text-blue-600 dark:text-blue-400">${objMastery}%</span>
+                      </div>
                     </div>
                     <div class="w-full h-1 bg-gray-200 dark:bg-gray-700 rounded-full overflow-hidden">
-                      <div class="h-full bg-blue-500 rounded-full" style="width: ${objMastery}%;"></div>
+                      <div class="h-full ${objMastery >= 80 ? 'bg-emerald-500' : 'bg-blue-500'} rounded-full" style="width: ${objMastery}%;"></div>
                     </div>
                   </div>
                 `;
@@ -223,7 +246,7 @@ class RoadmapController {
     });
   }
 
-  // Interactive Skill Graph with Prerequisite Advisory
+  // Interactive Skill Graph with Drilldown Modal
   renderSkillGraph() {
     const container = document.getElementById("grammar-dependency-container");
     if (!container) return;
@@ -251,7 +274,7 @@ class RoadmapController {
       }
 
       return `
-        <div class="p-3.5 rounded-2xl border ${isPassed ? 'border-emerald-300 bg-emerald-50/50 dark:bg-emerald-950/20' : 'border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800'} text-xs space-y-1.5 shrink-0 min-w-[190px] shadow-2xs hover:scale-102 transition-all cursor-pointer" onclick="window.progressCtrl && window.progressCtrl.showEvidenceModal('${s.grammarTopics && s.grammarTopics[0]}')">
+        <div class="skill-graph-card p-3.5 rounded-2xl border ${isPassed ? 'border-emerald-300 bg-emerald-50/50 dark:bg-emerald-950/20' : 'border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800'} text-xs space-y-1.5 shrink-0 min-w-[200px] shadow-2xs hover:scale-102 transition-all cursor-pointer" data-stage-idx="${idx}">
           <div class="flex items-center justify-between">
             <span class="font-bold text-gray-800 dark:text-gray-200">${s.sublevel} - Chặng ${idx + 1}</span>
             <span>${statusIcon}</span>
@@ -264,9 +287,109 @@ class RoadmapController {
     }).join(`
       <div class="text-gray-400 font-bold self-center">➔</div>
     `);
+
+    // Add click listeners to open Skill Graph Drilldown Modal
+    container.querySelectorAll(".skill-graph-card").forEach(card => {
+      card.addEventListener("click", () => {
+        const sIdx = parseInt(card.getAttribute("data-stage-idx"));
+        const stage = stages[sIdx];
+        if (stage) this.openSkillGraphDrilldown(stage, stages, sIdx);
+      });
+    });
   }
 
-  // Stage Mastery Test Modal
+  // Drilldown modal for Skill Graph node
+  openSkillGraphDrilldown(stage, allStages, idx) {
+    const modal = document.getElementById("mastery-evidence-modal");
+    const titleEl = document.getElementById("evidence-modal-title");
+    const contentEl = document.getElementById("evidence-modal-content");
+    if (!modal || !contentEl) return;
+
+    if (titleEl) titleEl.textContent = `Chi Tiết Kỹ Năng: ${stage.title}`;
+
+    const prog = this.calculateStageProgress(stage);
+    let prereqHtml = "";
+    if (idx > 0) {
+      const prevStage = allStages[idx - 1];
+      const prevProg = this.calculateStageProgress(prevStage);
+      prereqHtml = `
+        <div class="p-3 bg-gray-50 dark:bg-gray-900/50 rounded-2xl border border-gray-200 dark:border-gray-700 text-xs space-y-1">
+          <span class="text-[10px] font-bold text-gray-400 uppercase">Kỹ năng tiền đề (Prerequisites):</span>
+          <div class="flex items-center justify-between">
+            <span class="font-bold text-gray-800 dark:text-gray-200">${prevStage.title} (${prevStage.sublevel})</span>
+            <span class="font-bold ${prevProg >= 75 ? 'text-emerald-600' : 'text-amber-600'}">${prevProg >= 75 ? '✓ Đạt' : '⚠️ Chưa vững'} (${prevProg}%)</span>
+          </div>
+        </div>
+      `;
+    }
+
+    let objectivesHtml = "";
+    let weakestObj = null;
+    let minMastery = 1000;
+
+    if (stage.learningObjectives && stage.learningObjectives.length > 0) {
+      objectivesHtml = `
+        <div class="space-y-2 pt-2">
+          <span class="text-[10px] font-bold text-gray-400 uppercase">Mục tiêu học tập thành phần:</span>
+          ${stage.learningObjectives.map(lo => {
+            const objData = (window.progressCtrl && window.progressCtrl.getObjectiveData) 
+              ? window.progressCtrl.getObjectiveData(lo.id) 
+              : { mastery: 50, confidence: 50, status: "learning" };
+            
+            if (objData.mastery < minMastery) {
+              minMastery = objData.mastery;
+              weakestObj = { ...lo, objData };
+            }
+
+            return `
+              <div class="p-2.5 rounded-xl bg-gray-50 dark:bg-gray-900/40 border border-gray-100 dark:border-gray-700/60 text-xs flex items-center justify-between">
+                <div>
+                  <div class="font-bold text-gray-900 dark:text-gray-100">${lo.title}</div>
+                  <div class="text-[10px] text-gray-400">Confidence: ${objData.confidence || 40}% • Status: <b>${objData.status || 'learning'}</b></div>
+                </div>
+                <span class="font-mono font-bold text-blue-600 dark:text-blue-400 ml-2">${objData.mastery || 40}%</span>
+              </div>
+            `;
+          }).join("")}
+        </div>
+      `;
+    }
+
+    contentEl.innerHTML = `
+      <div class="space-y-3 text-left">
+        <div class="flex items-center justify-between p-3 rounded-2xl bg-blue-50 dark:bg-blue-950/40 border border-blue-200 dark:border-blue-900/40">
+          <div>
+            <div class="text-xs font-bold text-blue-900 dark:text-blue-200">${stage.sublevel} - ${stage.title}</div>
+            <div class="text-[10px] text-blue-700 dark:text-blue-300">Độ làm chủ tổng thể (Stage Mastery)</div>
+          </div>
+          <span class="text-xl font-mono font-black text-blue-600 dark:text-blue-400">${prog}%</span>
+        </div>
+
+        ${prereqHtml}
+        ${objectivesHtml}
+
+        ${weakestObj ? `
+          <button id="btn-practice-weakest-lo" class="w-full py-2.5 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-bold text-xs shadow-md transition-all">
+            🎯 Luyện mục tiêu yếu nhất (${weakestObj.id}) →
+          </button>
+        ` : ''}
+      </div>
+    `;
+
+    const weakBtn = document.getElementById("btn-practice-weakest-lo");
+    if (weakBtn && weakestObj) {
+      weakBtn.addEventListener("click", () => {
+        modal.classList.add("hidden");
+        if (window.mistakesCtrl) {
+          window.mistakesCtrl.practiceObjective(weakestObj.id, stage.grammarTopics && stage.grammarTopics[0]);
+        }
+      });
+    }
+
+    modal.classList.remove("hidden");
+  }
+
+  // 4-Part Mastery Test Modal
   openStageMasteryTest(stage) {
     this.currentTestingStage = stage;
     const modal = document.getElementById("stage-test-modal");
@@ -285,11 +408,21 @@ class RoadmapController {
       return;
     }
 
+    // Render multi-part header
+    testContainer.innerHTML = `
+      <div class="p-3 bg-amber-50 dark:bg-amber-950/30 rounded-2xl border border-amber-200 dark:border-amber-900/40 text-xs text-amber-900 dark:text-amber-200">
+        <b>📋 Đề thi Đánh giá Năng lực Toàn diện (4 Phần):</b> Nhận diện ngữ pháp, điền dạng từ, ngữ cảnh giao tiếp và trật tự câu.
+      </div>
+    `;
+
     questions.forEach((q, qIdx) => {
       const qBlock = document.createElement("div");
       qBlock.className = "p-4 rounded-2xl bg-gray-50 dark:bg-gray-900/50 border border-gray-200 dark:border-gray-700 space-y-2.5";
       qBlock.innerHTML = `
-        <span class="text-xs font-bold text-gray-500 font-mono">Câu ${qIdx + 1} / ${questions.length}</span>
+        <div class="flex items-center justify-between">
+          <span class="text-xs font-bold text-gray-500 font-mono">Câu ${qIdx + 1} / ${questions.length}</span>
+          <span class="text-[10px] font-bold px-2 py-0.5 rounded bg-blue-100 text-blue-800 dark:bg-blue-900/40 dark:text-blue-300">Part ${((qIdx % 4) + 1)}</span>
+        </div>
         <h4 class="text-sm font-bold text-gray-900 dark:text-white">${q.q}</h4>
         <div class="space-y-1.5">
           ${q.opts.map((opt, optIdx) => `
@@ -318,6 +451,16 @@ class RoadmapController {
         if (window.progressCtrl) {
           if (!window.progressCtrl.data.stageTestsPassed) window.progressCtrl.data.stageTestsPassed = {};
           window.progressCtrl.data.stageTestsPassed[stage.id] = { score: scorePct, date: Date.now() };
+          
+          // Mark all stage learning objectives as Mastered!
+          if (stage.learningObjectives) {
+            stage.learningObjectives.forEach(lo => {
+              if (window.progressCtrl.data.objectives && window.progressCtrl.data.objectives[lo.id]) {
+                window.progressCtrl.data.objectives[lo.id].status = "mastered";
+              }
+            });
+          }
+
           window.progressCtrl.saveProgress();
         }
         if (window.appCtrl) {

@@ -188,18 +188,24 @@ class GrammarExerciseController {
     let totalBlanks = 0;
     let correctCount = 0;
 
-    unit.sections.forEach(sec => {
-      sec.dialogue.forEach(line => {
-        line.blanks.forEach(b => {
+    const sections = unit.sections || unit.dialogues || [];
+    sections.forEach(sec => {
+      const lines = sec.lines || sec.dialogue || [];
+      lines.forEach(line => {
+        const blanks = line.blanks || [];
+        blanks.forEach(b => {
           totalBlanks++;
           const inputEl = document.getElementById(`input_${b.id}`);
           const badgeEl = document.getElementById(`badge_${b.id}`);
           if (!inputEl) return;
 
           const userVal = (inputEl.value || "").trim().toLowerCase();
-          const correctVal = (b.answer || "").trim().toLowerCase();
+          const correctAnswers = Array.isArray(b.correct) ? b.correct : [b.answer || ""];
+          const isCorrect = correctAnswers.some(ans => (ans || "").toLowerCase() === userVal);
+          const targetTopicId = b.topicId || sec.topicId || unit.topicId || "grammar";
+          const targetObjectiveId = b.objectiveId || sec.objectiveId || unit.objectiveId || null;
 
-          if (userVal === correctVal) {
+          if (isCorrect) {
             correctCount++;
             inputEl.className = "grammar-input font-bold text-center px-2 py-0.5 rounded-xl border-2 border-emerald-500 bg-emerald-50 dark:bg-emerald-950/40 text-emerald-900 dark:text-emerald-200 text-sm shadow-2xs";
             if (badgeEl) {
@@ -211,24 +217,31 @@ class GrammarExerciseController {
             inputEl.className = "grammar-input font-bold text-center px-2 py-0.5 rounded-xl border-2 border-rose-500 bg-rose-50 dark:bg-rose-950/40 text-rose-900 dark:text-rose-200 text-sm shadow-2xs";
             if (badgeEl) {
               badgeEl.className = "text-[10px] font-bold text-rose-600 dark:text-rose-400 mt-0.5 text-center";
-              badgeEl.textContent = `Đáp án: ${b.answer}`;
+              badgeEl.textContent = `Đáp án: ${correctAnswers[0]}`;
               badgeEl.classList.remove("hidden");
             }
 
-            // Register in Mistake Notebook with Warum explanation
+            // Register in Mistake Notebook with Warum explanation & Error Pattern
             if (window.mistakesCtrl) {
-              const warumText = b.explanation || unit.rule_summary?.formula || `Động từ chia theo ngôi tương ứng: ${b.answer}`;
+              const warumText = b.hint || b.explanation || unit.grammar_rule || `Đáp án đúng là: ${correctAnswers[0]}`;
               window.mistakesCtrl.addMistake({
                 id: `gram_${b.id}`,
                 type: "grammar",
                 level: unit.level || "A1",
-                question: `Điền câu: "${line.text.replace(b.placeholder, '___')}"`,
+                question: `Điền câu: "${line.text_template || line.text || ''}"`,
                 userAnswer: userVal || "(Để trống)",
-                correctAnswer: b.answer,
-                topic: unit.topic || "Ngữ pháp",
+                correctAnswer: correctAnswers[0],
+                topicId: targetTopicId,
+                objectiveId: targetObjectiveId,
+                topic: unit.title || unit.unit || "Ngữ pháp",
                 explanation: warumText
               });
             }
+          }
+
+          // Directly record to Progress Engine with Objective Tracking!
+          if (window.progressCtrl) {
+            window.progressCtrl.recordActivity("grammar", isCorrect, targetTopicId, targetObjectiveId);
           }
         });
       });
@@ -241,10 +254,9 @@ class GrammarExerciseController {
     if (scoreBox) scoreBox.classList.remove("hidden");
     if (scoreVal) scoreVal.textContent = `${correctCount} / ${totalBlanks}`;
 
-    if (correctCount === totalBlanks) {
+    if (correctCount === totalBlanks && totalBlanks > 0) {
       if (scoreMsg) scoreMsg.innerHTML = "🎉 <b>Hoàn hảo!</b> Bạn đã chia đúng 100% tất cả các từ trong bài học!";
       if (window.speechCtrl) window.speechCtrl.playCorrectSound();
-      if (window.progressCtrl) window.progressCtrl.recordActivity("grammar", 2);
     } else {
       if (scoreMsg) scoreMsg.innerHTML = `Đúng ${correctCount}/${totalBlanks} vị trí. Các câu sai đã được lưu vào <b class="text-rose-600 dark:text-rose-400">Sổ tay lỗi sai</b> để bạn ôn lại!`;
       if (window.speechCtrl) window.speechCtrl.playComboSound(1);

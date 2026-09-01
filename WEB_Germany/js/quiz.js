@@ -200,7 +200,9 @@ class QuizController {
         window.speechCtrl.playCorrectSound();
         window.speechCtrl.speak(item.article ? `${item.article} ${item.word}` : item.word);
       }
-      if (window.progressCtrl) window.progressCtrl.recordActivity("vocab", 1);
+      if (window.progressCtrl) {
+        window.progressCtrl.recordActivity("vocab", true, item.topicId || "artikel", item.objectiveId || "LO_ART_01");
+      }
     } else {
       this.combo = 0;
       selectedBtn.className = "w-full p-4 text-left rounded-2xl border-2 border-rose-500 bg-rose-50 dark:bg-rose-950/40 text-rose-800 dark:text-rose-200 font-bold transition-all flex items-center justify-between";
@@ -214,9 +216,14 @@ class QuizController {
           question: item.article ? `${item.article} ${item.word}` : item.word,
           userAnswer: chosenText,
           correctAnswer: item.meaning_vi,
+          topicId: item.topicId || "artikel",
+          objectiveId: item.objectiveId || "LO_ART_01",
           topic: item.topic_vi || item.topic || "Từ vựng",
           explanation: `"${item.word}" có nghĩa là "${item.meaning_vi}". Ví dụ: ${item.example_de || ''}`
         });
+      }
+      if (window.progressCtrl) {
+        window.progressCtrl.recordActivity("vocab", false, item.topicId || "artikel", item.objectiveId || "LO_ART_01");
       }
     }
 
@@ -257,12 +264,14 @@ class QuizController {
         window.speechCtrl.playComboSound(this.combo);
         window.speechCtrl.speak(`${this.currentQuestion.article} ${this.currentQuestion.word}`);
       }
-      if (window.progressCtrl) window.progressCtrl.recordActivity("vocab", 1);
+      if (window.progressCtrl) {
+        window.progressCtrl.recordActivity("vocab", true, "artikel", "LO_ART_01");
+      }
     } else {
       this.combo = 0;
       if (window.speechCtrl) window.speechCtrl.playWrongSound();
 
-      // Add to Mistake Notebook
+      // Add to Mistake Notebook with Error Pattern
       if (window.mistakesCtrl) {
         window.mistakesCtrl.addMistake({
           id: `art_${this.currentQuestion.id}`,
@@ -270,9 +279,14 @@ class QuizController {
           question: `Mạo từ của danh từ "${this.currentQuestion.word}"`,
           userAnswer: chosenArticle,
           correctAnswer: `${this.currentQuestion.article} ${this.currentQuestion.word}`,
+          topicId: "artikel",
+          objectiveId: "LO_ART_01",
           topic: "Mạo từ Der / Die / Das",
           explanation: `Danh từ "${this.currentQuestion.word}" đi với mạo từ "${this.currentQuestion.article}". Số nhiều: ${this.currentQuestion.plural || 'die ' + this.currentQuestion.word}`
         });
+      }
+      if (window.progressCtrl) {
+        window.progressCtrl.recordActivity("vocab", false, "artikel", "LO_ART_01");
       }
     }
 

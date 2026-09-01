@@ -1,6 +1,8 @@
 [
   {
     "id": "cornelsen_modal_01",
+    "topicId": "modalverben",
+    "objectiveId": "LO_MOD_01",
     "unit": "Kapitel 1: Modalverben",
     "title": "Chia Động Từ Khuyết Thiếu: müssen, wollen, dürfen, sollen",
     "level": "A1-A2",
@@ -11,6 +13,7 @@
       {
         "section_num": "3",
         "verb_target": "müssen",
+        "objectiveId": "LO_MOD_01",
         "title": "Hội thoại 3: müssen (bắt buộc / phải làm gì)",
         "lines": [
           {
@@ -19,16 +22,14 @@
             "blanks": [
               {
                 "id": "blank_1",
-                "correct": [
-                  "müssen"
-                ],
+                "objectiveId": "LO_MOD_01",
+                "correct": ["müssen"],
                 "hint": "müssen (chủ ngữ: Alle = số nhiều)"
               },
               {
                 "id": "blank_2",
-                "correct": [
-                  "musst"
-                ],
+                "objectiveId": "LO_MOD_01",
+                "correct": ["musst"],
                 "hint": "müssen (chủ ngữ: du)"
               }
             ]
@@ -39,9 +40,8 @@
             "blanks": [
               {
                 "id": "blank_3",
-                "correct": [
-                  "müsst"
-                ],
+                "objectiveId": "LO_MOD_01",
+                "correct": ["müsst"],
                 "hint": "müssen (chủ ngữ: ihr)"
               }
             ]
@@ -52,29 +52,26 @@
             "blanks": [
               {
                 "id": "blank_4",
-                "correct": [
-                  "müssen"
-                ],
+                "objectiveId": "LO_MOD_01",
+                "correct": ["müssen"],
                 "hint": "müssen (chủ ngữ: Wir)"
               },
               {
                 "id": "blank_5",
-                "correct": [
-                  "muss"
-                ],
+                "objectiveId": "LO_MOD_01",
+                "correct": ["muss"],
                 "hint": "müssen (chủ ngữ: Papa = er)"
               }
             ]
           },
           {
             "speaker": "Mutter",
-            "text_template": "Nicht fair! Nicht fair! Ich {blank_6} Wäsche waschen und die Wohnung aufräumen. Das ist nicht fair!",
+            "text_template": "Nicht fair! Nicht fair! Ich {blank_6} Wäsche waschen und die Wohnung aufräumen. Das ist không công bằng!",
             "blanks": [
               {
                 "id": "blank_6",
-                "correct": [
-                  "muss"
-                ],
+                "objectiveId": "LO_MOD_01",
+                "correct": ["muss"],
                 "hint": "müssen (chủ ngữ: Ich)"
               }
             ]
@@ -84,6 +81,7 @@
       {
         "section_num": "4",
         "verb_target": "wollen",
+        "objectiveId": "LO_MOD_01",
         "title": "Hội thoại 4: wollen (muốn / dự định làm gì)",
         "lines": [
           {
@@ -92,9 +90,8 @@
             "blanks": [
               {
                 "id": "blank_7",
-                "correct": [
-                  "wollt"
-                ],
+                "objectiveId": "LO_MOD_01",
+                "correct": ["wollt"],
                 "hint": "wollen (chủ ngữ: ihr)"
               }
             ]
@@ -105,9 +102,8 @@
             "blanks": [
               {
                 "id": "blank_8",
-                "correct": [
-                  "wollen"
-                ],
+                "objectiveId": "LO_MOD_01",
+                "correct": ["wollen"],
                 "hint": "wollen (chủ ngữ: Wir)"
               }
             ]
@@ -118,9 +114,8 @@
             "blanks": [
               {
                 "id": "blank_9",
-                "correct": [
-                  "willst"
-                ],
+                "objectiveId": "LO_MOD_01",
+                "correct": ["willst"],
                 "hint": "wollen (chủ ngữ: du)"
               }
             ]
@@ -131,16 +126,14 @@
             "blanks": [
               {
                 "id": "blank_10",
-                "correct": [
-                  "will"
-                ],
+                "objectiveId": "LO_MOD_01",
+                "correct": ["will"],
                 "hint": "wollen (chủ ngữ: ich)"
               },
               {
                 "id": "blank_11",
-                "correct": [
-                  "will"
-                ],
+                "objectiveId": "LO_MOD_01",
+                "correct": ["will"],
                 "hint": "wollen (chủ ngữ: Annika = sie)"
               }
             ]
@@ -151,9 +144,8 @@
             "blanks": [
               {
                 "id": "blank_12",
-                "correct": [
-                  "wollen"
-                ],
+                "objectiveId": "LO_MOD_01",
+                "correct": ["wollen"],
                 "hint": "wollen (chủ ngữ: Die Kinder = số nhiều)"
               }
             ]
@@ -163,6 +155,7 @@
       {
         "section_num": "5",
         "verb_target": "dürfen",
+        "objectiveId": "LO_MOD_01",
         "title": "Hội thoại 5: dürfen (được phép làm gì)",
         "lines": [
           {
@@ -171,9 +164,8 @@
             "blanks": [
               {
                 "id": "blank_13",
-                "correct": [
-                  "darfst"
-                ],
+                "objectiveId": "LO_MOD_01",
+                "correct": ["darfst"],
                 "hint": "dürfen (chủ ngữ: du)"
               }
             ]
@@ -184,9 +176,8 @@
             "blanks": [
               {
                 "id": "blank_14",
-                "correct": [
-                  "darf"
-                ],
+                "objectiveId": "LO_MOD_01",
+                "correct": ["darf"],
                 "hint": "dürfen (chủ ngữ: ich)"
               }
             ]
@@ -202,10 +193,8 @@
             "blanks": [
               {
                 "id": "blank_15",
-                "correct": [
-                  "Darf",
-                  "darf"
-                ],
+                "objectiveId": "LO_MOD_01",
+                "correct": ["Darf", "darf"],
                 "hint": "dürfen (chủ ngữ: Juliane = sie, đầu câu viết hoa)"
               }
             ]
@@ -216,16 +205,14 @@
             "blanks": [
               {
                 "id": "blank_16",
-                "correct": [
-                  "dürft"
-                ],
+                "objectiveId": "LO_MOD_01",
+                "correct": ["dürft"],
                 "hint": "dürfen (chủ ngữ: ihr)"
               },
               {
                 "id": "blank_17",
-                "correct": [
-                  "dürft"
-                ],
+                "objectiveId": "LO_MOD_01",
+                "correct": ["dürft"],
                 "hint": "dürfen (chủ ngữ: ihr)"
               }
             ]
@@ -236,16 +223,14 @@
             "blanks": [
               {
                 "id": "blank_18",
-                "correct": [
-                  "dürfen"
-                ],
+                "objectiveId": "LO_MOD_01",
+                "correct": ["dürfen"],
                 "hint": "dürfen (chủ ngữ: Wir)"
               },
               {
                 "id": "blank_19",
-                "correct": [
-                  "dürfen"
-                ],
+                "objectiveId": "LO_MOD_01",
+                "correct": ["dürfen"],
                 "hint": "dürfen (chủ ngữ: Oma und Opa = số nhiều)"
               }
             ]
@@ -255,6 +240,7 @@
       {
         "section_num": "6",
         "verb_target": "sollen",
+        "objectiveId": "LO_MOD_01",
         "title": "Hội thoại 6: sollen (nên / được dặn phải làm gì)",
         "lines": [
           {
@@ -263,9 +249,8 @@
             "blanks": [
               {
                 "id": "blank_20",
-                "correct": [
-                  "soll"
-                ],
+                "objectiveId": "LO_MOD_01",
+                "correct": ["soll"],
                 "hint": "sollen (chủ ngữ: ich)"
               }
             ]
@@ -276,16 +261,14 @@
             "blanks": [
               {
                 "id": "blank_21",
-                "correct": [
-                  "sollst"
-                ],
+                "objectiveId": "LO_MOD_01",
+                "correct": ["sollst"],
                 "hint": "sollen (chủ ngữ: Du)"
               },
               {
                 "id": "blank_22",
-                "correct": [
-                  "soll"
-                ],
+                "objectiveId": "LO_MOD_01",
+                "correct": ["soll"],
                 "hint": "sollen (chủ ngữ: Wer = ngôi 3 số ít)"
               }
             ]
@@ -296,10 +279,8 @@
             "blanks": [
               {
                 "id": "blank_23",
-                "correct": [
-                  "Sollen",
-                  "sollen"
-                ],
+                "objectiveId": "LO_MOD_01",
+                "correct": ["Sollen", "sollen"],
                 "hint": "sollen (chủ ngữ: wir, đầu câu viết hoa)"
               }
             ]
@@ -310,6 +291,8 @@
   },
   {
     "id": "cornelsen_artikel_02",
+    "topicId": "akkusativ",
+    "objectiveId": "LO_AKK_02",
     "unit": "Kapitel 4: Artikel & Kasus",
     "title": "Biến Cách Quán Từ: Akkusativ & Dativ",
     "level": "A1-A2",
@@ -320,6 +303,8 @@
       {
         "section_num": "1",
         "verb_target": "Akkusativ",
+        "topicId": "akkusativ",
+        "objectiveId": "LO_AKK_02",
         "title": "Bài tập 1: Mạo từ trong câu Akkusativ (haben, kaufen, suchen...)",
         "lines": [
           {
@@ -328,18 +313,16 @@
             "blanks": [
               {
                 "id": "blank_ak1",
-                "correct": [
-                  "einen",
-                  "den"
-                ],
+                "topicId": "akkusativ",
+                "objectiveId": "LO_AKK_03",
+                "correct": ["einen", "den"],
                 "hint": "mạo từ giống đực (Maskulin) ở cách Akkusativ"
               },
               {
                 "id": "blank_ak2",
-                "correct": [
-                  "eine",
-                  "die"
-                ],
+                "topicId": "akkusativ",
+                "objectiveId": "LO_AKK_03",
+                "correct": ["eine", "die"],
                 "hint": "mạo từ giống cái (Feminin) ở cách Akkusativ"
               }
             ]
@@ -350,17 +333,16 @@
             "blanks": [
               {
                 "id": "blank_ak3",
-                "correct": [
-                  "den",
-                  "einen"
-                ],
+                "topicId": "akkusativ",
+                "objectiveId": "LO_AKK_02",
+                "correct": ["den", "einen"],
                 "hint": "der Schlüssel ➔ den Schlüssel (Akkusativ)"
               },
               {
                 "id": "blank_ak4",
-                "correct": [
-                  "die"
-                ],
+                "topicId": "akkusativ",
+                "objectiveId": "LO_AKK_05",
+                "correct": ["die"],
                 "hint": "für + Akkusativ: die Wohnung"
               }
             ]
@@ -370,6 +352,8 @@
       {
         "section_num": "2",
         "verb_target": "Dativ",
+        "topicId": "dativ",
+        "objectiveId": "LO_DAT_02",
         "title": "Bài tập 2: Mạo từ trong câu Dativ (helfen, danken, mit, nach...)",
         "lines": [
           {
@@ -378,16 +362,16 @@
             "blanks": [
               {
                 "id": "blank_da1",
-                "correct": [
-                  "dem"
-                ],
+                "topicId": "dativ",
+                "objectiveId": "LO_DAT_04",
+                "correct": ["dem"],
                 "hint": "mit + Dativ: der Bus ➔ dem Bus"
               },
               {
                 "id": "blank_da2",
-                "correct": [
-                  "der"
-                ],
+                "topicId": "dativ",
+                "objectiveId": "LO_DAT_04",
+                "correct": ["der"],
                 "hint": "mit + Dativ: die U-Bahn ➔ der U-Bahn"
               }
             ]
@@ -398,9 +382,9 @@
             "blanks": [
               {
                 "id": "blank_da3",
-                "correct": [
-                  "dem"
-                ],
+                "topicId": "dativ",
+                "objectiveId": "LO_DAT_02",
+                "correct": ["dem"],
                 "hint": "helfen + Dativ: der Mann ➔ dem Mann"
               }
             ]

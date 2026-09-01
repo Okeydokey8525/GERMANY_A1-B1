@@ -6,6 +6,8 @@ class SentenceBuilderController {
       {
         id: "sb_01",
         level: "A1",
+        topicId: "w_fragen",
+        objectiveId: "LO_W_02",
         meaning_vi: "Tôi đi đến trường học vào hôm nay.",
         correctOrder: ["Ich", "gehe", "heute", "zur", "Schule."],
         alternativeOrders: [
@@ -23,6 +25,8 @@ class SentenceBuilderController {
       {
         id: "sb_02",
         level: "A1",
+        topicId: "modalverben",
+        objectiveId: "LO_MOD_02",
         meaning_vi: "Nico có thể nói tiếng Đức rất tốt.",
         correctOrder: ["Nico", "kann", "sehr", "gut", "Deutsch", "sprechen."],
         chips: ["sprechen.", "kann", "Deutsch", "Nico", "sehr", "gut"],
@@ -37,6 +41,8 @@ class SentenceBuilderController {
       {
         id: "sb_03",
         level: "A1",
+        topicId: "praesens",
+        objectiveId: "LO_PRAES_03",
         meaning_vi: "Mỗi ngày tôi thức dậy lúc 7 giờ sáng.",
         correctOrder: ["Ich", "stehe", "jeden", "Tag", "um", "7", "Uhr", "auf."],
         chips: ["auf.", "Ich", "jeden", "stehe", "Uhr", "um", "Tag", "7"],
@@ -51,6 +57,8 @@ class SentenceBuilderController {
       {
         id: "sb_04",
         level: "A2",
+        topicId: "nebensaetze",
+        objectiveId: "LO_NEB_01",
         meaning_vi: "Tôi học tiếng Đức vì tôi muốn du học tại Đức.",
         correctOrder: ["Ich", "lerne", "Deutsch,", "weil", "ich", "in", "Deutschland", "studieren", "möchte."],
         chips: ["möchte.", "lerne", "studieren", "Deutsch,", "Ich", "weil", "Deutschland", "ich", "in"],
@@ -64,6 +72,8 @@ class SentenceBuilderController {
       {
         id: "sb_05",
         level: "A2",
+        topicId: "wechselpraepositionen",
+        objectiveId: "LO_WECH_03",
         meaning_vi: "Tôi đặt cuốn sách lên trên mặt bàn.",
         correctOrder: ["Ich", "lege", "das", "Buch", "auf", "den", "Tisch."],
         chips: ["Buch", "auf", "Ich", "den", "lege", "das", "Tisch."],
@@ -78,6 +88,8 @@ class SentenceBuilderController {
       {
         id: "sb_06",
         level: "B1",
+        topicId: "passiv",
+        objectiveId: "LO_PAS_01",
         meaning_vi: "Ở nước Đức, rất nhiều bia được tiêu thụ mỗi năm.",
         correctOrder: ["In", "Deutschland", "wird", "jedes", "Jahr", "viel", "Bier", "getrunken."],
         chips: ["getrunken.", "Deutschland", "jedes", "In", "viel", "wird", "Jahr", "Bier"],
@@ -92,6 +104,8 @@ class SentenceBuilderController {
       {
         id: "sb_07",
         level: "B1",
+        topicId: "konjunktiv2",
+        objectiveId: "LO_KONJ_02",
         meaning_vi: "Nếu tôi có nhiều thời gian, tôi sẽ đi du lịch đến Berlin.",
         correctOrder: ["Wenn", "ich", "mehr", "Zeit", "hätte,", "würde", "ich", "nach", "Berlin", "reisen."],
         chips: ["hätte,", "würde", "nach", "Wenn", "mehr", "ich", "Berlin", "reisen.", "ich", "Zeit"],
@@ -227,7 +241,7 @@ class SentenceBuilderController {
         window.speechCtrl.speak(userStr);
       }
       if (window.progressCtrl) {
-        window.progressCtrl.recordActivity("grammar", true);
+        window.progressCtrl.recordActivity("grammar", true, item.topicId || "w_fragen", item.objectiveId || "LO_W_02");
       }
       if (nextBtn) nextBtn.classList.remove("hidden");
     } else {
@@ -243,9 +257,14 @@ class SentenceBuilderController {
           question: `Trật tự câu: "${item.meaning_vi}"`,
           userAnswer: userStr || "(Chưa hoàn thành)",
           correctAnswer: correctStr,
+          topicId: item.topicId || "w_fragen",
+          objectiveId: item.objectiveId || "LO_W_02",
           topic: "Trật tự từ (Word Order)",
           explanation: item.explanation
         });
+      }
+      if (window.progressCtrl) {
+        window.progressCtrl.recordActivity("grammar", false, item.topicId || "w_fragen", item.objectiveId || "LO_W_02");
       }
     }
   }

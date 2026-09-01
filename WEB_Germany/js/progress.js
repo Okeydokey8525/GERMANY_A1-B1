@@ -305,12 +305,35 @@ class ProgressController {
     // Record Granular Learning Objective if provided
     if (objectiveId) {
       if (!this.data.objectives[objectiveId]) {
-        this.data.objectives[objectiveId] = { correct: 0, total: 0, mastery: 20 };
+        this.data.objectives[objectiveId] = { correct: 0, total: 0, recent: [], mastery: 20, confidence: 15, status: "unseen" };
       }
       const obj = this.data.objectives[objectiveId];
-      obj.total += 1;
-      if (isCorrect) obj.correct += 1;
-      obj.mastery = Math.round((obj.correct / obj.total) * 100);
+      obj.total = (obj.total || 0) + 1;
+      if (isCorrect) obj.correct = (obj.correct || 0) + 1;
+      if (!obj.recent) obj.recent = [];
+      obj.recent.push(isCorrect ? 1 : 0);
+      if (obj.recent.length > 10) obj.recent.shift();
+
+      // Objective Mastery: 60% Recent + 40% Overall
+      const recentRate = obj.recent.reduce((a, b) => a + b, 0) / obj.recent.length;
+      const allRate = obj.correct / obj.total;
+      obj.mastery = Math.round((recentRate * 0.6 + allRate * 0.4) * 100);
+
+      // Objective Confidence: Sample Size (70%) + Consistency (30%)
+      const sampleConfidence = Math.min(1.0, obj.total / 10);
+      const consistency = 1 - Math.abs(recentRate - allRate);
+      obj.confidence = Math.round((sampleConfidence * 0.7 + consistency * 0.3) * 100);
+
+      // Objective Status
+      if (obj.total === 0) {
+        obj.status = "unseen";
+      } else if (obj.total < 4 || obj.mastery < 50) {
+        obj.status = "learning";
+      } else if (obj.mastery < 80 || obj.confidence < 60) {
+        obj.status = "developing";
+      } else {
+        obj.status = "competent";
+      }
     }
 
     // SRS Retention calculation for this topic
@@ -367,6 +390,17 @@ class ProgressController {
   getTopicMastery(topicId) {
     const key = this.normalizeTopicId(topicId);
     return this.data.topics[key] ? (this.data.topics[key].mastery || 20) : 20;
+  }
+
+  getObjectiveData(objId) {
+    if (!this.data.objectives || !this.data.objectives[objId]) {
+      return { correct: 0, total: 0, mastery: 0, confidence: 0, status: "unseen" };
+    }
+    const o = this.data.objectives[objId];
+    return {
+      ...o,
+      status: o.status || (o.total === 0 ? "unseen" : (o.mastery >= 80 && o.confidence >= 60 ? "competent" : (o.mastery >= 50 ? "developing" : "learning")))
+    };
   }
 
   updateSkillProgress(skill, isCorrect) {
