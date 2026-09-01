@@ -351,17 +351,29 @@ class ProgressController {
       }
     }
 
-    // 4-Component Mastery Formula: 30% Recent + 20% Overall + 30% SRS Retention + 20% Coverage
-    const recentAcc = t.recent.length > 0 ? (t.recent.reduce((a, b) => a + b, 0) / t.recent.length) : 0.5;
-    const overallAcc = t.total > 0 ? (t.correct / t.total) : 0.5;
-    const coverageFactor = Math.min(1.0, t.total / 15);
+    // Check if this topic has defined Learning Objectives
+    const topicDef = (this.learningObjectivesData || []).find(top => top.topicId === key);
+    let computedMastery = 0;
     
-    const computedMastery = Math.round(
-      (recentAcc * 30) +
-      (overallAcc * 20) +
-      (srsRetention * 30) +
-      (coverageFactor * 20)
-    );
+    if (topicDef && topicDef.objectives && topicDef.objectives.length > 0) {
+      let weightedSum = 0;
+      let totalWeight = 0;
+      topicDef.objectives.forEach(lo => {
+        const objData = this.getObjectiveData(lo.id);
+        const objM = objData.total > 0 ? objData.mastery : (t.recent.length > 0 ? Math.round(recentAcc * 100) : 25);
+        weightedSum += (objM * (lo.weight || 20));
+        totalWeight += (lo.weight || 20);
+      });
+      const objWeightedScore = totalWeight > 0 ? (weightedSum / totalWeight) : 30;
+      computedMastery = Math.round((objWeightedScore * 0.7) + (srsRetention * 100 * 0.3));
+    } else {
+      computedMastery = Math.round(
+        (recentAcc * 30) +
+        (overallAcc * 20) +
+        (srsRetention * 30) +
+        (coverageFactor * 20)
+      );
+    }
 
     // Multi-factor Confidence calculation: Sample Size (60%) + SRS Evidence (20%) + Consistency (20%)
     const sampleFactor = Math.min(1.0, t.total / 18);
@@ -476,25 +488,72 @@ class ProgressController {
     return list.slice(0, 3);
   }
 
-  // Real Adaptive Learning Queue with Clear "Why this lesson?" Explanations
-  getAdaptiveTodayQueue() {
+  // Identifies the single most urgent Learning Objective to reinforce
+  getWeakestObjective() {
+    if (!this.learningObjectivesData || this.learningObjectivesData.length === 0) return null;
+    let weakest = null;
+    let lowestScore = 999;
+
+    for (const topic of this.learningObjectivesData) {
+      // Check if prerequisites are met (>= 60%)
+      const prereqsMet = (topic.prerequisites || []).every(pr => this.getTopicMastery(pr) >= 60);
+      if (!prereqsMet && topic.prerequisites && topic.prerequisites.length > 0) continue;
+
+      for (const obj of (topic.objectives || [])) {
+        const objData = this.getObjectiveData(obj.id);
+        const m = objData.total > 0 ? objData.mastery : 35;
+        if (m < lowestScore && objData.status !== "mastered") {
+          lowestScore = m;
+          weakest = {
+            id: obj.id,
+            title: obj.title,
+            topicId: topic.topicId,
+            topicTitle: topic.topicName,
+            mastery: m,
+            status: objData.status || (objData.total === 0 ? "unseen" : "learning"),
+            confidence: objData.confidence || 20
+          };
+        }
+      }
+    }
+    return weakest;
+  }
+
+  getAdaptiveQueue() {
     const queue = [];
-    const counts = window.srsCtrl ? window.srsCtrl.getCounts() : { due: 0, availableNewToday: 0 };
-    const weak = this.getWeakAreas();
+    const counts = (window.srsCtrl && window.srsCtrl.getCounts) ? window.srsCtrl.getCounts() : { due: 0 };
+    const mistakesCount = (window.mistakesCtrl && window.mistakesCtrl.mistakes) ? window.mistakesCtrl.mistakes.length : 0;
     const skills = this.data.skills;
 
-    if (weak.length > 0 && weak[0].weaknessScore > 30) {
-      const topWeak = weak[0];
+    // Highest Priority: Target Weakest Learning Objective
+    const weakestObj = this.getWeakestObjective();
+    if (weakestObj) {
       queue.push({
-        id: "q_weak",
+        id: "q_weakest_lo",
+        priority: "highest",
+        icon: "🎯",
+        title: `Mục tiêu cần củng cố: ${weakestObj.title}`,
+        desc: `${weakestObj.topicTitle} • Mastery: ${weakestObj.mastery}% (${weakestObj.status})`,
+        timeEst: "~3 phút",
+        tab: "grammar",
+        topicId: weakestObj.topicId,
+        objectiveId: weakestObj.id,
+        why: `Hệ thống phân tích bạn đang yếu ở mục tiêu "${weakestObj.title}" (${weakestObj.mastery}%). Hãy luyện tập củng cố ngay để mở khóa các chủ điểm tiếp theo!`,
+        badge: "Cấp thiết"
+      });
+    }
+
+    if (mistakesCount > 0) {
+      queue.push({
+        id: "q_mistakes",
         priority: "high",
-        icon: "⚡",
-        title: `Củng cố điểm yếu: ${topWeak.topic}`,
-        desc: topWeak.advice,
-        timeEst: "~5 phút",
-        tab: "mistakes",
-        why: `Bạn sai ${topWeak.errorRate}% trong ${topWeak.evidence.totalAttempts || topWeak.mistakeCount} câu gần đây. Củng cố trước khi mở bài mới!`,
-        badge: "Ưu tiên cao"
+        icon: "📕",
+        title: "Khắc phục Lỗi sai trong Sổ tay",
+        desc: `Bạn có ${mistakesCount} câu hỏi cần củng cố lại kiến thức`,
+        timeEst: "~3 phút",
+        tab: "quiz",
+        why: "Sửa lỗi sai ngay lập tức ngăn chặn việc hình thành 'trí nhớ sai lệch' trong tiếng Đức.",
+        badge: `${mistakesCount} lỗi cần sửa`
       });
     }
 
@@ -740,27 +799,47 @@ class ProgressController {
     const container = document.getElementById("dash-today-queue-container");
     if (!container) return;
 
-    const queue = this.getAdaptiveTodayQueue();
-    container.innerHTML = queue.map((item, idx) => `
-      <div class="p-4 rounded-2xl border-2 ${item.priority === 'high' ? 'border-amber-300 dark:border-amber-900/60 bg-amber-50/30 dark:bg-amber-950/20' : 'border-gray-100 dark:border-gray-700/80 bg-white dark:bg-gray-800'} shadow-2xs hover:shadow-sm transition-all flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 cursor-pointer" onclick="window.appCtrl && window.appCtrl.switchTab('${item.tab}')">
-        <div class="flex items-start gap-3 flex-1">
-          <div class="w-10 h-10 rounded-2xl ${item.priority === 'high' ? 'bg-amber-100 dark:bg-amber-900/40 text-amber-700 dark:text-amber-300' : 'bg-blue-50 dark:bg-blue-950/40 text-blue-600 dark:text-blue-400'} flex items-center justify-center text-lg font-black shadow-2xs shrink-0 mt-0.5">
-            ${item.icon}
-          </div>
-          <div class="space-y-1">
-            <div class="flex flex-wrap items-center gap-2">
-              <span class="text-xs font-black text-gray-400 font-mono">#${idx + 1}</span>
-              <h4 class="text-sm font-bold text-gray-900 dark:text-gray-100">${item.title}</h4>
-              <span class="px-2 py-0.2 rounded-full text-[10px] font-bold ${item.priority === 'high' ? 'bg-amber-200 dark:bg-amber-900 text-amber-900 dark:text-amber-100' : 'bg-blue-100 dark:bg-blue-900/40 text-blue-700 dark:text-blue-300'}">${item.badge}</span>
-              <span class="text-[10px] text-gray-400 font-mono">${item.timeEst}</span>
+    const queue = this.getAdaptiveQueue();
+    container.innerHTML = queue.map((item, idx) => {
+      const isHighest = item.priority === "highest";
+      const isHigh = item.priority === "high";
+      const borderClass = isHighest 
+        ? "border-rose-400 dark:border-rose-800 bg-rose-50/40 dark:bg-rose-950/20" 
+        : (isHigh ? "border-amber-300 dark:border-amber-900/60 bg-amber-50/30 dark:bg-amber-950/20" : "border-gray-100 dark:border-gray-700/80 bg-white dark:bg-gray-800");
+
+      const iconBg = isHighest 
+        ? "bg-rose-100 dark:bg-rose-900/40 text-rose-700 dark:text-rose-300" 
+        : (isHigh ? "bg-amber-100 dark:bg-amber-900/40 text-amber-700 dark:text-amber-300" : "bg-blue-50 dark:bg-blue-950/40 text-blue-600 dark:text-blue-400");
+
+      const badgeBg = isHighest
+        ? "bg-rose-200 dark:bg-rose-900 text-rose-900 dark:text-rose-100"
+        : (isHigh ? "bg-amber-200 dark:bg-amber-900 text-amber-900 dark:text-amber-100" : "bg-blue-100 dark:bg-blue-900/40 text-blue-700 dark:text-blue-300");
+
+      const clickAction = item.objectiveId && item.topicId
+        ? `window.mistakesCtrl && window.mistakesCtrl.practiceObjective('${item.objectiveId}', '${item.topicId}')`
+        : `window.appCtrl && window.appCtrl.switchTab('${item.tab}')`;
+
+      return `
+        <div class="p-4 rounded-2xl border-2 ${borderClass} shadow-2xs hover:shadow-sm transition-all flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 cursor-pointer" onclick="${clickAction}">
+          <div class="flex items-start gap-3 flex-1">
+            <div class="w-10 h-10 rounded-2xl ${iconBg} flex items-center justify-center text-lg font-black shadow-2xs shrink-0 mt-0.5">
+              ${item.icon}
             </div>
-            <p class="text-xs text-gray-600 dark:text-gray-300">${item.desc}</p>
-            <div class="text-[11px] text-gray-500 dark:text-gray-400 italic">💡 <b>Vì sao gợi ý:</b> ${item.why}</div>
+            <div class="space-y-1">
+              <div class="flex flex-wrap items-center gap-2">
+                <span class="text-xs font-black text-gray-400 font-mono">#${idx + 1}</span>
+                <h4 class="text-sm font-bold text-gray-900 dark:text-gray-100">${item.title}</h4>
+                <span class="px-2 py-0.2 rounded-full text-[10px] font-bold ${badgeBg}">${item.badge}</span>
+                <span class="text-[10px] text-gray-400 font-mono">${item.timeEst}</span>
+              </div>
+              <p class="text-xs text-gray-600 dark:text-gray-300">${item.desc}</p>
+              <div class="text-[11px] text-gray-500 dark:text-gray-400 italic">💡 <b>Vì sao gợi ý:</b> ${item.why}</div>
+            </div>
           </div>
+          <span class="text-xs font-bold ${isHighest ? 'text-rose-600 dark:text-rose-400' : 'text-blue-600 dark:text-blue-400'} self-end sm:self-center hover:translate-x-0.5 transition-all">Luyện ngay →</span>
         </div>
-        <span class="text-xs font-bold text-blue-600 dark:text-blue-400 self-end sm:self-center hover:translate-x-0.5 transition-all">Bắt đầu →</span>
-      </div>
-    `).join("");
+      `;
+    }).join("");
   }
 }
 

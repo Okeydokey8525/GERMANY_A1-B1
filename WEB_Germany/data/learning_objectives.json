@@ -69,7 +69,7 @@
     "prerequisites": ["artikel", "akkusativ"],
     "leadsTo": ["wechselpraepositionen", "adjektivdeklination"],
     "objectives": [
-      { "id": "LO_DAT_01", "title": "Nhận biết tân ngữ gián tiếp (Wem?) và vị trí đứng yên (Wo?)", "weight": 20 },
+      { "id": "LO_DAT_01", "title": "Nhận biết tân ngữ gián tiếp (Wem?) và phân biệt Wo? / Wohin? khi dùng Wechselpräpositionen", "weight": 20 },
       { "id": "LO_DAT_02", "title": "Biến đổi mạo từ: dem (đực/trung), der (cái), den (+n) (số nhiều)", "weight": 30 },
       { "id": "LO_DAT_03", "title": "Đại từ nhân xưng ở Dativ (mir, dir, ihm, ihr, uns, euch, ihnen/Ihnen)", "weight": 25 },
       { "id": "LO_DAT_04", "title": "Các giới từ bắt buộc đi với Dativ: aus, bei, mit, nach, seit, von, zu, ab", "weight": 25 }
@@ -83,7 +83,7 @@
     "leadsTo": ["nebensaetze", "passiv"],
     "objectives": [
       { "id": "LO_PERF_01", "title": "Cấu trúc câu Perfekt: haben/sein ở V2 + Partizip II ở cuối câu", "weight": 30 },
-      { "id": "LO_PERF_02", "title": "Phân biệt trợ động từ haben (hành động) vs sein (di chuyển/đổi trạng thái)", "weight": 40 },
+      { "id": "LO_PERF_02", "title": "Quy tắc chọn trợ động từ: 'sein' (với một số động từ di chuyển, đổi trạng thái và ngoại lệ) vs 'haben' (đa số ngoại động từ)", "weight": 40 },
       { "id": "LO_PERF_03", "title": "Quy tắc tạo Partizip II có quy tắc (ge-...-t) và bất quy tắc (ge-...-en)", "weight": 30 }
     ]
   },
