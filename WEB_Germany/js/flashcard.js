@@ -1,4 +1,4 @@
-// WEB_Germany Flashcard 3D Interactive Module
+// WEB_Germany Flashcard 3D Interactive Module (with IPA & Vietnamese Phonetics)
 
 class FlashcardController {
   constructor() {
@@ -95,7 +95,6 @@ class FlashcardController {
   buildTopicPills() {
     if (!this.topicPills) return;
     
-    // Extract unique topics
     const topicMap = new Map();
     topicMap.set("ALL", "✨ Tất cả");
     
@@ -139,8 +138,9 @@ class FlashcardController {
       if (this.searchQuery) {
         const matchWord = v.word.toLowerCase().includes(this.searchQuery);
         const matchVi = v.meaning_vi.toLowerCase().includes(this.searchQuery);
+        const matchPronounce = (v.pronounce_vi || "").toLowerCase().includes(this.searchQuery);
         const matchTopic = (v.sub_category || "").toLowerCase().includes(this.searchQuery);
-        if (!matchWord && !matchVi && !matchTopic) return false;
+        if (!matchWord && !matchVi && !matchTopic && !matchPronounce) return false;
       }
       return true;
     });
@@ -206,6 +206,7 @@ class FlashcardController {
     const frontWord = document.getElementById("fc-front-word");
     const frontArticle = document.getElementById("fc-front-article");
     const frontPlural = document.getElementById("fc-front-plural");
+    const frontPronounce = document.getElementById("fc-front-pronounce");
     const frontTopic = document.getElementById("fc-front-topic");
     const frontLevel = document.getElementById("fc-front-level");
     const frontBadge = document.getElementById("fc-mastered-badge");
@@ -224,6 +225,7 @@ class FlashcardController {
       if (frontWord) frontWord.textContent = "Không tìm thấy từ vựng";
       if (frontArticle) frontArticle.textContent = "";
       if (frontPlural) frontPlural.textContent = "Thử chọn chủ đề hoặc cấp độ khác.";
+      if (frontPronounce) frontPronounce.textContent = "";
       if (frontTopic) frontTopic.textContent = "Trống";
       if (this.progressText) this.progressText.textContent = "0 / 0";
       if (this.progressBar) this.progressBar.style.width = "0%";
@@ -268,8 +270,23 @@ class FlashcardController {
       }`;
     }
     if (frontWord) frontWord.textContent = item.word;
-    if (frontPlural) frontPlural.textContent = item.plural ? `Pl: ${item.plural}` : (item.article ? "" : "Verb / Adjektiv");
-    if (frontTopic) frontTopic.textContent = item.sub_category || item.topic_vi || item.topic;
+    
+    // Pronunciation Guide
+    if (frontPronounce) {
+      if (item.pronounce_vi || item.ipa) {
+        const ipaText = item.ipa ? `${item.ipa}` : '';
+        const viReadText = item.pronounce_vi ? `đọc là: /${item.pronounce_vi}/` : '';
+        frontPronounce.innerHTML = `<span class="opacity-80">${ipaText}</span> <span class="mx-1">•</span> <span class="text-blue-600 dark:text-blue-400 font-bold">${viReadText}</span>`;
+      } else {
+        frontPronounce.innerHTML = "";
+      }
+    }
+
+    if (frontPlural) {
+      frontPlural.textContent = item.plural ? `Pl: ${item.plural}` : (item.sub_category || "Cơ bản");
+    }
+
+    if (frontTopic) frontTopic.textContent = item.topic_vi || item.topic;
     if (frontLevel) {
       frontLevel.textContent = item.level;
       frontLevel.className = `px-2.5 py-0.5 rounded-full text-xs font-bold ${
