@@ -1,243 +1,284 @@
-// WEB_Germany Interactive Grammar Exercises Module (Cornelsen Grammatik aktiv Style)
+// WEB_Germany Interactive Grammar Exercise Controller with Warum? Explanations & Mistake Tracking
 
-class GrammarExercisesController {
+class GrammarExerciseController {
   constructor() {
-    this.exercises = [];
-    this.currentExerciseIndex = 0;
-    this.userScore = null;
-
+    this.units = [];
+    this.currentUnitIndex = 0;
+    this.userAnswers = {}; // { 'u0_b0': 'muss', 'u0_b1': 'darf' }
+    this.score = 0;
+    
     this.initElements();
   }
 
   initElements() {
-    // Buttons inside grammar exercise view
-    const btnCheck = document.getElementById("btn-grammar-check");
-    const btnShowAnswers = document.getElementById("btn-grammar-solution");
-    const btnReset = document.getElementById("btn-grammar-reset");
-    const btnListen = document.getElementById("btn-grammar-listen");
-
-    if (btnCheck) btnCheck.addEventListener("click", () => this.checkAnswers());
-    if (btnShowAnswers) btnShowAnswers.addEventListener("click", () => this.showSolutions());
-    if (btnReset) btnReset.addEventListener("click", () => this.resetExercise());
-    if (btnListen) btnListen.addEventListener("click", () => this.listenAudio());
-  }
-
-  setData(exercises) {
-    this.exercises = exercises;
-    this.buildUnitPills();
-    this.renderCurrentExercise();
-  }
-
-  buildUnitPills() {
-    const container = document.getElementById("grammar-exercise-units");
-    if (!container || !this.exercises || this.exercises.length === 0) return;
-
-    container.innerHTML = "";
-    this.exercises.forEach((ex, idx) => {
-      const btn = document.createElement("button");
-      btn.className = `px-3.5 py-2 rounded-xl text-xs font-bold whitespace-nowrap transition-all duration-200 ${
-        idx === this.currentExerciseIndex
-          ? "bg-blue-600 text-white shadow-md shadow-blue-500/20"
-          : "bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700"
-      }`;
-      btn.textContent = ex.unit || `Chương ${idx + 1}`;
-      btn.addEventListener("click", () => {
-        this.currentExerciseIndex = idx;
-        this.buildUnitPills();
-        this.renderCurrentExercise();
+    const unitSelector = document.getElementById("grammar-unit-select");
+    if (unitSelector) {
+      unitSelector.addEventListener("change", (e) => {
+        this.currentUnitIndex = parseInt(e.target.value) || 0;
+        this.userAnswers = {};
+        this.renderCurrentUnit();
       });
-      container.appendChild(btn);
+    }
+
+    const btnCheckAll = document.getElementById("btn-check-grammar");
+    const btnShowAnswers = document.getElementById("btn-show-grammar-answers");
+    const btnResetAll = document.getElementById("btn-reset-grammar");
+    const btnPlayAudio = document.getElementById("btn-play-grammar-audio");
+
+    if (btnCheckAll) btnCheckAll.addEventListener("click", () => this.checkAllAnswers());
+    if (btnShowAnswers) btnShowAnswers.addEventListener("click", () => this.showAllAnswers());
+    if (btnResetAll) btnResetAll.addEventListener("click", () => this.resetAllAnswers());
+    if (btnPlayAudio) btnPlayAudio.addEventListener("click", () => this.playFullDialogueAudio());
+  }
+
+  setData(unitsData) {
+    this.units = unitsData;
+    this.populateUnitSelect();
+    this.renderCurrentUnit();
+  }
+
+  populateUnitSelect() {
+    const selector = document.getElementById("grammar-unit-select");
+    if (!selector) return;
+
+    selector.innerHTML = "";
+    this.units.forEach((unit, idx) => {
+      const opt = document.createElement("option");
+      opt.value = idx;
+      opt.textContent = `${unit.level} • ${unit.unit_title}`;
+      selector.appendChild(opt);
     });
   }
 
-  renderCurrentExercise() {
-    if (!this.exercises || this.exercises.length === 0) return;
-    const ex = this.exercises[this.currentExerciseIndex];
-    if (!ex) return;
+  renderCurrentUnit() {
+    if (this.units.length === 0) return;
+    const unit = this.units[this.currentUnitIndex];
+    if (!unit) return;
 
-    // Header elements
-    const titleEl = document.getElementById("exercise-title");
-    const levelEl = document.getElementById("exercise-level");
-    const sourceEl = document.getElementById("exercise-source");
-    const descEl = document.getElementById("exercise-desc");
-    const ruleBox = document.getElementById("exercise-rule-content");
-    const dialoguesContainer = document.getElementById("exercise-dialogues-container");
-    const feedbackBox = document.getElementById("exercise-score-feedback");
+    const titleEl = document.getElementById("grammar-ex-title");
+    const subTitleEl = document.getElementById("grammar-ex-subtitle");
+    const ruleBox = document.getElementById("grammar-rule-content");
+    const dialogueContainer = document.getElementById("grammar-dialogue-container");
+    const scoreBox = document.getElementById("grammar-score-summary");
 
-    if (titleEl) titleEl.textContent = ex.title;
-    if (levelEl) levelEl.textContent = ex.level || "A1-B1";
-    if (sourceEl) sourceEl.textContent = ex.source || "Cornelsen Grammatik aktiv";
-    if (descEl) descEl.textContent = ex.description;
-    if (ruleBox) ruleBox.innerHTML = ex.grammar_rule;
-    if (feedbackBox) feedbackBox.classList.add("hidden");
+    if (titleEl) titleEl.textContent = `${unit.unit_title}`;
+    if (subTitleEl) subTitleEl.textContent = `${unit.topic} • ${unit.instruction}`;
+    if (scoreBox) scoreBox.classList.add("hidden");
 
-    if (!dialoguesContainer) return;
-    dialoguesContainer.innerHTML = "";
-
-    ex.dialogues.forEach(d => {
-      const sectionCard = document.createElement("div");
-      sectionCard.className = "p-5 sm:p-6 rounded-3xl bg-white dark:bg-gray-800 border-2 border-gray-100 dark:border-gray-700 shadow-sm space-y-4";
-
-      let linesHtml = "";
-      d.lines.forEach((line) => {
-        let textWithInputs = line.text_template;
-
-        // Replace each {blank_X} with an interactive input field
-        (line.blanks || []).forEach(blank => {
-          const correctVals = blank.correct.join("|");
-          const inputHtml = `
-            <span class="inline-flex flex-col items-center mx-1 my-0.5 align-middle">
-              <input type="text"
-                     class="grammar-input px-3 py-1 text-center font-bold text-xs sm:text-sm bg-blue-50/60 dark:bg-blue-950/40 border-b-2 border-blue-400 dark:border-blue-500 rounded-lg focus:outline-none focus:border-blue-600 focus:bg-white dark:focus:bg-gray-900 transition-all duration-150 shadow-xs"
-                     style="width: ${Math.max(blank.correct[0].length * 14 + 28, 85)}px"
-                     data-blank-id="${blank.id}"
-                     data-correct="${correctVals}"
-                     data-hint="${blank.hint || ''}"
-                     placeholder="_____"
-                     autocomplete="off"
-                     autocapitalize="off"
-                     spellcheck="false">
-              <span class="correct-badge hidden text-[10px] font-bold text-emerald-600 dark:text-emerald-400 mt-0.5"></span>
-            </span>
-          `;
-          textWithInputs = textWithInputs.replace(`{${blank.id}}`, inputHtml);
-        });
-
-        linesHtml += `
-          <div class="p-3 rounded-2xl bg-gray-50/70 dark:bg-gray-900/40 border border-gray-100 dark:border-gray-800/80 flex items-start gap-2.5 text-xs sm:text-sm leading-relaxed">
-            <span class="font-bold text-blue-700 dark:text-blue-400 min-w-[70px] sm:min-w-[90px] shrink-0 pt-1">${line.speaker}:</span>
-            <div class="flex-1 text-gray-800 dark:text-gray-200 pt-0.5">${textWithInputs}</div>
+    if (ruleBox && unit.rule_summary) {
+      ruleBox.innerHTML = `
+        <div class="space-y-2">
+          <p class="font-bold text-blue-900 dark:text-blue-200">${unit.rule_summary.title || 'Quy tắc ngữ pháp'}</p>
+          <div class="p-3 bg-white dark:bg-gray-800 rounded-xl border border-blue-100 dark:border-blue-900/40 text-gray-700 dark:text-gray-300 space-y-1">
+            ${(unit.rule_summary.points || []).map(p => `<div>• ${p}</div>`).join('')}
           </div>
-        `;
-      });
-
-      sectionCard.innerHTML = `
-        <div class="flex items-center justify-between border-b border-gray-100 dark:border-gray-700 pb-2.5">
-          <h4 class="font-extrabold text-sm sm:text-base text-gray-900 dark:text-white flex items-center gap-2">
-            <span class="w-6 h-6 rounded-full bg-blue-600 text-white text-xs flex items-center justify-center">${d.section_num || '✍️'}</span>
-            <span>${d.title}</span>
-          </h4>
-          <span class="px-2 py-0.5 rounded text-[10px] font-mono font-bold bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-300">${d.verb_target || ''}</span>
+          ${unit.rule_summary.formula ? `<div class="font-mono text-xs text-blue-600 dark:text-blue-400 font-bold">💡 ${unit.rule_summary.formula}</div>` : ''}
         </div>
-        <div class="space-y-2.5">${linesHtml}</div>
+      `;
+    }
+
+    if (!dialogueContainer) return;
+    dialogueContainer.innerHTML = "";
+
+    unit.sections.forEach((sec, secIdx) => {
+      const secEl = document.createElement("div");
+      secEl.className = "p-5 rounded-3xl border-2 border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 shadow-sm space-y-4";
+      
+      const secHeader = document.createElement("div");
+      secHeader.className = "flex items-center justify-between border-b border-gray-100 dark:border-gray-700/60 pb-3";
+      secHeader.innerHTML = `
+        <div>
+          <h3 class="font-extrabold text-gray-900 dark:text-white text-base">${sec.section_title}</h3>
+          <p class="text-xs text-gray-500 dark:text-gray-400">${sec.context_vi || ''}</p>
+        </div>
+        <button class="section-audio-btn p-2 rounded-xl bg-blue-50 dark:bg-blue-950/40 text-blue-600 dark:text-blue-400 hover:scale-105 active:scale-95 transition-all text-xs font-bold flex items-center gap-1.5 shadow-xs">
+          <span>🔊</span> <span>Nghe đoạn này</span>
+        </button>
       `;
 
-      dialoguesContainer.appendChild(sectionCard);
+      secHeader.querySelector(".section-audio-btn").addEventListener("click", () => {
+        this.playSectionAudio(sec);
+      });
+      secEl.appendChild(secHeader);
+
+      const dialogueList = document.createElement("div");
+      dialogueList.className = "space-y-3.5";
+
+      sec.dialogue.forEach((line) => {
+        const lineEl = document.createElement("div");
+        lineEl.className = "flex items-start gap-3 text-sm text-gray-800 dark:text-gray-200";
+
+        let renderedText = line.text;
+        line.blanks.forEach(b => {
+          const blankId = b.id;
+          const userVal = this.userAnswers[blankId] || "";
+          const inputHtml = `
+            <span class="inline-flex flex-col mx-1 align-baseline relative">
+              <input type="text" 
+                id="input_${blankId}" 
+                data-blank-id="${blankId}"
+                value="${userVal}" 
+                placeholder="${b.hint || '...'}"
+                class="grammar-input font-bold text-center px-2 py-0.5 rounded-xl border-2 border-blue-300 dark:border-blue-700 bg-blue-50/50 dark:bg-blue-950/20 text-blue-900 dark:text-blue-200 focus:border-blue-600 focus:bg-white dark:focus:bg-gray-800 transition-all text-sm inline-block shadow-2xs" 
+                style="width: ${Math.max(80, ((b.answer || '').length + 3) * 12)}px;"
+                autocomplete="off"
+                spellcheck="false"
+              />
+              <span id="badge_${blankId}" class="hidden text-[10px] font-bold mt-0.5 text-center"></span>
+            </span>
+          `;
+          renderedText = renderedText.replace(b.placeholder, inputHtml);
+        });
+
+        lineEl.innerHTML = `
+          <div class="w-7 h-7 rounded-full bg-gray-100 dark:bg-gray-700 flex items-center justify-center text-sm shrink-0 font-bold text-gray-600 dark:text-gray-300">
+            ${line.avatar || '👤'}
+          </div>
+          <div class="space-y-1 flex-1 leading-relaxed">
+            <div class="font-bold text-xs text-gray-500 dark:text-gray-400">${line.speaker}:</div>
+            <div class="text-sm font-medium text-gray-900 dark:text-gray-100">${renderedText}</div>
+            ${line.translation_vi ? `<div class="text-xs text-gray-400 dark:text-gray-500 italic">${line.translation_vi}</div>` : ''}
+            <div id="warum_${line.id || secIdx}" class="hidden mt-1 p-2 rounded-xl bg-blue-50 dark:bg-blue-950/30 text-xs text-blue-700 dark:text-blue-300 border border-blue-100 dark:border-blue-900/40"></div>
+          </div>
+        `;
+
+        dialogueList.appendChild(lineEl);
+      });
+
+      secEl.appendChild(dialogueList);
+      dialogueContainer.appendChild(secEl);
     });
 
-    // Auto check on Enter key in inputs
     document.querySelectorAll(".grammar-input").forEach(input => {
+      input.addEventListener("input", (e) => {
+        const bId = e.target.getAttribute("data-blank-id");
+        this.userAnswers[bId] = e.target.value.trim();
+      });
       input.addEventListener("keydown", (e) => {
-        if (e.key === "Enter") {
-          this.checkAnswers();
-        }
+        if (e.key === "Enter") this.checkAllAnswers();
       });
     });
   }
 
-  checkAnswers() {
-    const inputs = document.querySelectorAll(".grammar-input");
-    if (inputs.length === 0) return;
-
-    let total = inputs.length;
+  checkAllAnswers() {
+    if (this.units.length === 0) return;
+    const unit = this.units[this.currentUnitIndex];
+    let totalBlanks = 0;
     let correctCount = 0;
 
-    inputs.forEach(input => {
-      const userVal = input.value.trim().toLowerCase();
-      const correctStr = input.getAttribute("data-correct") || "";
-      const validOptions = correctStr.split("|").map(v => v.trim().toLowerCase());
-      const hintBadge = input.parentElement.querySelector(".correct-badge");
+    unit.sections.forEach(sec => {
+      sec.dialogue.forEach(line => {
+        line.blanks.forEach(b => {
+          totalBlanks++;
+          const inputEl = document.getElementById(`input_${b.id}`);
+          const badgeEl = document.getElementById(`badge_${b.id}`);
+          if (!inputEl) return;
 
-      const isCorrect = validOptions.includes(userVal);
+          const userVal = (inputEl.value || "").trim().toLowerCase();
+          const correctVal = (b.answer || "").trim().toLowerCase();
 
-      if (isCorrect) {
-        correctCount++;
-        input.className = "grammar-input px-3 py-1 text-center font-bold text-xs sm:text-sm bg-emerald-50 dark:bg-emerald-950/40 border-2 border-emerald-500 text-emerald-800 dark:text-emerald-200 rounded-lg shadow-xs";
-        if (hintBadge) {
-          hintBadge.classList.remove("hidden");
-          hintBadge.textContent = "✓ Đúng";
-          hintBadge.className = "correct-badge text-[10px] font-bold text-emerald-600 dark:text-emerald-400 mt-0.5";
-        }
-      } else {
-        input.className = "grammar-input px-3 py-1 text-center font-bold text-xs sm:text-sm bg-rose-50 dark:bg-rose-950/40 border-2 border-rose-500 text-rose-800 dark:text-rose-200 rounded-lg shadow-xs";
-        if (hintBadge) {
-          hintBadge.classList.remove("hidden");
-          hintBadge.textContent = `Đáp án: ${validOptions[0]}`;
-          hintBadge.className = "correct-badge text-[10px] font-bold text-rose-600 dark:text-rose-400 mt-0.5";
-        }
-      }
+          if (userVal === correctVal) {
+            correctCount++;
+            inputEl.className = "grammar-input font-bold text-center px-2 py-0.5 rounded-xl border-2 border-emerald-500 bg-emerald-50 dark:bg-emerald-950/40 text-emerald-900 dark:text-emerald-200 text-sm shadow-2xs";
+            if (badgeEl) {
+              badgeEl.className = "text-[10px] font-bold text-emerald-600 dark:text-emerald-400 mt-0.5 text-center";
+              badgeEl.textContent = "✓ Đúng";
+              badgeEl.classList.remove("hidden");
+            }
+          } else {
+            inputEl.className = "grammar-input font-bold text-center px-2 py-0.5 rounded-xl border-2 border-rose-500 bg-rose-50 dark:bg-rose-950/40 text-rose-900 dark:text-rose-200 text-sm shadow-2xs";
+            if (badgeEl) {
+              badgeEl.className = "text-[10px] font-bold text-rose-600 dark:text-rose-400 mt-0.5 text-center";
+              badgeEl.textContent = `Đáp án: ${b.answer}`;
+              badgeEl.classList.remove("hidden");
+            }
+
+            // Register in Mistake Notebook with Warum explanation
+            if (window.mistakesCtrl) {
+              const warumText = b.explanation || unit.rule_summary?.formula || `Động từ chia theo ngôi tương ứng: ${b.answer}`;
+              window.mistakesCtrl.addMistake({
+                id: `gram_${b.id}`,
+                type: "grammar",
+                question: `Điền câu: "${line.text.replace(b.placeholder, '___')}"`,
+                userAnswer: userVal || "(Để trống)",
+                correctAnswer: b.answer,
+                topic: unit.topic || "Ngữ pháp",
+                explanation: warumText
+              });
+            }
+          }
+        });
+      });
     });
 
-    const percent = Math.round((correctCount / total) * 100);
-    const feedbackBox = document.getElementById("exercise-score-feedback");
-    const scoreText = document.getElementById("exercise-score-text");
+    const scoreBox = document.getElementById("grammar-score-summary");
+    const scoreVal = document.getElementById("grammar-score-val");
+    const scoreMsg = document.getElementById("grammar-score-msg");
 
-    if (feedbackBox && scoreText) {
-      feedbackBox.classList.remove("hidden");
-      scoreText.innerHTML = `Kết quả: <b>${correctCount}/${total}</b> câu chính xác (<b>${percent}%</b>)`;
-      feedbackBox.className = percent >= 70
-        ? "p-4 rounded-2xl bg-emerald-50 dark:bg-emerald-950/40 border-2 border-emerald-500 text-emerald-900 dark:text-emerald-100 flex items-center justify-between shadow-sm animate-gentle-pulse"
-        : "p-4 rounded-2xl bg-amber-50 dark:bg-amber-950/40 border-2 border-amber-500 text-amber-900 dark:text-amber-100 flex items-center justify-between shadow-sm";
-    }
+    if (scoreBox) scoreBox.classList.remove("hidden");
+    if (scoreVal) scoreVal.textContent = `${correctCount} / ${totalBlanks}`;
 
-    if (window.speechCtrl) {
-      if (percent >= 70) window.speechCtrl.playCorrectSound();
-      else window.speechCtrl.playWrongSound();
+    if (correctCount === totalBlanks) {
+      if (scoreMsg) scoreMsg.innerHTML = "🎉 <b>Hoàn hảo!</b> Bạn đã chia đúng 100% tất cả các từ trong bài học!";
+      if (window.speechCtrl) window.speechCtrl.playCorrectSound();
+      if (window.progressCtrl) window.progressCtrl.recordActivity("grammar", 2);
+    } else {
+      if (scoreMsg) scoreMsg.innerHTML = `Đúng ${correctCount}/${totalBlanks} vị trí. Các câu sai đã được lưu vào <b class="text-rose-600 dark:text-rose-400">Sổ tay lỗi sai</b> để bạn ôn lại!`;
+      if (window.speechCtrl) window.speechCtrl.playComboSound(1);
     }
   }
 
-  showSolutions() {
-    const inputs = document.querySelectorAll(".grammar-input");
-    inputs.forEach(input => {
-      const correctStr = input.getAttribute("data-correct") || "";
-      const validOptions = correctStr.split("|");
-      input.value = validOptions[0];
-      input.className = "grammar-input px-3 py-1 text-center font-bold text-xs sm:text-sm bg-emerald-50 dark:bg-emerald-950/40 border-2 border-emerald-500 text-emerald-800 dark:text-emerald-200 rounded-lg shadow-xs";
-      
-      const hintBadge = input.parentElement.querySelector(".correct-badge");
-      if (hintBadge) {
-        hintBadge.classList.remove("hidden");
-        hintBadge.textContent = "✓ Gợi ý chuẩn";
-        hintBadge.className = "correct-badge text-[10px] font-bold text-emerald-600 dark:text-emerald-400 mt-0.5";
-      }
+  showAllAnswers() {
+    if (this.units.length === 0) return;
+    const unit = this.units[this.currentUnitIndex];
+    unit.sections.forEach(sec => {
+      sec.dialogue.forEach(line => {
+        line.blanks.forEach(b => {
+          const inputEl = document.getElementById(`input_${b.id}`);
+          if (inputEl) {
+            inputEl.value = b.answer;
+            this.userAnswers[b.id] = b.answer;
+          }
+        });
+      });
     });
-
-    if (window.appCtrl) window.appCtrl.showToast("Đã hiển thị toàn bộ đáp án mẫu!");
+    this.checkAllAnswers();
   }
 
-  resetExercise() {
-    const inputs = document.querySelectorAll(".grammar-input");
-    inputs.forEach(input => {
-      input.value = "";
-      input.className = "grammar-input px-3 py-1 text-center font-bold text-xs sm:text-sm bg-blue-50/60 dark:bg-blue-950/40 border-b-2 border-blue-400 dark:border-blue-500 rounded-lg focus:outline-none focus:border-blue-600 focus:bg-white dark:focus:bg-gray-900 transition-all duration-150 shadow-xs";
-      const hintBadge = input.parentElement.querySelector(".correct-badge");
-      if (hintBadge) hintBadge.classList.add("hidden");
-    });
-
-    const feedbackBox = document.getElementById("exercise-score-feedback");
-    if (feedbackBox) feedbackBox.classList.add("hidden");
+  resetAllAnswers() {
+    this.userAnswers = {};
+    this.renderCurrentUnit();
     if (window.appCtrl) window.appCtrl.showToast("Đã làm mới bài tập!");
   }
 
-  listenAudio() {
-    const ex = this.exercises[this.currentExerciseIndex];
-    if (!ex || !window.speechCtrl) return;
-
-    let fullText = "";
-    ex.dialogues.forEach(d => {
-      d.lines.forEach(l => {
-        // Construct clean sentence with first correct answer
-        let lineText = l.text_template;
-        (l.blanks || []).forEach(b => {
-          lineText = lineText.replace(`{${b.id}}`, b.correct[0]);
-        });
-        fullText += `${l.speaker}: ${lineText}. `;
+  playSectionAudio(sec) {
+    if (!window.speechCtrl) return;
+    const fullText = sec.dialogue.map(d => {
+      let cleanText = d.text;
+      d.blanks.forEach(b => {
+        cleanText = cleanText.replace(b.placeholder, b.answer);
       });
-    });
+      return cleanText;
+    }).join(". ");
 
-    window.speechCtrl.speak(fullText, 0.85);
-    if (window.appCtrl) window.appCtrl.showToast("Đang phát âm bài hội thoại...");
+    window.speechCtrl.speak(fullText);
+  }
+
+  playFullDialogueAudio() {
+    if (this.units.length === 0 || !window.speechCtrl) return;
+    const unit = this.units[this.currentUnitIndex];
+    const fullText = unit.sections.map(sec => {
+      return sec.dialogue.map(d => {
+        let cleanText = d.text;
+        d.blanks.forEach(b => {
+          cleanText = cleanText.replace(b.placeholder, b.answer);
+        });
+        return cleanText;
+      }).join(". ");
+    }).join(". ");
+
+    window.speechCtrl.speak(fullText);
   }
 }
 
-window.grammarExCtrl = new GrammarExercisesController();
+window.grammarExCtrl = new GrammarExerciseController();

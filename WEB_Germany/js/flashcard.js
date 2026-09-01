@@ -1,4 +1,4 @@
-// WEB_Germany Flashcard 3D Interactive Module (with IPA & Vietnamese Phonetics)
+// WEB_Germany Flashcard 3D Interactive Module with Spaced Repetition System (SRS)
 
 class FlashcardController {
   constructor() {
@@ -8,11 +8,10 @@ class FlashcardController {
     this.isFlipped = false;
     this.selectedTopic = "ALL";
     this.selectedLevel = "ALL";
+    this.onlyDueFilter = false;
     this.searchQuery = "";
-    this.masteredSet = new Set();
     
     this.initElements();
-    this.loadMasteredState();
   }
 
   initElements() {
@@ -22,27 +21,32 @@ class FlashcardController {
     this.progressText = document.getElementById("flashcard-progress-text");
     this.topicPills = document.getElementById("topic-pills");
     
-    // Bind buttons
+    // Bind flip actions
     const btnFlip = document.getElementById("btn-flip-card");
     if (btnFlip) btnFlip.addEventListener("click", () => this.flipCard());
     if (this.cardInner) this.cardInner.addEventListener("click", (e) => {
-      // Don't flip if clicking the speaker button
-      if (e.target.closest(".speaker-btn")) return;
+      if (e.target.closest(".speaker-btn") || e.target.closest(".srs-rate-btn")) return;
       this.flipCard();
     });
 
     const btnPrev = document.getElementById("btn-prev-card");
     const btnNext = document.getElementById("btn-next-card");
     const btnShuffle = document.getElementById("btn-shuffle-cards");
-    const btnMastered = document.getElementById("btn-mark-mastered");
-    const btnUnmastered = document.getElementById("btn-mark-unmastered");
+    const btnDueFilter = document.getElementById("btn-filter-srs-due");
     const searchInput = document.getElementById("flashcard-search");
 
     if (btnPrev) btnPrev.addEventListener("click", () => this.prevCard());
     if (btnNext) btnNext.addEventListener("click", () => this.nextCard());
     if (btnShuffle) btnShuffle.addEventListener("click", () => this.shuffleCards());
-    if (btnMastered) btnMastered.addEventListener("click", () => this.markCurrentMastered(true));
-    if (btnUnmastered) btnUnmastered.addEventListener("click", () => this.markCurrentMastered(false));
+
+    if (btnDueFilter) {
+      btnDueFilter.addEventListener("click", () => {
+        this.onlyDueFilter = !this.onlyDueFilter;
+        btnDueFilter.classList.toggle("bg-amber-500", this.onlyDueFilter);
+        btnDueFilter.classList.toggle("text-white", this.onlyDueFilter);
+        this.applyFilters();
+      });
+    }
     
     if (searchInput) {
       searchInput.addEventListener("input", (e) => {
@@ -51,7 +55,16 @@ class FlashcardController {
       });
     }
 
-    // Keyboard navigation (Arrow Left, Arrow Right, Space for flip)
+    // 4 SRS Rating Buttons on Card Back
+    document.querySelectorAll(".srs-rate-btn").forEach(btn => {
+      btn.addEventListener("click", (e) => {
+        e.stopPropagation();
+        const rating = btn.getAttribute("data-rating");
+        this.rateCurrentCard(rating);
+      });
+    });
+
+    // Keyboard navigation (Arrow Left, Arrow Right, Space for flip, 1-4 for SRS)
     document.addEventListener("keydown", (e) => {
       const activeTab = document.querySelector(".tab-content.active");
       if (!activeTab || activeTab.id !== "tab-flashcards") return;
@@ -64,30 +77,20 @@ class FlashcardController {
         this.nextCard();
       } else if (e.code === "ArrowLeft") {
         this.prevCard();
+      } else if (this.isFlipped) {
+        if (e.key === "1") this.rateCurrentCard("again");
+        else if (e.key === "2") this.rateCurrentCard("hard");
+        else if (e.key === "3") this.rateCurrentCard("good");
+        else if (e.key === "4") this.rateCurrentCard("easy");
       }
     });
   }
 
-  loadMasteredState() {
-    try {
-      const saved = localStorage.getItem("web_germany_mastered_words");
-      if (saved) {
-        this.masteredSet = new Set(JSON.parse(saved));
-      }
-    } catch (e) {
-      this.masteredSet = new Set();
-    }
-  }
-
-  saveMasteredState() {
-    try {
-      localStorage.setItem("web_germany_mastered_words", JSON.stringify(Array.from(this.masteredSet)));
-      if (window.appCtrl) window.appCtrl.updateStats();
-    } catch (e) {}
-  }
-
   setData(vocabList) {
     this.rawVocab = vocabList;
+    if (window.srsCtrl) {
+      window.srsCtrl.initCards(vocabList);
+    }
     this.buildTopicPills();
     this.applyFilters();
   }
@@ -129,11 +132,18 @@ class FlashcardController {
   }
 
   applyFilters() {
+    const today = window.srsCtrl ? window.srsCtrl.getLocalDateString() : "";
+
     this.filteredVocab = this.rawVocab.filter(v => {
       // Level filter
       if (this.selectedLevel !== "ALL" && v.level !== this.selectedLevel) return false;
       // Topic filter
       if (this.selectedTopic !== "ALL" && v.topic !== this.selectedTopic) return false;
+      // Due filter
+      if (this.onlyDueFilter && window.srsCtrl) {
+        const srsCard = window.srsCtrl.cards[v.id];
+        if (!srsCard || srsCard.dueDate > today) return false;
+      }
       // Search query
       if (this.searchQuery) {
         const matchWord = v.word.toLowerCase().includes(this.searchQuery);
@@ -186,20 +196,23 @@ class FlashcardController {
     if (window.appCtrl) window.appCtrl.showToast("Đã xáo trộn danh sách thẻ!");
   }
 
-  markCurrentMastered(isMastered) {
+  rateCurrentCard(rating) {
     if (this.filteredVocab.length === 0) return;
     const current = this.filteredVocab[this.currentIndex];
-    if (isMastered) {
-      this.masteredSet.add(current.id);
-      if (window.speechCtrl) window.speechCtrl.playCorrectSound();
-      if (window.appCtrl) window.appCtrl.showToast(`Đã thuộc: ${current.word}! 🎉`);
-    } else {
-      this.masteredSet.delete(current.id);
-      if (window.appCtrl) window.appCtrl.showToast(`Đã chuyển vào hàng đợi ôn tập.`);
+
+    if (window.srsCtrl) {
+      window.srsCtrl.rateCard(current.id, rating);
     }
-    this.saveMasteredState();
-    this.renderCard();
-    setTimeout(() => this.nextCard(), 300);
+
+    if (rating === "again") {
+      if (window.speechCtrl) window.speechCtrl.playWrongSound();
+      if (window.appCtrl) window.appCtrl.showToast(`Đã thêm "${current.word}" vào hàng đợi ôn lại ngay!`);
+    } else if (rating === "good" || rating === "easy") {
+      if (window.speechCtrl) window.speechCtrl.playCorrectSound();
+      if (window.appCtrl) window.appCtrl.showToast(`Tuyệt vời! Đã cập nhật lịch ôn từ "${current.word}". 🎉`);
+    }
+
+    setTimeout(() => this.nextCard(), 250);
   }
 
   renderCard() {
@@ -217,6 +230,7 @@ class FlashcardController {
     const backExVi = document.getElementById("fc-back-ex-vi");
     const backCategory = document.getElementById("fc-back-category");
     const backSpeaker = document.getElementById("fc-back-speaker");
+    const backSrsInterval = document.getElementById("fc-back-srs-interval");
 
     const cardFrontEl = document.querySelector(".flip-card-front");
     const cardBackEl = document.querySelector(".flip-card-back");
@@ -233,23 +247,16 @@ class FlashcardController {
     }
 
     const item = this.filteredVocab[this.currentIndex];
-    const isMastered = this.masteredSet.has(item.id);
+    const srsCard = window.srsCtrl ? window.srsCtrl.cards[item.id] : null;
+    const isMastered = srsCard && srsCard.state === "mastered";
 
     // Color theme based on article
     let cardColorClass = "card-other";
-    let badgeColorClass = "badge-other";
     let articleDisplay = item.article || "";
     
-    if (item.article === "der") {
-      cardColorClass = "card-der";
-      badgeColorClass = "badge-der";
-    } else if (item.article === "die") {
-      cardColorClass = "card-die";
-      badgeColorClass = "badge-die";
-    } else if (item.article === "das") {
-      cardColorClass = "card-das";
-      badgeColorClass = "badge-das";
-    }
+    if (item.article === "der") cardColorClass = "card-der";
+    else if (item.article === "die") cardColorClass = "card-die";
+    else if (item.article === "das") cardColorClass = "card-das";
 
     // Apply card border classes
     if (cardFrontEl) {
@@ -262,7 +269,7 @@ class FlashcardController {
     // Populate Front
     if (frontArticle) {
       frontArticle.textContent = articleDisplay;
-      frontArticle.className = `text-lg sm:text-xl font-bold uppercase tracking-wider ${
+      frontArticle.className = `text-xl sm:text-2xl font-black uppercase tracking-wider ${
         item.article === 'der' ? 'text-blue-600 dark:text-blue-400' :
         item.article === 'die' ? 'text-rose-600 dark:text-rose-400' :
         item.article === 'das' ? 'text-emerald-600 dark:text-emerald-400' :
@@ -297,11 +304,8 @@ class FlashcardController {
     }
 
     if (frontBadge) {
-      if (isMastered) {
-        frontBadge.classList.remove("hidden");
-      } else {
-        frontBadge.classList.add("hidden");
-      }
+      if (isMastered) frontBadge.classList.remove("hidden");
+      else frontBadge.classList.add("hidden");
     }
 
     if (frontSpeaker) {
@@ -317,6 +321,11 @@ class FlashcardController {
     if (backExDe) backExDe.textContent = item.example_de || `Hier ist ein Beispielsatz mit ${item.word}.`;
     if (backExVi) backExVi.textContent = item.example_vi || `Ví dụ minh họa cho từ ${item.meaning_vi}.`;
     if (backCategory) backCategory.textContent = `${item.topic_vi || item.topic} • ${item.sub_category || ''}`;
+
+    if (backSrsInterval && srsCard) {
+      const stateName = srsCard.state === "mastered" ? "Đã thuộc sâu" : (srsCard.state === "review" ? "Đang ghi nhớ" : "Mới học");
+      backSrsInterval.textContent = `Trạng thái: ${stateName} • Chu kỳ: ${srsCard.interval || 0} ngày`;
+    }
 
     if (backSpeaker) {
       backSpeaker.onclick = (e) => {

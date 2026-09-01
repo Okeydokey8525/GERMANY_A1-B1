@@ -1,211 +1,293 @@
-// WEB_Germany Main Application Core & State Management
+// WEB_Germany Main Application Core Controller & Navigation Hub
 
 class AppController {
   constructor() {
-    this.currentTab = "flashcards";
-    this.currentGlobalLevel = "A1";
-    this.streak = 1;
-    this.isDarkMode = false;
+    this.currentTab = "dashboard";
+    this.currentLevel = "A1";
+    this.isLoading = true;
     
     this.initApp();
   }
 
   async initApp() {
     this.initTheme();
-    this.initStreak();
     this.initNavigation();
-    this.initGlobalLevelSelector();
-    await this.loadAllData();
+    this.initSettingsModal();
+    this.initOnboarding();
+    await this.loadAllDatasets();
     this.updateStats();
     
-    // Initialize Lucide icons if available
-    if (window.lucide) {
-      window.lucide.createIcons();
+    // Check if first-time user
+    const hasSeenOnboarding = localStorage.getItem("deutschmaster_onboarding_seen");
+    if (!hasSeenOnboarding) {
+      this.openOnboarding();
     }
   }
 
-  // -------------------------------------------------------------
-  // Theme Management (Dark / Light)
-  // -------------------------------------------------------------
   initTheme() {
-    const savedTheme = localStorage.getItem("web_germany_theme");
-    const systemPrefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
-    
-    this.isDarkMode = savedTheme ? (savedTheme === "dark") : systemPrefersDark;
-    this.applyTheme();
+    const isDark = localStorage.getItem("web_germany_theme") === "dark" ||
+      (!("web_germany_theme" in localStorage) && window.matchMedia("(prefers-color-scheme: dark)").matches);
 
-    const themeToggleBtn = document.getElementById("btn-toggle-theme");
-    if (themeToggleBtn) {
-      themeToggleBtn.addEventListener("click", () => {
-        this.isDarkMode = !this.isDarkMode;
-        localStorage.setItem("web_germany_theme", this.isDarkMode ? "dark" : "light");
-        this.applyTheme();
-      });
-    }
-  }
-
-  applyTheme() {
-    if (this.isDarkMode) {
+    if (isDark) {
       document.documentElement.classList.add("dark");
     } else {
       document.documentElement.classList.remove("dark");
     }
-    const iconSun = document.getElementById("theme-icon-sun");
-    const iconMoon = document.getElementById("theme-icon-moon");
-    if (iconSun && iconMoon) {
-      iconSun.classList.toggle("hidden", !this.isDarkMode);
-      iconMoon.classList.toggle("hidden", this.isDarkMode);
-    }
-  }
 
-  // -------------------------------------------------------------
-  // Daily Streak Calculator
-  // -------------------------------------------------------------
-  initStreak() {
-    try {
-      const today = new Date().toISOString().split("T")[0];
-      const lastVisit = localStorage.getItem("web_germany_last_visit");
-      let currentStreak = parseInt(localStorage.getItem("web_germany_streak") || "1", 10);
-
-      if (lastVisit) {
-        const lastDate = new Date(lastVisit);
-        const currentDate = new Date(today);
-        const diffDays = Math.round((currentDate - lastDate) / (1000 * 60 * 60 * 24));
-
-        if (diffDays === 1) {
-          currentStreak += 1;
-        } else if (diffDays > 1) {
-          currentStreak = 1;
+    const themeToggleBtn = document.getElementById("theme-toggle-btn");
+    if (themeToggleBtn) {
+      themeToggleBtn.addEventListener("click", () => {
+        const currentlyDark = document.documentElement.classList.contains("dark");
+        if (currentlyDark) {
+          document.documentElement.classList.remove("dark");
+          localStorage.setItem("web_germany_theme", "light");
+        } else {
+          document.documentElement.classList.add("dark");
+          localStorage.setItem("web_germany_theme", "dark");
         }
-      }
-
-      localStorage.setItem("web_germany_last_visit", today);
-      localStorage.setItem("web_germany_streak", currentStreak.toString());
-      this.streak = currentStreak;
-
-      const streakEl = document.getElementById("header-streak-count");
-      if (streakEl) streakEl.textContent = this.streak;
-    } catch (e) {
-      this.streak = 1;
-    }
-  }
-
-  // -------------------------------------------------------------
-  // Global Level Selector
-  // -------------------------------------------------------------
-  initGlobalLevelSelector() {
-    const selector = document.getElementById("global-level-select");
-    if (selector) {
-      selector.addEventListener("change", (e) => {
-        this.currentGlobalLevel = e.target.value;
-        this.syncGlobalLevel();
       });
     }
   }
 
-  syncGlobalLevel() {
-    if (window.flashcardCtrl) window.flashcardCtrl.setLevelFilter(this.currentGlobalLevel);
-    if (window.lessonsCtrl && this.currentGlobalLevel !== "ALL") window.lessonsCtrl.switchLevel(this.currentGlobalLevel);
-    if (window.examCtrl && this.currentGlobalLevel !== "ALL") window.examCtrl.selectExamLevel(this.currentGlobalLevel);
-    this.showToast(`Đã chuyển sang cấp độ: ${this.currentGlobalLevel}`);
-  }
-
-  // -------------------------------------------------------------
-  // Navigation & Tab Switching
-  // -------------------------------------------------------------
   initNavigation() {
-    document.querySelectorAll(".nav-tab-btn").forEach(btn => {
-      btn.addEventListener("click", (e) => {
-        const tabId = btn.getAttribute("data-tab");
-        if (tabId) this.switchTab(tabId);
+    // Top & Bottom Navigation buttons
+    const navButtons = document.querySelectorAll(".nav-tab-btn, .bottom-nav-btn");
+    navButtons.forEach(btn => {
+      btn.addEventListener("click", () => {
+        const tab = btn.getAttribute("data-tab");
+        if (tab) this.switchTab(tab);
       });
     });
+
+    // Level selector dropdown/pills
+    const levelSelector = document.getElementById("global-level-select");
+    if (levelSelector) {
+      levelSelector.addEventListener("change", (e) => {
+        this.currentLevel = e.target.value;
+        this.syncGlobalLevel(this.currentLevel);
+      });
+    }
+
+    // Settings open button
+    const btnSettings = document.getElementById("btn-open-settings");
+    if (btnSettings) {
+      btnSettings.addEventListener("click", () => this.openSettingsModal());
+    }
   }
 
-  switchTab(tabKey) {
-    this.currentTab = tabKey;
+  switchTab(tabId) {
+    this.currentTab = tabId;
 
-    // Hide all tab contents and show selected
+    // Update Tab Contents
     document.querySelectorAll(".tab-content").forEach(el => {
       el.classList.remove("active");
     });
-    const targetContent = document.getElementById(`tab-${tabKey}`);
-    if (targetContent) targetContent.classList.add("active");
+    const targetContent = document.getElementById(`tab-${tabId}`);
+    if (targetContent) {
+      targetContent.classList.add("active");
+    }
 
-    // Update Bottom & Top Nav styling
+    // Update Nav buttons styling
     document.querySelectorAll(".nav-tab-btn").forEach(btn => {
-      const isCurrent = (btn.getAttribute("data-tab") === tabKey);
-      if (isCurrent) {
-        btn.classList.add("text-blue-600", "dark:text-blue-400", "font-bold");
-        btn.classList.remove("text-gray-500", "dark:text-gray-400");
+      const bTab = btn.getAttribute("data-tab");
+      if (bTab === tabId) {
+        btn.className = "nav-tab-btn px-4 py-2 rounded-2xl text-xs font-bold bg-blue-600 text-white shadow-md shadow-blue-500/20 transition-all flex items-center gap-1.5";
       } else {
-        btn.classList.remove("text-blue-600", "dark:text-blue-400", "font-bold");
-        btn.classList.add("text-gray-500", "dark:text-gray-400");
+        btn.className = "nav-tab-btn px-4 py-2 rounded-2xl text-xs font-semibold text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800 transition-all flex items-center gap-1.5";
       }
     });
 
-    window.scrollTo({ top: 0, behavior: "smooth" });
+    // Update Bottom Nav buttons
+    document.querySelectorAll(".bottom-nav-btn").forEach(btn => {
+      const bTab = btn.getAttribute("data-tab");
+      if (bTab === tabId) {
+        btn.className = "bottom-nav-btn flex flex-col items-center justify-center text-blue-600 dark:text-blue-400 font-bold text-[10px] transition-all";
+      } else {
+        btn.className = "bottom-nav-btn flex flex-col items-center justify-center text-gray-400 dark:text-gray-500 font-medium text-[10px] hover:text-gray-700 dark:hover:text-gray-300 transition-all";
+      }
+    });
+
+    // Sub-renders if needed
+    if (tabId === "mistakes" && window.mistakesCtrl) {
+      window.mistakesCtrl.renderMistakesList();
+    } else if (tabId === "roadmap" && window.roadmapCtrl) {
+      window.roadmapCtrl.renderRoadmap();
+      window.roadmapCtrl.renderCanDoChecklist();
+    } else if (tabId === "dashboard" && window.progressCtrl) {
+      window.progressCtrl.updateUI();
+    }
+
+    window.scrollTo({ top: 0, behavior: 'smooth' });
   }
 
-  // -------------------------------------------------------------
-  // Data Loader
-  // -------------------------------------------------------------
-  async loadAllData() {
+  syncGlobalLevel(level) {
+    if (window.flashcardCtrl) window.flashcardCtrl.setLevelFilter(level);
+    if (window.lessonsCtrl) window.lessonsCtrl.switchLevel(level);
+    if (window.examCtrl) window.examCtrl.switchLevel(level);
+    if (window.progressCtrl) {
+      window.progressCtrl.data.currentLevel = level;
+      window.progressCtrl.saveProgress();
+    }
+  }
+
+  async loadAllDatasets() {
     try {
-      const [vTopics, vA1B1, gData, gExercises, lData, eData] = await Promise.all([
-        fetch("./data/vocab_topics.json").then(r => r.json()),
-        fetch("./data/vocab_a1_b1.json").then(r => r.json()),
-        fetch("./data/grammar_data.json").then(r => r.json()),
-        fetch("./data/grammar_exercises.json").then(r => r.json()),
-        fetch("./data/lessons_data.json").then(r => r.json()),
-        fetch("./data/mock_exams.json").then(r => r.json()),
+      const [vocabTopics, vocab, grammar, grammarExercises, lessons, mockExams] = await Promise.all([
+        fetch("./data/vocab_topics.json").then(r => r.json()).catch(() => []),
+        fetch("./data/vocab_a1_b1.json").then(r => r.json()).catch(() => []),
+        fetch("./data/grammar_data.json").then(r => r.json()).catch(() => ({})),
+        fetch("./data/grammar_exercises.json").then(r => r.json()).catch(() => []),
+        fetch("./data/lessons_data.json").then(r => r.json()).catch(() => ({ A1: [], A2: [], B1: [] })),
+        fetch("./data/mock_exams.json").then(r => r.json()).catch(() => ({ A1: [], A2: [], B1: [] }))
       ]);
 
-      if (window.flashcardCtrl) window.flashcardCtrl.setData(vA1B1);
-      if (window.quizCtrl) window.quizCtrl.setData(vA1B1);
-      if (window.grammarCtrl) window.grammarCtrl.setData(gData);
-      if (window.grammarExCtrl) window.grammarExCtrl.setData(gExercises);
-      if (window.lessonsCtrl) window.lessonsCtrl.setData(lData);
-      if (window.examCtrl) window.examCtrl.setData(eData);
+      // Distribute to controllers
+      if (window.flashcardCtrl) window.flashcardCtrl.setData(vocab);
+      if (window.quizCtrl) window.quizCtrl.setData(vocab);
+      if (window.grammarCtrl) window.grammarCtrl.setData(grammar);
+      if (window.grammarExCtrl) window.grammarExCtrl.setData(grammarExercises);
+      if (window.lessonsCtrl) window.lessonsCtrl.setData(lessons);
+      if (window.examCtrl) window.examCtrl.setData(mockExams);
 
-      console.log("All German learning datasets loaded successfully.");
+      this.isLoading = false;
+      const loader = document.getElementById("app-global-loader");
+      if (loader) loader.classList.add("hidden");
     } catch (e) {
-      console.error("Error loading application data:", e);
-      this.showToast("Không thể nạp dữ liệu offline. Đang dùng bộ nhớ cache.");
+      console.error("Critical error loading datasets:", e);
+      this.showToast("Không thể tải dữ liệu. Vui lòng kiểm tra kết nối mạng!");
     }
   }
 
   updateStats() {
-    try {
-      const mastered = JSON.parse(localStorage.getItem("web_germany_mastered_words") || "[]");
-      const completed = JSON.parse(localStorage.getItem("web_germany_completed_lessons") || "[]");
-
-      const masteredEl = document.getElementById("stat-mastered-words");
-      const completedEl = document.getElementById("stat-completed-lessons");
-      
-      if (masteredEl) masteredEl.textContent = mastered.length;
-      if (completedEl) completedEl.textContent = completed.length;
-    } catch (e) {}
+    if (window.progressCtrl) window.progressCtrl.updateUI();
+    if (window.srsCtrl) window.srsCtrl.updateUI();
+    if (window.mistakesCtrl) window.mistakesCtrl.updateBadge();
   }
 
-  showToast(message, duration = 2500) {
+  initSettingsModal() {
+    const modal = document.getElementById("settings-modal");
+    const closeBtn = document.getElementById("btn-close-settings");
+    const exportBtn = document.getElementById("btn-export-progress");
+    const importInput = document.getElementById("import-progress-file");
+    const speedSlider = document.getElementById("settings-speech-speed");
+    const speedVal = document.getElementById("settings-speed-val");
+    const dailyGoalSelect = document.getElementById("settings-daily-goal");
+    const resetBtn = document.getElementById("btn-reset-all-data");
+
+    if (closeBtn && modal) {
+      closeBtn.addEventListener("click", () => modal.classList.add("hidden"));
+      modal.addEventListener("click", (e) => {
+        if (e.target === modal) modal.classList.add("hidden");
+      });
+    }
+
+    if (exportBtn && window.progressCtrl) {
+      exportBtn.addEventListener("click", () => window.progressCtrl.exportDataJSON());
+    }
+
+    if (importInput && window.progressCtrl) {
+      importInput.addEventListener("change", (e) => {
+        const file = e.target.files[0];
+        if (file) {
+          const reader = new FileReader();
+          reader.onload = (event) => {
+            window.progressCtrl.importDataJSON(event.target.result);
+          };
+          reader.readAsText(file);
+        }
+      });
+    }
+
+    if (speedSlider && window.speechCtrl) {
+      speedSlider.addEventListener("input", (e) => {
+        const val = parseFloat(e.target.value) || 0.9;
+        if (speedVal) speedVal.textContent = `${val.toFixed(1)}x`;
+        window.speechCtrl.setSpeed(val);
+      });
+    }
+
+    if (dailyGoalSelect && window.progressCtrl) {
+      dailyGoalSelect.addEventListener("change", (e) => {
+        const mins = parseInt(e.target.value) || 20;
+        window.progressCtrl.data.dailyGoalMinutes = mins;
+        window.progressCtrl.saveProgress();
+      });
+    }
+
+    if (resetBtn) {
+      resetBtn.addEventListener("click", () => {
+        if (confirm("CẢNH BÁO: Hành động này sẽ xóa toàn bộ lịch sử ôn tập, streak và sổ tay lỗi sai. Bạn có chắc chắn không?")) {
+          localStorage.clear();
+          window.location.reload();
+        }
+      });
+    }
+  }
+
+  openSettingsModal() {
+    const modal = document.getElementById("settings-modal");
+    if (!modal) return;
+
+    if (window.progressCtrl) {
+      const pData = window.progressCtrl.data;
+      const speedSlider = document.getElementById("settings-speech-speed");
+      const speedVal = document.getElementById("settings-speed-val");
+      const dailyGoalSelect = document.getElementById("settings-daily-goal");
+
+      if (speedSlider) speedSlider.value = pData.settings.speechRate || 0.9;
+      if (speedVal) speedVal.textContent = `${(pData.settings.speechRate || 0.9).toFixed(1)}x`;
+      if (dailyGoalSelect) dailyGoalSelect.value = pData.dailyGoalMinutes || 20;
+    }
+
+    modal.classList.remove("hidden");
+  }
+
+  initOnboarding() {
+    const modal = document.getElementById("onboarding-modal");
+    const startBtn = document.getElementById("btn-start-onboarding");
+    if (startBtn && modal) {
+      startBtn.addEventListener("click", () => {
+        const levelRadio = document.querySelector("input[name='onboard_level']:checked");
+        const goalRadio = document.querySelector("input[name='onboard_goal']:checked");
+        const timeRadio = document.querySelector("input[name='onboard_time']:checked");
+
+        if (window.progressCtrl) {
+          if (levelRadio) window.progressCtrl.data.currentLevel = levelRadio.value;
+          if (goalRadio) window.progressCtrl.data.targetGoal = goalRadio.value;
+          if (timeRadio) window.progressCtrl.data.dailyGoalMinutes = parseInt(timeRadio.value) || 20;
+          window.progressCtrl.saveProgress();
+        }
+
+        localStorage.setItem("deutschmaster_onboarding_seen", "true");
+        modal.classList.add("hidden");
+        this.showToast("Chào mừng bạn đến với DeutschMaster! Chúc bạn học thật tốt 🇩🇪");
+      });
+    }
+  }
+
+  openOnboarding() {
+    const modal = document.getElementById("onboarding-modal");
+    if (modal) modal.classList.remove("hidden");
+  }
+
+  showToast(message, duration = 3000) {
     const container = document.getElementById("toast-container");
     if (!container) return;
 
     const toast = document.createElement("div");
-    toast.className = "toast px-4 py-2.5 rounded-2xl bg-gray-900/90 dark:bg-white/90 text-white dark:text-gray-900 text-xs sm:text-sm font-semibold shadow-2xl backdrop-blur-md flex items-center gap-2 border border-white/10 dark:border-gray-900/10";
+    toast.className = "toast max-w-sm px-4 py-3 bg-gray-900/90 dark:bg-white/90 text-white dark:text-gray-900 text-xs sm:text-sm font-semibold rounded-2xl shadow-xl flex items-center gap-2 pointer-events-auto backdrop-blur-md";
     toast.innerHTML = `<span>🇩🇪</span> <span>${message}</span>`;
 
     container.appendChild(toast);
     setTimeout(() => {
       toast.style.opacity = "0";
-      toast.style.transform = "translateY(10px)";
+      toast.style.transform = "translateY(10px) scale(0.9)";
       toast.style.transition = "all 0.3s ease";
       setTimeout(() => toast.remove(), 300);
     }, duration);
   }
 }
 
-window.addEventListener("DOMContentLoaded", () => {
+document.addEventListener("DOMContentLoaded", () => {
   window.appCtrl = new AppController();
 });

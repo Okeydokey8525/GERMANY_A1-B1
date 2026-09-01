@@ -1,4 +1,4 @@
-// WEB_Germany Quiz & Practice Module (3 Interactive Modes)
+// WEB_Germany Quiz & Practice Module with Mistake Notebook integration
 
 class QuizController {
   constructor() {
@@ -10,8 +10,6 @@ class QuizController {
     this.totalAnswered = 0;
     this.quizPool = [];
     this.currentQuestion = null;
-    this.timerInterval = null;
-    this.timeLeft = 15;
 
     this.initElements();
   }
@@ -84,7 +82,6 @@ class QuizController {
   switchMode(mode) {
     this.currentMode = mode;
     
-    // Update active tab buttons
     ["mc", "article", "spelling"].forEach(m => {
       const btn = document.getElementById(`quiz-mode-${m}`);
       if (btn) {
@@ -96,7 +93,6 @@ class QuizController {
       }
     });
 
-    // Show/hide view containers
     const mcView = document.getElementById("quiz-view-mc");
     const articleView = document.getElementById("quiz-view-article");
     const spellingView = document.getElementById("quiz-view-spelling");
@@ -114,14 +110,12 @@ class QuizController {
     this.totalAnswered = 0;
     this.updateScoreUI();
 
-    // Prepare pool
     if (this.currentMode === "article") {
       this.quizPool = this.vocabList.filter(v => v.article && ["der", "die", "das"].includes(v.article));
     } else {
       this.quizPool = [...this.vocabList];
     }
 
-    // Shuffle pool
     for (let i = this.quizPool.length - 1; i > 0; i--) {
       const j = Math.floor(Math.random() * (i + 1));
       [this.quizPool[i], this.quizPool[j]] = [this.quizPool[j], this.quizPool[i]];
@@ -134,13 +128,12 @@ class QuizController {
   loadQuestion() {
     if (this.quizPool.length === 0) return;
     if (this.currentIndex >= this.quizPool.length) {
-      this.currentIndex = 0; // Loop or finish
+      this.currentIndex = 0;
     }
 
     const item = this.quizPool[this.currentIndex];
     this.currentQuestion = item;
 
-    // Reset UI feedback
     const feedbackBox = document.getElementById("quiz-feedback-box");
     const btnNext = document.getElementById("btn-next-quiz");
     if (feedbackBox) feedbackBox.classList.add("hidden");
@@ -163,7 +156,6 @@ class QuizController {
     const subPromptEl = document.getElementById("quiz-mc-subprompt");
     const optionsContainer = document.getElementById("quiz-mc-options");
 
-    // Randomize direction: 50% German -> Vietnamese, 50% Vietnamese -> German
     const isDeToVi = Math.random() > 0.4;
     
     if (promptEl) {
@@ -173,7 +165,6 @@ class QuizController {
       subPromptEl.textContent = isDeToVi ? "Chọn nghĩa tiếng Việt chính xác:" : "Chọn từ tiếng Đức tương ứng:";
     }
 
-    // Pick 3 distractors
     const otherVocab = this.vocabList.filter(v => v.id !== item.id);
     const shuffledOthers = [...otherVocab].sort(() => 0.5 - Math.random()).slice(0, 3);
     const options = [item, ...shuffledOthers].sort(() => 0.5 - Math.random());
@@ -190,13 +181,13 @@ class QuizController {
           <span class="w-6 h-6 rounded-full border border-gray-300 dark:border-gray-600 flex items-center justify-center text-xs group-hover:border-blue-500 text-transparent group-hover:text-blue-500">✓</span>
         `;
 
-        btn.addEventListener("click", () => this.handleMCSelection(btn, opt.id === item.id, item));
+        btn.addEventListener("click", () => this.handleMCSelection(btn, opt.id === item.id, item, labelText));
         optionsContainer.appendChild(btn);
       });
     }
   }
 
-  handleMCSelection(selectedBtn, isCorrect, item) {
+  handleMCSelection(selectedBtn, isCorrect, item, chosenText) {
     const allBtns = document.querySelectorAll("#quiz-mc-options button");
     allBtns.forEach(b => b.disabled = true);
 
@@ -209,10 +200,24 @@ class QuizController {
         window.speechCtrl.playCorrectSound();
         window.speechCtrl.speak(item.article ? `${item.article} ${item.word}` : item.word);
       }
+      if (window.progressCtrl) window.progressCtrl.recordActivity("vocab", 1);
     } else {
       this.combo = 0;
       selectedBtn.className = "w-full p-4 text-left rounded-2xl border-2 border-rose-500 bg-rose-50 dark:bg-rose-950/40 text-rose-800 dark:text-rose-200 font-bold transition-all flex items-center justify-between";
       if (window.speechCtrl) window.speechCtrl.playWrongSound();
+      
+      // Add to Mistake Notebook
+      if (window.mistakesCtrl) {
+        window.mistakesCtrl.addMistake({
+          id: `quiz_${item.id}`,
+          type: "quiz",
+          question: item.article ? `${item.article} ${item.word}` : item.word,
+          userAnswer: chosenText,
+          correctAnswer: item.meaning_vi,
+          topic: item.topic_vi || item.topic || "Từ vựng",
+          explanation: `"${item.word}" có nghĩa là "${item.meaning_vi}". Ví dụ: ${item.example_de || ''}`
+        });
+      }
     }
 
     this.updateScoreUI();
@@ -231,7 +236,6 @@ class QuizController {
     if (meaningEl) meaningEl.textContent = item.meaning_vi;
     if (pluralEl) pluralEl.textContent = item.plural ? `Plural: ${item.plural}` : "";
 
-    // Enable buttons
     ["der", "die", "das"].forEach(art => {
       const btn = document.getElementById(`btn-article-${art}`);
       if (btn) {
@@ -253,9 +257,23 @@ class QuizController {
         window.speechCtrl.playComboSound(this.combo);
         window.speechCtrl.speak(`${this.currentQuestion.article} ${this.currentQuestion.word}`);
       }
+      if (window.progressCtrl) window.progressCtrl.recordActivity("vocab", 1);
     } else {
       this.combo = 0;
       if (window.speechCtrl) window.speechCtrl.playWrongSound();
+
+      // Add to Mistake Notebook
+      if (window.mistakesCtrl) {
+        window.mistakesCtrl.addMistake({
+          id: `art_${this.currentQuestion.id}`,
+          type: "article",
+          question: `Mạo từ của danh từ "${this.currentQuestion.word}"`,
+          userAnswer: chosenArticle,
+          correctAnswer: `${this.currentQuestion.article} ${this.currentQuestion.word}`,
+          topic: "Mạo từ Der / Die / Das",
+          explanation: `Danh từ "${this.currentQuestion.word}" đi với mạo từ "${this.currentQuestion.article}". Số nhiều: ${this.currentQuestion.plural || 'die ' + this.currentQuestion.word}`
+        });
+      }
     }
 
     this.updateScoreUI();
@@ -281,7 +299,6 @@ class QuizController {
       inputEl.focus();
     }
 
-    // Auto pronounce prompt
     if (window.speechCtrl) {
       window.speechCtrl.speak(item.word);
     }
@@ -305,9 +322,23 @@ class QuizController {
         window.speechCtrl.playCorrectSound();
         window.speechCtrl.speak(this.currentQuestion.article ? `${this.currentQuestion.article} ${this.currentQuestion.word}` : this.currentQuestion.word);
       }
+      if (window.progressCtrl) window.progressCtrl.recordActivity("vocab", 1);
     } else {
       this.combo = 0;
       if (window.speechCtrl) window.speechCtrl.playWrongSound();
+
+      // Add to Mistake Notebook
+      if (window.mistakesCtrl) {
+        window.mistakesCtrl.addMistake({
+          id: `spell_${this.currentQuestion.id}`,
+          type: "quiz",
+          question: `Chính tả: "${this.currentQuestion.meaning_vi}"`,
+          userAnswer: userInput || "(Chưa gõ)",
+          correctAnswer: this.currentQuestion.word,
+          topic: "Chính tả (Rechtschreibung)",
+          explanation: `Viết đúng: "${this.currentQuestion.word}". Đọc là: /${this.currentQuestion.pronounce_vi || ''}/`
+        });
+      }
     }
 
     this.updateScoreUI();
@@ -328,7 +359,7 @@ class QuizController {
       if (feedbackTitle) feedbackTitle.innerHTML = `<span class="font-bold text-emerald-600 dark:text-emerald-400">Chính xác! 🎉</span> +${10 + this.combo * 2} điểm`;
     } else {
       feedbackBox.className = "p-4 rounded-2xl border-2 border-rose-500 bg-rose-50 dark:bg-rose-950/40 text-rose-900 dark:text-rose-100 flex items-center justify-between";
-      if (feedbackTitle) feedbackTitle.innerHTML = `<span class="font-bold text-rose-600 dark:text-rose-400">Chưa chính xác! ❌</span>`;
+      if (feedbackTitle) feedbackTitle.innerHTML = `<span class="font-bold text-rose-600 dark:text-rose-400">Chưa chính xác! ❌ Đã ghi vào Sổ tay lỗi sai.</span>`;
     }
 
     const fullDe = item.article ? `<b>${item.article} ${item.word}</b>` : `<b>${item.word}</b>`;

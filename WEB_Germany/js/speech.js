@@ -6,6 +6,7 @@ class SpeechController {
     this.voices = [];
     this.germanVoice = null;
     this.audioCtx = null;
+    this.currentSpeed = 0.9;
     
     if (this.synth) {
       this.initVoices();
@@ -18,13 +19,21 @@ class SpeechController {
   initVoices() {
     if (!this.synth) return;
     this.voices = this.synth.getVoices();
-    // Prioritize German voices
+    // Prioritize high quality German voices
     this.germanVoice = this.voices.find(v => v.lang.startsWith('de') && (v.name.includes('Google') || v.name.includes('Natural') || v.name.includes('Hedda') || v.name.includes('Katja') || v.name.includes('Stefan')))
       || this.voices.find(v => v.lang.startsWith('de'))
       || null;
   }
 
-  speak(text, rate = 0.9) {
+  setSpeed(rate) {
+    this.currentSpeed = Math.max(0.5, Math.min(2.0, rate));
+    if (window.progressCtrl) {
+      window.progressCtrl.data.settings.speechRate = this.currentSpeed;
+      window.progressCtrl.saveProgress();
+    }
+  }
+
+  speak(text, customRate = null) {
     if (!this.synth) {
       console.warn("SpeechSynthesis not supported on this browser.");
       return;
@@ -39,7 +48,7 @@ class SpeechController {
 
     const utterance = new SpeechSynthesisUtterance(cleanText);
     utterance.lang = 'de-DE';
-    utterance.rate = rate;
+    utterance.rate = customRate || this.currentSpeed || 0.9;
     utterance.pitch = 1.0;
 
     if (this.germanVoice) {
@@ -85,9 +94,7 @@ class SpeechController {
       
       osc.start(now);
       osc.stop(now + 0.35);
-    } catch (e) {
-      console.error(e);
-    }
+    } catch (e) {}
   }
 
   playWrongSound() {
@@ -111,9 +118,7 @@ class SpeechController {
       
       osc.start(now);
       osc.stop(now + 0.25);
-    } catch (e) {
-      console.error(e);
-    }
+    } catch (e) {}
   }
 
   playFlipSound() {
@@ -166,5 +171,4 @@ class SpeechController {
   }
 }
 
-// Global instance
 window.speechCtrl = new SpeechController();
