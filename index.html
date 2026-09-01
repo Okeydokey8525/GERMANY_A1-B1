@@ -1,11 +1,485 @@
 <!DOCTYPE html>
-<html lang="vi">
+<html lang="vi" class="dark">
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="refresh" content="0; url=./WEB_Germany/">
-    <title>Đang chuyển hướng...</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>DeutschMaster A1–B1 • Hệ Thống Tự Học Tiếng Đức Toàn Diện</title>
+  <meta name="description" content="Nền tảng học tiếng Đức cá nhân hóa A1–B1: SRS Flashcards, 40 Learning Objectives, Luyện nói 7 bước, Luyện viết & Đề thi Goethe/telc.">
+  
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['"Plus Jakarta Sans"', 'system-ui', 'sans-serif'],
+            mono: ['"JetBrains Mono"', 'monospace'],
+          },
+          colors: {
+            brand: {
+              50: '#eff6ff',
+              100: '#dbeafe',
+              500: '#3b82f6',
+              600: '#2563eb',
+              700: '#1d4ed8',
+              900: '#1e3a8a',
+            },
+            deGold: '#F59E0B',
+            deRed: '#EF4444',
+            deDark: '#0F172A'
+          },
+          animation: {
+            'blob': 'blob 7s infinite',
+            'float': 'float 4s ease-in-out infinite',
+            'pulse-slow': 'pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+          },
+          keyframes: {
+            blob: {
+              '0%': { transform: 'translate(0px, 0px) scale(1)' },
+              '33%': { transform: 'translate(30px, -50px) scale(1.1)' },
+              '66%': { transform: 'translate(-20px, 20px) scale(0.9)' },
+              '100%': { transform: 'translate(0px, 0px) scale(1)' },
+            },
+            float: {
+              '0%, 100%': { transform: 'translateY(0)' },
+              '50%': { transform: 'translateY(-8px)' },
+            }
+          }
+        }
+      }
+    }
+  </script>
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+  <style>
+    /* Custom Modern Glassmorphism & Utilities */
+    .glass-card {
+      background: rgba(255, 255, 255, 0.75);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border: 1px solid rgba(255, 255, 255, 0.3);
+    }
+    .dark .glass-card {
+      background: rgba(15, 23, 42, 0.75);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+    }
+    .glass-nav {
+      background: rgba(255, 255, 255, 0.85);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border-bottom: 1px solid rgba(229, 231, 235, 0.8);
+    }
+    .dark .glass-nav {
+      background: rgba(15, 23, 42, 0.85);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    }
+    .text-gradient {
+      background: linear-gradient(135deg, #38bdf8 0%, #3b82f6 50%, #818cf8 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    .de-flag-bar {
+      background: linear-gradient(90deg, #111827 0%, #111827 33.3%, #dc2626 33.3%, #dc2626 66.6%, #f59e0b 66.6%, #f59e0b 100%);
+    }
+    /* Smooth Scroll */
+    html {
+      scroll-behavior: smooth;
+    }
+  </style>
 </head>
-<body>
-    <p>Đang chuyển hướng sang DeutschMaster... <a href="./WEB_Germany/">Bấm vào đây nếu không tự chuyển</a></p>
+<body class="bg-slate-50 dark:bg-slate-950 text-slate-900 dark:text-slate-100 min-h-screen font-sans selection:bg-blue-500 selection:text-white transition-colors duration-300 relative overflow-x-hidden">
+
+  <!-- Floating Background Ambient Blobs -->
+  <div class="fixed inset-0 pointer-events-none z-0 overflow-hidden">
+    <div class="absolute -top-40 -left-40 w-96 h-96 bg-blue-500/15 dark:bg-blue-600/10 rounded-full blur-3xl animate-blob"></div>
+    <div class="absolute top-1/3 -right-40 w-96 h-96 bg-purple-500/15 dark:bg-purple-600/10 rounded-full blur-3xl animate-blob animation-delay-2000"></div>
+    <div class="absolute -bottom-40 left-1/3 w-96 h-96 bg-amber-500/15 dark:bg-amber-600/10 rounded-full blur-3xl animate-blob animation-delay-4000"></div>
+  </div>
+
+  <!-- Top German Flag Indicator Bar -->
+  <div class="h-1.5 w-full de-flag-bar fixed top-0 left-0 z-50"></div>
+
+  <!-- Header Navigation -->
+  <header class="sticky top-0 z-40 glass-nav transition-all">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+      
+      <!-- Brand Logo -->
+      <a href="./WEB_Germany/" class="flex items-center gap-3 group">
+        <div class="w-10 h-10 rounded-2xl bg-gradient-to-tr from-blue-600 to-indigo-600 flex items-center justify-center text-xl shadow-lg shadow-blue-500/25 group-hover:scale-105 transition-all">
+          🇩🇪
+        </div>
+        <div>
+          <span class="font-extrabold text-base sm:text-lg text-slate-900 dark:text-white flex items-center gap-1.5">
+            DeutschMaster <span class="text-xs px-2 py-0.5 rounded-full bg-blue-100 dark:bg-blue-900/50 text-blue-700 dark:text-blue-300 font-mono font-bold">A1–B1</span>
+          </span>
+          <p class="text-[10px] text-slate-500 dark:text-slate-400 font-medium">Learning OS & Resource Portal</p>
+        </div>
+      </a>
+
+      <!-- Quick Actions -->
+      <div class="flex items-center gap-3">
+        <!-- Theme Toggle -->
+        <button id="btn-theme-toggle" class="p-2 rounded-xl text-slate-500 hover:text-slate-900 dark:text-slate-400 dark:hover:text-white hover:bg-slate-200/50 dark:hover:bg-slate-800 transition-all text-sm" title="Đổi giao diện Sáng / Tối">
+          🌙
+        </button>
+
+        <!-- Resource Vault Nav Link -->
+        <a href="#resources" class="hidden sm:inline-flex items-center gap-1 text-xs font-bold text-slate-600 dark:text-slate-300 hover:text-blue-600 dark:hover:text-blue-400 px-3 py-2 rounded-xl transition-all">
+          📚 Kho Tài Liệu
+        </a>
+
+        <!-- Launch App CTA Button -->
+        <a href="./WEB_Germany/" class="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white text-xs sm:text-sm font-extrabold shadow-md shadow-blue-500/20 hover:shadow-blue-500/30 hover:scale-[1.02] active:scale-95 transition-all">
+          <span>Vào Học Ngay</span>
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Content Container -->
+  <main class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 sm:py-16 space-y-16">
+
+    <!-- HERO SECTION -->
+    <section class="text-center space-y-6 max-w-4xl mx-auto pt-4">
+      
+      <!-- Top Badge -->
+      <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-blue-50 dark:bg-blue-950/60 border border-blue-200 dark:border-blue-800 text-blue-700 dark:text-blue-300 text-xs font-bold shadow-xs animate-float">
+        <span class="w-2 h-2 rounded-full bg-emerald-500 animate-ping"></span>
+        <span>Hệ Thống Tự Học Tiếng Đức Chuẩn CEFR (A1 ➔ A2 ➔ B1)</span>
+      </div>
+
+      <!-- Main Headline -->
+      <h1 class="text-3xl sm:text-5xl lg:text-6xl font-black tracking-tight text-slate-900 dark:text-white leading-[1.15]">
+        Chinh Phục Tiếng Đức Cùng <br>
+        <span class="text-gradient">DeutschMaster Learning OS</span>
+      </h1>
+
+      <!-- Subtitle Description -->
+      <p class="text-sm sm:text-base lg:text-lg text-slate-600 dark:text-slate-300 max-w-2xl mx-auto leading-relaxed">
+        Nền tảng tự học tương tác toàn diện không phụ thuộc mạng internet: Thuật toán giãn cách bộ nhớ SRS v4, 40 Mục tiêu năng lực Can-Do, Phòng luyện nói 7 bước, Studio luyện viết & Kho đề thi Goethe / telc trọn bộ.
+      </p>
+
+      <!-- Primary Action Buttons -->
+      <div class="flex flex-col sm:flex-row items-center justify-center gap-3 pt-2">
+        <a href="./WEB_Germany/" id="btn-hero-launch" class="w-full sm:w-auto px-8 py-4 rounded-2xl bg-gradient-to-r from-blue-600 via-indigo-600 to-blue-700 hover:from-blue-700 hover:to-indigo-800 text-white font-extrabold text-sm sm:text-base shadow-xl shadow-blue-500/25 hover:shadow-blue-500/40 hover:scale-105 active:scale-95 transition-all flex items-center justify-center gap-2">
+          <span>🚀 Mở Ứng Dụng DeutschMaster</span>
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path></svg>
+        </a>
+
+        <a href="#resources" class="w-full sm:w-auto px-6 py-4 rounded-2xl glass-card text-slate-700 dark:text-slate-200 hover:text-blue-600 dark:hover:text-blue-400 font-bold text-sm sm:text-base hover:border-blue-400 transition-all flex items-center justify-center gap-2">
+          <span>📁 Khám Phá Kho Tài Liệu PDF</span>
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+        </a>
+      </div>
+
+      <!-- Quick Metrics Ribbon -->
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-3 pt-8 max-w-3xl mx-auto text-left">
+        <div class="p-4 rounded-2xl glass-card space-y-1">
+          <span class="text-xs text-slate-500 dark:text-slate-400 font-bold">Mục tiêu năng lực</span>
+          <div class="text-xl sm:text-2xl font-black text-blue-600 dark:text-blue-400 font-mono">40 / 40 (100%)</div>
+          <p class="text-[11px] text-slate-500 dark:text-slate-400">12 Chuyên đề chuẩn CEFR</p>
+        </div>
+
+        <div class="p-4 rounded-2xl glass-card space-y-1">
+          <span class="text-xs text-slate-500 dark:text-slate-400 font-bold">Nicos Weg DW</span>
+          <div class="text-xl sm:text-2xl font-black text-emerald-600 dark:text-emerald-400 font-mono">228 Bài học</div>
+          <p class="text-[11px] text-slate-500 dark:text-slate-400">A1, A2, B1 tích hợp Audio</p>
+        </div>
+
+        <div class="p-4 rounded-2xl glass-card space-y-1">
+          <span class="text-xs text-slate-500 dark:text-slate-400 font-bold">Thuật toán trí nhớ</span>
+          <div class="text-xl sm:text-2xl font-black text-purple-600 dark:text-purple-400 font-mono">SRS v4 SM-2</div>
+          <p class="text-[11px] text-slate-500 dark:text-slate-400">Chống quên từ vựng tối ưu</p>
+        </div>
+
+        <div class="p-4 rounded-2xl glass-card space-y-1">
+          <span class="text-xs text-slate-500 dark:text-slate-400 font-bold">Khảo thí & Luyện thi</span>
+          <div class="text-xl sm:text-2xl font-black text-amber-600 dark:text-amber-400 font-mono">Goethe & telc</div>
+          <p class="text-[11px] text-slate-500 dark:text-slate-400">Đề thi mẫu có chấm điểm</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- CORE FEATURES SHOWCASE -->
+    <section class="space-y-6">
+      <div class="text-center space-y-2">
+        <h2 class="text-2xl sm:text-3xl font-black text-slate-900 dark:text-white">6 Trụ Cột Học Tập Hiện Đại</h2>
+        <p class="text-xs sm:text-sm text-slate-500 dark:text-slate-400">Thiết kế tối ưu cho người tự học từ con số 0 đến B1</p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
+        
+        <!-- Feature 1 -->
+        <div class="p-6 rounded-3xl glass-card space-y-3 hover:border-blue-500/50 hover:shadow-xl transition-all group">
+          <div class="w-12 h-12 rounded-2xl bg-blue-100 dark:bg-blue-900/40 text-blue-600 dark:text-blue-300 flex items-center justify-center text-2xl group-hover:scale-110 transition-transform">
+            🧠
+          </div>
+          <h3 class="text-lg font-bold text-slate-900 dark:text-white">Adaptive Learning & Objectives</h3>
+          <p class="text-xs text-slate-600 dark:text-slate-300 leading-relaxed">
+            40 Mục tiêu học tập cụ thể với điều kiện tiên quyết (Prerequisites). Thuật toán tự động nhận diện điểm yếu và đưa ra hàng đợi luyện tập thích ứng cá nhân hóa.
+          </p>
+          <a href="./WEB_Germany/" class="inline-flex items-center gap-1 text-xs font-bold text-blue-600 dark:text-blue-400 group-hover:underline">
+            Xem chi tiết Roadmap →
+          </a>
+        </div>
+
+        <!-- Feature 2 -->
+        <div class="p-6 rounded-3xl glass-card space-y-3 hover:border-purple-500/50 hover:shadow-xl transition-all group">
+          <div class="w-12 h-12 rounded-2xl bg-purple-100 dark:bg-purple-900/40 text-purple-600 dark:text-purple-300 flex items-center justify-center text-2xl group-hover:scale-110 transition-transform">
+            🎙️
+          </div>
+          <h3 class="text-lg font-bold text-slate-900 dark:text-white">Phòng Luyện Nói 7 Bước (Sprechen)</h3>
+          <p class="text-xs text-slate-600 dark:text-slate-300 leading-relaxed">
+            Quy trình chuẩn sư phạm: Nghe mẫu bản ngữ → Chuẩn bị dàn ý → Thu âm giọng nói → Nghe lại giọng mình (MediaRecorder) → Tự đánh giá 4 tiêu chí trên 7 chủ đề thực tế.
+          </p>
+          <a href="./WEB_Germany/" class="inline-flex items-center gap-1 text-xs font-bold text-purple-600 dark:text-purple-400 group-hover:underline">
+            Vào phòng Luyện nói →
+          </a>
+        </div>
+
+        <!-- Feature 3 -->
+        <div class="p-6 rounded-3xl glass-card space-y-3 hover:border-emerald-500/50 hover:shadow-xl transition-all group">
+          <div class="w-12 h-12 rounded-2xl bg-emerald-100 dark:bg-emerald-900/40 text-emerald-600 dark:text-emerald-300 flex items-center justify-center text-2xl group-hover:scale-110 transition-transform">
+            ✍️
+          </div>
+          <h3 class="text-lg font-bold text-slate-900 dark:text-white">Guided Writing Studio (Schreiben)</h3>
+          <p class="text-xs text-slate-600 dark:text-slate-300 leading-relaxed">
+            Khung soạn thảo thư từ có kho mẫu câu hữu dụng (Redemittel), tự động phân tích tức thì Lời chào (Anrede), Lời kết (Grußformel), độ dài từ và đối chiếu với bài mẫu chuẩn.
+          </p>
+          <a href="./WEB_Germany/" class="inline-flex items-center gap-1 text-xs font-bold text-emerald-600 dark:text-emerald-400 group-hover:underline">
+            Vào Writing Studio →
+          </a>
+        </div>
+
+        <!-- Feature 4 -->
+        <div class="p-6 rounded-3xl glass-card space-y-3 hover:border-amber-500/50 hover:shadow-xl transition-all group">
+          <div class="w-12 h-12 rounded-2xl bg-amber-100 dark:bg-amber-900/40 text-amber-600 dark:text-amber-300 flex items-center justify-center text-2xl group-hover:scale-110 transition-transform">
+            📓
+          </div>
+          <h3 class="text-lg font-bold text-slate-900 dark:text-white">Sổ Tay Lỗi Sai Thông Minh (Fehlerbuch)</h3>
+          <p class="text-xs text-slate-600 dark:text-slate-300 leading-relaxed">
+            Tự động phát hiện mẫu lỗi lặp lại (ví dụ nhầm Nominativ sang Akkusativ khi số lần sai ≥3), gắn thẻ Error Tag và tạo bài luyện tập nhắm trúng điểm yếu.
+          </p>
+          <a href="./WEB_Germany/" class="inline-flex items-center gap-1 text-xs font-bold text-amber-600 dark:text-amber-400 group-hover:underline">
+            Khám phá Sổ tay lỗi sai →
+          </a>
+        </div>
+
+        <!-- Feature 5 -->
+        <div class="p-6 rounded-3xl glass-card space-y-3 hover:border-rose-500/50 hover:shadow-xl transition-all group">
+          <div class="w-12 h-12 rounded-2xl bg-rose-100 dark:bg-rose-900/40 text-rose-600 dark:text-rose-300 flex items-center justify-center text-2xl group-hover:scale-110 transition-transform">
+            ⚡
+          </div>
+          <h3 class="text-lg font-bold text-slate-900 dark:text-white">SRS Flashcards & Der/Die/Das Sprint</h3>
+          <p class="text-xs text-slate-600 dark:text-slate-300 leading-relaxed">
+            Ôn tập từ vựng với thẻ 3D theo thuật toán SM-2, giới hạn thẻ mới hàng ngày và chế độ đua phản xạ mạo từ giúp thuộc nhanh giống danh từ tiếng Đức.
+          </p>
+          <a href="./WEB_Germany/" class="inline-flex items-center gap-1 text-xs font-bold text-rose-600 dark:text-rose-400 group-hover:underline">
+            Luyện Flashcard ngay →
+          </a>
+        </div>
+
+        <!-- Feature 6 -->
+        <div class="p-6 rounded-3xl glass-card space-y-3 hover:border-indigo-500/50 hover:shadow-xl transition-all group">
+          <div class="w-12 h-12 rounded-2xl bg-indigo-100 dark:bg-indigo-900/40 text-indigo-600 dark:text-indigo-300 flex items-center justify-center text-2xl group-hover:scale-110 transition-transform">
+            ⏱️
+          </div>
+          <h3 class="text-lg font-bold text-slate-900 dark:text-white">Thi Phân Loại & Đề Thi Thử (Exams)</h3>
+          <p class="text-xs text-slate-600 dark:text-slate-300 leading-relaxed">
+            Bài test chẩn đoán 15 câu với phổ điểm 4 kỹ năng độc lập cùng phòng thi thử Goethe/telc có đồng hồ đếm ngược, tự động chấm điểm theo ngưỡng tham khảo 60%.
+          </p>
+          <a href="./WEB_Germany/" class="inline-flex items-center gap-1 text-xs font-bold text-indigo-600 dark:text-indigo-400 group-hover:underline">
+            Làm bài Placement Test →
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- RESOURCE VAULT SECTION -->
+    <section id="resources" class="space-y-6 pt-6">
+      <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-slate-200 dark:border-slate-800 pb-4">
+        <div>
+          <h2 class="text-2xl sm:text-3xl font-black text-slate-900 dark:text-white flex items-center gap-2">
+            <span>📁</span> <span>Kho Tài Liệu Gốc & Giáo Trình Tham Khảo</span>
+          </h2>
+          <p class="text-xs sm:text-sm text-slate-500 dark:text-slate-400">Trọn bộ tài liệu PDF chính thống được phân loại khoa học theo từng cấp độ</p>
+        </div>
+        <span class="text-xs font-bold px-3 py-1 bg-slate-200 dark:bg-slate-800 text-slate-700 dark:text-slate-300 rounded-full shrink-0">
+          5 Danh mục tài liệu
+        </span>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
+        
+        <!-- Folder 1: Từ Vựng -->
+        <div class="p-6 rounded-3xl glass-card space-y-4 flex flex-col justify-between">
+          <div class="space-y-2">
+            <div class="flex items-center justify-between">
+              <span class="px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-blue-100 dark:bg-blue-900/40 text-blue-800 dark:text-blue-300">01_Tu_Vung</span>
+              <span class="text-xs text-slate-400 font-mono">3 Files PDF</span>
+            </div>
+            <h3 class="text-base font-bold text-slate-900 dark:text-white">Từ Vựng Chuẩn Goethe & ÖSD</h3>
+            <p class="text-xs text-slate-500 dark:text-slate-400">
+              Danh sách từ vựng trọng tâm A1_Wortliste_Goethe, A2_Wortliste và B1_Wortliste_Goethe_OSD có kèm ví dụ ngữ cảnh.
+            </p>
+          </div>
+          <div class="pt-2 border-t border-slate-100 dark:border-slate-800 flex items-center justify-between text-xs">
+            <span class="text-slate-400">Định dạng: PDF Gốc</span>
+            <a href="./TIENG_DUC_A1_B1/01_Tu_Vung/" class="font-bold text-blue-600 dark:text-blue-400 hover:underline flex items-center gap-1">
+              <span>Mở thư mục</span> ➔
+            </a>
+          </div>
+        </div>
+
+        <!-- Folder 2: Ngữ Pháp -->
+        <div class="p-6 rounded-3xl glass-card space-y-4 flex flex-col justify-between">
+          <div class="space-y-2">
+            <div class="flex items-center justify-between">
+              <span class="px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-purple-100 dark:bg-purple-900/40 text-purple-800 dark:text-purple-300">02_Ngu_Phap</span>
+              <span class="text-xs text-slate-400 font-mono">4 Files PDF</span>
+            </div>
+            <h3 class="text-base font-bold text-slate-900 dark:text-white">Ngữ Pháp Cornelsen & Schubert</h3>
+            <p class="text-xs text-slate-500 dark:text-slate-400">
+              Sách bài tập Grammatik Aktiv A1–B1 (Cornelsen) và bộ Schubert Grammatik Übungen A1, A2, B1 có đáp án chi tiết.
+            </p>
+          </div>
+          <div class="pt-2 border-t border-slate-100 dark:border-slate-800 flex items-center justify-between text-xs">
+            <span class="text-slate-400">Định dạng: PDF</span>
+            <a href="./TIENG_DUC_A1_B1/02_Ngu_Phap/" class="font-bold text-purple-600 dark:text-purple-400 hover:underline flex items-center gap-1">
+              <span>Mở thư mục</span> ➔
+            </a>
+          </div>
+        </div>
+
+        <!-- Folder 3: Luyện Nghe Transcript -->
+        <div class="p-6 rounded-3xl glass-card space-y-4 flex flex-col justify-between">
+          <div class="space-y-2">
+            <div class="flex items-center justify-between">
+              <span class="px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-emerald-100 dark:bg-emerald-900/40 text-emerald-800 dark:text-emerald-300">03_Luyen_Nghe</span>
+              <span class="text-xs text-slate-400 font-mono">4 Files TXT</span>
+            </div>
+            <h3 class="text-base font-bold text-slate-900 dark:text-white">Kịch Bản Nicos Weg DW (228 Bài)</h3>
+            <p class="text-xs text-slate-500 dark:text-slate-400">
+              Toàn bộ Manuskript kịch bản lời thoại Nicos Weg A1, A2, B1 tổng hợp phục vụ luyện nghe chép chính tả và shadowing.
+            </p>
+          </div>
+          <div class="pt-2 border-t border-slate-100 dark:border-slate-800 flex items-center justify-between text-xs">
+            <span class="text-slate-400">Định dạng: TXT / Manuskript</span>
+            <a href="./TIENG_DUC_A1_B1/03_Luyen_Nghe_Transcript/" class="font-bold text-emerald-600 dark:text-emerald-400 hover:underline flex items-center gap-1">
+              <span>Mở thư mục</span> ➔
+            </a>
+          </div>
+        </div>
+
+        <!-- Folder 4: Đề Thi Mẫu -->
+        <div class="p-6 rounded-3xl glass-card space-y-4 flex flex-col justify-between">
+          <div class="space-y-2">
+            <div class="flex items-center justify-between">
+              <span class="px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-amber-100 dark:bg-amber-900/40 text-amber-800 dark:text-amber-300">04_De_Thi_Mau</span>
+              <span class="text-xs text-slate-400 font-mono">6 Đề + Audio</span>
+            </div>
+            <h3 class="text-base font-bold text-slate-900 dark:text-white">Đề Thi Mẫu Goethe & telc A1–B1</h3>
+            <p class="text-xs text-slate-500 dark:text-slate-400">
+              Đề thi Modellsatz Goethe A1, A2, B1 và telc Übungstest trọn bộ file PDF đề bài, lời giải và file Audio nghe MP3.
+            </p>
+          </div>
+          <div class="pt-2 border-t border-slate-100 dark:border-slate-800 flex items-center justify-between text-xs">
+            <span class="text-slate-400">Định dạng: PDF & Audio MP3</span>
+            <a href="./TIENG_DUC_A1_B1/04_De_Thi_Mau/" class="font-bold text-amber-600 dark:text-amber-400 hover:underline flex items-center gap-1">
+              <span>Mở thư mục</span> ➔
+            </a>
+          </div>
+        </div>
+
+        <!-- Folder 5: Giáo Trình Tham Khảo -->
+        <div class="p-6 rounded-3xl glass-card space-y-4 flex flex-col justify-between">
+          <div class="space-y-2">
+            <div class="flex items-center justify-between">
+              <span class="px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-rose-100 dark:bg-rose-900/40 text-rose-800 dark:text-rose-300">05_Giao_Trinh</span>
+              <span class="text-xs text-slate-400 font-mono">6 Kursbuch PDF</span>
+            </div>
+            <h3 class="text-base font-bold text-slate-900 dark:text-white">Giáo Trình Netzwerk & Menschen</h3>
+            <p class="text-xs text-slate-500 dark:text-slate-400">
+              Bộ sách học tiếng Đức tiêu chuẩn quốc tế: Netzwerk Neu A1, A2, B1 Kursbuch và Menschen Kursbuch A1, A2, B1.
+            </p>
+          </div>
+          <div class="pt-2 border-t border-slate-100 dark:border-slate-800 flex items-center justify-between text-xs">
+            <span class="text-slate-400">Định dạng: PDF</span>
+            <a href="./TIENG_DUC_A1_B1/05_Giao_Trinh_Tham_Khao/" class="font-bold text-rose-600 dark:text-rose-400 hover:underline flex items-center gap-1">
+              <span>Mở thư mục</span> ➔
+            </a>
+          </div>
+        </div>
+
+        <!-- Folder 6: Quick Web Launch Card -->
+        <div class="p-6 rounded-3xl bg-gradient-to-br from-blue-600 to-indigo-700 text-white space-y-4 flex flex-col justify-between shadow-xl shadow-blue-500/20">
+          <div class="space-y-2">
+            <span class="px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-white/20 text-white">WEB_Germany SPA</span>
+            <h3 class="text-lg font-black">Mở Trực Tiếp Ứng Dụng Web</h3>
+            <p class="text-xs text-blue-100 leading-relaxed">
+              Trải nghiệm học tập tương tác mượt mà ngay trên trình duyệt với toàn bộ tính năng Luyện từ vựng, Nghe nói, Viết và Thi thử.
+            </p>
+          </div>
+          <a href="./WEB_Germany/" class="py-3 px-4 bg-white hover:bg-blue-50 text-blue-700 font-extrabold text-xs sm:text-sm rounded-2xl text-center shadow-md transition-all">
+            Khởi Động DeutschMaster App 🚀
+          </a>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- SYSTEM FOOTER -->
+    <footer class="pt-10 border-t border-slate-200 dark:border-slate-800 text-xs text-slate-500 dark:text-slate-400 space-y-4">
+      <div class="flex flex-col sm:flex-row items-center justify-between gap-4">
+        <div class="flex items-center gap-2">
+          <span class="text-lg">🇩🇪</span>
+          <span class="font-bold text-slate-800 dark:text-slate-200">DeutschMaster A1–B1 System</span>
+          <span>• 100% Client-Side & Privacy First</span>
+        </div>
+        <div class="flex items-center gap-4 text-xs font-semibold">
+          <a href="./AUDIT_REPORT.md" class="hover:text-blue-600 dark:hover:text-blue-400">Báo Cáo Kiểm Toán</a>
+          <a href="./README.md" class="hover:text-blue-600 dark:hover:text-blue-400">Hướng Dẫn Dự Án</a>
+          <a href="https://github.com/Okeydokey8525/GERMANY_A1-B1" target="_blank" class="hover:text-blue-600 dark:hover:text-blue-400">GitHub Repository</a>
+        </div>
+      </div>
+      <p class="text-center sm:text-left text-[11px] text-slate-400">
+        Dự án phi thương mại phục vụ mục đích tự học tiếng Đức cho cộng đồng học viên Việt Nam. Tất cả tài liệu và bài tập được chuẩn hóa theo khung tham chiếu châu Âu CEFR.
+      </p>
+    </footer>
+
+  </main>
+
+  <!-- Theme Switcher Script -->
+  <script>
+    const themeToggleBtn = document.getElementById("btn-theme-toggle");
+    
+    // Check saved theme or system preference
+    if (localStorage.getItem("web_germany_theme") === "light") {
+      document.documentElement.classList.remove("dark");
+      if (themeToggleBtn) themeToggleBtn.textContent = "☀️";
+    } else {
+      document.documentElement.classList.add("dark");
+      if (themeToggleBtn) themeToggleBtn.textContent = "🌙";
+    }
+
+    if (themeToggleBtn) {
+      themeToggleBtn.addEventListener("click", () => {
+        const isDark = document.documentElement.classList.toggle("dark");
+        localStorage.setItem("web_germany_theme", isDark ? "dark" : "light");
+        themeToggleBtn.textContent = isDark ? "🌙" : "☀️";
+      });
+    }
+  </script>
 </body>
 </html>
