@@ -52,6 +52,22 @@ class SpeakingController {
         meaning_vi: "Ngài có thể làm ơn giúp tôi được không?",
         phonetic_hint: "khoen-từn di mi-a bít-tờ hép-phừn",
         focus: "Thể lịch sự Konjunktiv II với 'Könnten'"
+      },
+      {
+        id: "sp_07",
+        level: "B1",
+        targetText: "Meiner Meinung nach ist das Lernen einer Fremdsprache sehr nützlich.",
+        meaning_vi: "Theo quan điểm của tôi, việc học một ngoại ngữ là rất hữu ích.",
+        phonetic_hint: "mai-nơ mai-nung nác ist đas le-rơ-nừn ai-nơ phrém-s-pra-khờ de-a núyt-s-lích",
+        focus: "Biểu đạt quan điểm B1 và danh từ hóa động từ 'das Lernen'"
+      },
+      {
+        id: "sp_08",
+        level: "B1",
+        targetText: "Ich habe vor, mich intensiv auf die Prüfung vorzubereiten.",
+        meaning_vi: "Tôi có dự định sẽ chuẩn bị thật kỹ lưỡng cho kỳ thi.",
+        phonetic_hint: "ích ha-bờ pho, mích in-ten-síp ao-ph đi phrúy-phung pho-tsu-bờ-rai-từn",
+        focus: "Cấu trúc 'vorhaben + Infinitiv mit zu' và động từ tách 'vorzubereiten'"
       }
     ];
 

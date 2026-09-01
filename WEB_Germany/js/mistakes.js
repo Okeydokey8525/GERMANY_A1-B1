@@ -1,9 +1,10 @@
-// WEB_Germany Mistake Notebook (Sổ tay lỗi sai - Fehlerbuch)
+// WEB_Germany Mistake Notebook (Sổ tay lỗi sai - Fehlerbuch) with Error-to-Practice Pipeline
 
 class MistakesController {
   constructor() {
-    this.storageKey = "deutschmaster_mistakes_v2";
+    this.storageKey = "deutschmaster_mistakes_v3";
     this.mistakes = [];
+    this.currentFilter = "ALL";
     this.loadMistakes();
     this.initElements();
   }
@@ -35,14 +36,35 @@ class MistakesController {
 
     if (btnClear) btnClear.addEventListener("click", () => this.clearAllMistakes());
     if (btnPractice) btnPractice.addEventListener("click", () => this.startPracticeMistakes());
+
+    // Filter Buttons
+    document.querySelectorAll(".mistake-filter-btn").forEach(btn => {
+      btn.addEventListener("click", (e) => {
+        const filter = btn.getAttribute("data-filter");
+        this.setFilter(filter);
+      });
+    });
+  }
+
+  setFilter(filter) {
+    this.currentFilter = filter;
+    document.querySelectorAll(".mistake-filter-btn").forEach(b => {
+      const isSelected = b.getAttribute("data-filter") === filter;
+      if (isSelected) {
+        b.className = "mistake-filter-btn px-3 py-1.5 rounded-xl text-xs font-bold bg-rose-600 text-white shadow-xs transition-all";
+      } else {
+        b.className = "mistake-filter-btn px-3 py-1.5 rounded-xl text-xs font-semibold bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700 transition-all";
+      }
+    });
+    this.renderMistakesList();
   }
 
   addMistake(item) {
-    // Check if duplicate question already exists
     const idx = this.mistakes.findIndex(m => m.id === item.id || (m.question === item.question && m.type === item.type));
     const newEntry = {
       id: item.id || `mistake_${Date.now()}_${Math.random().toString(36).substr(2, 4)}`,
-      type: item.type || "general", // 'vocab', 'grammar', 'article', 'quiz', 'exam'
+      type: item.type || "vocab", // 'vocab', 'grammar', 'article', 'word-order', 'listening', 'quiz', 'exam'
+      level: item.level || (window.progressCtrl ? window.progressCtrl.data.currentLevel : "A1"),
       question: item.question,
       userAnswer: item.userAnswer || "Chưa chính xác",
       correctAnswer: item.correctAnswer,
@@ -60,7 +82,6 @@ class MistakesController {
       this.mistakes.unshift(newEntry);
     }
 
-    // Keep max 150 items
     if (this.mistakes.length > 150) {
       this.mistakes = this.mistakes.slice(0, 150);
     }
@@ -81,28 +102,67 @@ class MistakesController {
     }
   }
 
+  // Error-to-Practice Pipeline: Dispatches to the exact right learning tool!
   startPracticeMistakes() {
-    if (this.mistakes.length === 0) {
-      if (window.appCtrl) window.appCtrl.showToast("Tuyệt vời! Hiện tại bạn không có lỗi sai nào cần ôn.");
+    const targetMistakes = this.currentFilter === "ALL" 
+      ? this.mistakes 
+      : this.mistakes.filter(m => m.type === this.currentFilter);
+
+    if (targetMistakes.length === 0) {
+      if (window.appCtrl) window.appCtrl.showToast("Không có lỗi sai nào trong bộ lọc này!");
       return;
     }
 
-    // Convert mistakes into a temporary quiz pool and switch to quiz tab
-    const customPool = this.mistakes.map(m => ({
-      id: m.id,
-      word: m.question.replace(/^[der|die|das]+\s+/, ''),
-      article: m.question.startsWith("der ") ? "der" : (m.question.startsWith("die ") ? "die" : (m.question.startsWith("das ") ? "das" : "")),
-      meaning_vi: m.correctAnswer,
-      topic: m.topic,
-      topic_vi: `Lỗi sai: ${m.topic}`,
-      level: "A1"
-    }));
+    // If practicing Article mistakes -> Route to Article Sprint
+    if (this.currentFilter === "article" || (this.currentFilter === "ALL" && targetMistakes.every(m => m.type === "article"))) {
+      const articlePool = targetMistakes.map(m => {
+        const nounClean = m.question.replace(/^Mạo từ của danh từ\s+"/i, '').replace(/"$/, '').trim();
+        const artMatch = m.correctAnswer.match(/^(der|die|das)/i);
+        const art = artMatch ? artMatch[0].toLowerCase() : "der";
+        return {
+          id: m.id,
+          word: nounClean,
+          article: art,
+          meaning_vi: `Mạo từ: ${art}`,
+          topic: "Ôn lỗi sai Mạo từ"
+        };
+      });
+
+      if (window.quizCtrl) {
+        window.quizCtrl.setData(articlePool);
+        window.quizCtrl.switchMode("article");
+        if (window.appCtrl) {
+          window.appCtrl.switchTab("quiz");
+          window.appCtrl.showToast(`Bắt đầu Der/Die/Das Sprint cho ${articlePool.length} danh từ bạn hay nhầm! ⚡`);
+        }
+      }
+      return;
+    }
+
+    // Default: Route to Quiz practice with bugfix regex
+    const customPool = targetMistakes.map(m => {
+      // Fix regex bug: properly match leading der/die/das
+      const cleanWord = m.question.replace(/^(der|die|das)\s+/i, '').trim();
+      const artMatch = m.question.match(/^(der|die|das)\s+/i);
+      const article = artMatch ? artMatch[1].toLowerCase() : "";
+
+      return {
+        id: m.id,
+        word: cleanWord,
+        article: article,
+        meaning_vi: m.correctAnswer,
+        topic: m.topic,
+        topic_vi: `Lỗi sai: ${m.topic}`,
+        level: m.level || "A1"
+      };
+    });
 
     if (window.quizCtrl) {
       window.quizCtrl.setData(customPool);
+      window.quizCtrl.switchMode("mc");
       if (window.appCtrl) {
         window.appCtrl.switchTab("quiz");
-        window.appCtrl.showToast(`Bắt đầu luyện tập ${this.mistakes.length} câu bạn hay làm sai! 🔥`);
+        window.appCtrl.showToast(`Bắt đầu luyện tập ${customPool.length} câu lỗi sai! 🔥`);
       }
     }
   }
@@ -112,11 +172,15 @@ class MistakesController {
     const countBadge = document.getElementById("mistakes-count-badge");
     const emptyState = document.getElementById("mistakes-empty-state");
 
-    if (countBadge) countBadge.textContent = `${this.mistakes.length} lỗi`;
+    const filtered = this.currentFilter === "ALL" 
+      ? this.mistakes 
+      : this.mistakes.filter(m => m.type === this.currentFilter);
+
+    if (countBadge) countBadge.textContent = `${filtered.length} lỗi`;
 
     if (!container) return;
 
-    if (this.mistakes.length === 0) {
+    if (filtered.length === 0) {
       if (emptyState) emptyState.classList.remove("hidden");
       container.innerHTML = "";
       return;
@@ -125,9 +189,9 @@ class MistakesController {
     if (emptyState) emptyState.classList.add("hidden");
     container.innerHTML = "";
 
-    this.mistakes.forEach(m => {
+    filtered.forEach(m => {
       const card = document.createElement("div");
-      card.className = "p-4 rounded-2xl border-2 border-rose-200 dark:border-rose-900/50 bg-white dark:bg-gray-800 shadow-sm flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3";
+      card.className = "p-4 rounded-2xl border-2 border-rose-200 dark:border-rose-900/50 bg-white dark:bg-gray-800 shadow-2xs flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3";
       
       const typeBadgeClass = m.type === "grammar" ? "bg-purple-100 text-purple-800 dark:bg-purple-900/40 dark:text-purple-300" :
         (m.type === "article" ? "bg-amber-100 text-amber-800 dark:bg-amber-900/40 dark:text-amber-300" : "bg-blue-100 text-blue-800 dark:bg-blue-900/40 dark:text-blue-300");
@@ -136,6 +200,7 @@ class MistakesController {
         <div class="space-y-1.5 flex-1 text-left">
           <div class="flex items-center gap-2">
             <span class="px-2 py-0.5 rounded-full text-[11px] font-bold ${typeBadgeClass}">${m.topic || m.type}</span>
+            <span class="px-2 py-0.5 rounded-full text-[10px] font-bold bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-300">${m.level || 'A1'}</span>
             <span class="text-xs text-rose-500 font-bold">⚠️ Sai ${m.mistakeCount || 1} lần</span>
           </div>
           <div class="text-base font-bold text-gray-900 dark:text-gray-100">${m.question}</div>
@@ -167,7 +232,7 @@ class MistakesController {
       badge.classList.toggle("hidden", this.mistakes.length === 0);
     }
     if (dashMistakesCount) {
-      dashMistakesCount.textContent = this.mistakes.length;
+      dashMistakesCount.textContent = `${this.mistakes.length} lỗi`;
     }
   }
 }

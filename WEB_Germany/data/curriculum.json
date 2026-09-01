@@ -1,0 +1,187 @@
+{
+  "levels": {
+    "A1": {
+      "name": "Trình độ A1 (Căn bản)",
+      "description": "Hiểu và sử dụng các cấu trúc quen thuộc hàng ngày, tự giới thiệu bản thân và giao tiếp đơn giản.",
+      "stages": [
+        {
+          "id": "a1_stage_01",
+          "sublevel": "A1.1",
+          "title": "Bảng chữ cái & Phát âm chuẩn",
+          "desc": "Alphabet, biến âm (ä, ö, ü), phụ âm đặc biệt (ch, sch, sp, st, ß), đại từ nhân xưng và chào hỏi.",
+          "prerequisites": [],
+          "vocabTopics": ["Grundlagen", "Grüße & Alltag"],
+          "grammarTopics": ["Đại từ nhân xưng", "sein"],
+          "lessonIds": ["A1-01", "A1-02", "A1-03", "A1-04", "A1-05"],
+          "competency": "Có thể đánh vần tên, chào hỏi và giới thiệu thông tin cá nhân cơ bản."
+        },
+        {
+          "id": "a1_stage_02",
+          "sublevel": "A1.1",
+          "title": "Động từ hiện tại & Câu hỏi W-Fragen",
+          "desc": "Chia động từ hiện tại Präsens (haben, kommen, wohnen, heißen), số đếm 0-100 và quốc gia/nguồn gốc.",
+          "prerequisites": ["a1_stage_01"],
+          "vocabTopics": ["Verben", "Zahlen & Zeit"],
+          "grammarTopics": ["Präsens", "W-Fragen"],
+          "lessonIds": ["A1-06", "A1-07", "A1-08", "A1-09", "A1-10"],
+          "competency": "Có thể hỏi và trả lời về số điện thoại, quê quán và nghề nghiệp."
+        },
+        {
+          "id": "a1_stage_03",
+          "sublevel": "A1.2",
+          "title": "Mạo từ Der/Die/Das & Đồ đạc trong nhà",
+          "desc": "Mạo từ xác định/không xác định, danh từ số nhiều, phủ định nicht & kein, nhà ở và đồ dùng.",
+          "prerequisites": ["a1_stage_02"],
+          "vocabTopics": ["Familie & Alltag", "Im Restaurant"],
+          "grammarTopics": ["Artikel", "Negation"],
+          "lessonIds": ["A1-11", "A1-12", "A1-13", "A1-14", "A1-15"],
+          "competency": "Có thể mô tả căn phòng, đồ đạc và nhận biết giống mạo từ của danh từ."
+        },
+        {
+          "id": "a1_stage_04",
+          "sublevel": "A1.2",
+          "title": "Cách Akkusativ & Mua sắm ẩm thực",
+          "desc": "Biến cách tân ngữ trực tiếp Akkusativ (den, einen, keinen), ẩm thực, nấu ăn và gọi món tại nhà hàng.",
+          "prerequisites": ["a1_stage_03"],
+          "vocabTopics": ["Kochen & Lebensmittel", "Im Restaurant"],
+          "grammarTopics": ["Akkusativ"],
+          "lessonIds": ["A1-16", "A1-17", "A1-18", "A1-19", "A1-20"],
+          "competency": "Có thể đi siêu thị mua thực phẩm, hỏi giá tiền và gọi món ăn ở quán."
+        },
+        {
+          "id": "a1_stage_05",
+          "sublevel": "A1.2",
+          "title": "Động từ khuyết thiếu & Động từ tách",
+          "desc": "Modalverben (können, müssen, wollen, dürfen, sollen, möchten), động từ tách Trennbare Verben và lịch sinh hoạt.",
+          "prerequisites": ["a1_stage_04"],
+          "vocabTopics": ["Verben", "Familie & Alltag"],
+          "grammarTopics": ["Modalverben", "Trennbare Verben", "Word Order"],
+          "lessonIds": ["A1-21", "A1-22", "A1-23", "A1-24", "A1-25"],
+          "competency": "Có thể diễn đạt khả năng, nghĩa vụ, sở thích và kể về lịch trình trong ngày."
+        },
+        {
+          "id": "a1_stage_06",
+          "sublevel": "A1.2",
+          "title": "Cách Dativ & Giới từ vị trí (Wo?)",
+          "desc": "Tân ngữ gián tiếp Dativ (dem, der, dem, den), giới từ vị trí (in, an, auf, bei, mit) và chỉ đường.",
+          "prerequisites": ["a1_stage_05"],
+          "vocabTopics": ["Zahlen & Zeit", "Verben"],
+          "grammarTopics": ["Dativ", "Präpositionen"],
+          "lessonIds": ["A1-26", "A1-27", "A1-28", "A1-29", "A1-30"],
+          "competency": "Có thể hỏi đường, chỉ phương hướng và mô tả vị trí đồ vật chính xác."
+        },
+        {
+          "id": "a1_stage_07",
+          "sublevel": "A1.2",
+          "title": "Thì quá khứ hoàn thành (Das Perfekt)",
+          "desc": "Cấu trúc thì quá khứ Perfekt với haben/sein + Partizip II và kể về kỳ nghỉ/cuối tuần.",
+          "prerequisites": ["a1_stage_06"],
+          "vocabTopics": ["Verben", "Familie & Alltag"],
+          "grammarTopics": ["Perfekt", "Partizip II"],
+          "lessonIds": ["A1-31", "A1-32", "A1-33", "A1-34", "A1-35"],
+          "competency": "Có thể kể lại những việc đã làm hôm qua hoặc trong kỳ nghỉ vừa qua."
+        }
+      ]
+    },
+    "A2": {
+      "name": "Trình độ A2 (Sơ trung cấp)",
+      "description": "Giao tiếp trong các tình huống quen thuộc đòi hỏi trao đổi thông tin trực tiếp về bản thân, công việc và môi trường xung quanh.",
+      "stages": [
+        {
+          "id": "a2_stage_01",
+          "sublevel": "A2.1",
+          "title": "Quá khứ đơn (Präteritum) & Động từ phản thân",
+          "desc": "Thì Präteritum của war/hatte/Modalverben, động từ phản thân Reflexive Verben (sich freuen, sich interessieren).",
+          "prerequisites": ["a1_stage_07"],
+          "vocabTopics": ["Verben", "Familie & Alltag"],
+          "grammarTopics": ["Präteritum", "Reflexivpronomen"],
+          "lessonIds": ["A2-01", "A2-02", "A2-03", "A2-04", "A2-05"],
+          "competency": "Có thể kể chuyện ngắn và biểu đạt cảm xúc, sự quan tâm của bản thân."
+        },
+        {
+          "id": "a2_stage_02",
+          "sublevel": "A2.1",
+          "title": "Giới từ 2 chiều (Wechselpräpositionen)",
+          "desc": "Phân biệt vị trí đứng yên (Wo? + Dativ) và phương hướng di chuyển (Wohin? + Akkusativ).",
+          "prerequisites": ["a2_stage_01"],
+          "vocabTopics": ["Verben", "Grundlagen"],
+          "grammarTopics": ["Wechselpräpositionen", "Dativ vs Akkusativ"],
+          "lessonIds": ["A2-06", "A2-07", "A2-08", "A2-09", "A2-10"],
+          "competency": "Có thể sắp xếp đồ đạc và hướng dẫn di chuyển chính xác trong thành phố."
+        },
+        {
+          "id": "a2_stage_03",
+          "sublevel": "A2.2",
+          "title": "Đuôi tính từ (Adjektivdeklination)",
+          "desc": "Quy tắc chia đuôi tính từ sau mạo từ xác định, không xác định và không có mạo từ.",
+          "prerequisites": ["a2_stage_02"],
+          "vocabTopics": ["Im Restaurant", "Kochen & Lebensmittel"],
+          "grammarTopics": ["Adjektivdeklination"],
+          "lessonIds": ["A2-11", "A2-12", "A2-13", "A2-14", "A2-15"],
+          "competency": "Có thể miêu tả ngoại hình, trang phục và phẩm chất của sự vật, con người."
+        },
+        {
+          "id": "a2_stage_04",
+          "sublevel": "A2.2",
+          "title": "Mệnh đề phụ với weil, dass, wenn",
+          "desc": "Cấu trúc câu phức đẩy động từ về cuối câu với các liên từ nguyên nhân, điều kiện và nội dung.",
+          "prerequisites": ["a2_stage_03"],
+          "vocabTopics": ["Grundlagen", "Verben"],
+          "grammarTopics": ["Nebensätze", "Konnektoren"],
+          "lessonIds": ["A2-16", "A2-17", "A2-18", "A2-19", "A2-20"],
+          "competency": "Có thể giải thích lý do, đưa ra điều kiện và diễn đạt suy nghĩ phức tạp hơn."
+        }
+      ]
+    },
+    "B1": {
+      "name": "Trình độ B1 (Trung cấp độc lập)",
+      "description": "Hiểu các ý chính trong các cuộc đàm thoại chuẩn mực, tự tin xử lý hầu hết các tình huống khi du học, làm việc và sinh sống tại Đức.",
+      "stages": [
+        {
+          "id": "b1_stage_01",
+          "sublevel": "B1.1",
+          "title": "Thể bị động (Das Passiv)",
+          "desc": "Bị động ở thì hiện tại và quá khứ (werden + Partizip II, wurden + Partizip II) trong quy trình sản xuất và thông báo công cộng.",
+          "prerequisites": ["a2_stage_04"],
+          "vocabTopics": ["Verben", "Grundlagen"],
+          "grammarTopics": ["Passiv Präsens", "Passiv Präteritum"],
+          "lessonIds": ["B1-01", "B1-02", "B1-03", "B1-04", "B1-05"],
+          "competency": "Có thể mô tả quy trình công việc, bản tin thời sự và thông báo hành chính."
+        },
+        {
+          "id": "b1_stage_02",
+          "sublevel": "B1.1",
+          "title": "Thể giả định Konjunktiv II",
+          "desc": "Diễn đạt ước muốn, lời khuyên và yêu cầu lịch sự trang trọng (wäre, hätte, würde + Infinitiv, könnte, müsste).",
+          "prerequisites": ["b1_stage_01"],
+          "vocabTopics": ["Verben", "Familie & Alltag"],
+          "grammarTopics": ["Konjunktiv II", "Höflichkeit"],
+          "lessonIds": ["B1-06", "B1-07", "B1-08", "B1-09", "B1-10"],
+          "competency": "Có thể giao tiếp lịch sự trong môi trường công sở, viết thư xin việc và đưa ra lời khuyên."
+        },
+        {
+          "id": "b1_stage_03",
+          "sublevel": "B1.2",
+          "title": "Mệnh đề quan hệ (Relativsätze)",
+          "desc": "Đại từ quan hệ ở các cách Nominativ, Akkusativ, Dativ và Genitiv (der, die, das, dem, den, dessen, deren).",
+          "prerequisites": ["b1_stage_02"],
+          "vocabTopics": ["Grundlagen", "Verben"],
+          "grammarTopics": ["Relativpronomen", "Relativsätze"],
+          "lessonIds": ["B1-11", "B1-12", "B1-13", "B1-14", "B1-15"],
+          "competency": "Có thể bổ sung thông tin chi tiết cho danh từ mà không cần ngắt câu."
+        },
+        {
+          "id": "b1_stage_04",
+          "sublevel": "B1.2",
+          "title": "Động từ đi kèm giới từ & Cấu trúc Infinitiv mit zu",
+          "desc": "Verben mit festen Präpositionen (warten auf, sich freuen über, denken an) và um...zu, ohne...zu, statt...zu.",
+          "prerequisites": ["b1_stage_03"],
+          "vocabTopics": ["Verben", "Grundlagen"],
+          "grammarTopics": ["Verben mit Präpositionen", "Infinitiv mit zu"],
+          "lessonIds": ["B1-16", "B1-17", "B1-18", "B1-19", "B1-20"],
+          "competency": "Có thể tranh luận, nêu quan điểm cá nhân và viết bài luận B1 hoàn chỉnh."
+        }
+      ]
+    }
+  }
+}

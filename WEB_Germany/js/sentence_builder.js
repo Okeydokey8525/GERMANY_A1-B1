@@ -1,4 +1,4 @@
-// WEB_Germany German Sentence Builder & Word Order Visualizer (V2 Rule)
+// WEB_Germany German Sentence Builder & Word Order Visualizer (V2 Rule & Clause Engine)
 
 class SentenceBuilderController {
   constructor() {
@@ -59,33 +59,69 @@ class SentenceBuilderController {
           { role: "Liên từ phụ thuộc: weil", color: "border-purple-500 text-purple-600 bg-purple-50 dark:bg-purple-950/30" },
           { role: "Mệnh đề phụ: Động từ chia ở CUỐI CÂU (möchte)", color: "border-rose-500 text-rose-600 bg-rose-50 dark:bg-rose-950/30 font-bold" }
         ],
-        explanation: "Mệnh đề phụ với 'weil': Liên từ 'weil' đẩy toàn bộ động từ được chia (möchte) về đứng ở vị trí CUỐI CÙNG của mệnh đề!"
+        explanation: "Mệnh đề phụ với liên từ 'weil': Toàn bộ động từ bị đẩy về cuối câu, trong đó động từ chia (möchte) đứng ở vị trí cuối cùng!"
+      },
+      {
+        id: "sb_05",
+        level: "A2",
+        meaning_vi: "Tôi đặt cuốn sách lên trên mặt bàn.",
+        correctOrder: ["Ich", "lege", "das", "Buch", "auf", "den", "Tisch."],
+        chips: ["Buch", "auf", "Ich", "den", "lege", "das", "Tisch."],
+        slots: [
+          { role: "Chủ ngữ (Ich)", color: "border-blue-500 text-blue-600 bg-blue-50 dark:bg-blue-950/30" },
+          { role: "Hành động di chuyển (legen)", color: "border-rose-500 text-rose-600 bg-rose-50 dark:bg-rose-950/30 font-bold" },
+          { role: "Tân ngữ trực tiếp (das Buch)", color: "border-amber-500 text-amber-600 bg-amber-50 dark:bg-amber-950/30" },
+          { role: "Hướng di chuyển: Wohin? + Akkusativ (auf den Tisch)", color: "border-emerald-500 text-emerald-600 bg-emerald-50 dark:bg-emerald-950/30 font-bold" }
+        ],
+        explanation: "Giới từ 2 chiều (Wechselpräpositionen): Hành động đặt sách (legen) chỉ hướng di chuyển (Wohin?) nên dùng Akkusativ (den Tisch)!"
+      },
+      {
+        id: "sb_06",
+        level: "B1",
+        meaning_vi: "Ở nước Đức, rất nhiều bia được tiêu thụ mỗi năm.",
+        correctOrder: ["In", "Deutschland", "wird", "jedes", "Jahr", "viel", "Bier", "getrunken."],
+        chips: ["getrunken.", "Deutschland", "jedes", "In", "viel", "wird", "Jahr", "Bier"],
+        slots: [
+          { role: "Cụm vị trí / thời gian", color: "border-blue-500 text-blue-600 bg-blue-50 dark:bg-blue-950/30" },
+          { role: "Trợ động từ bị động: wird (V2)", color: "border-rose-500 text-rose-600 bg-rose-50 dark:bg-rose-950/30 font-bold" },
+          { role: "Chủ từ ngữ nghĩa (viel Bier)", color: "border-amber-500 text-amber-600 bg-amber-50 dark:bg-amber-950/30" },
+          { role: "Phân từ II ở cuối câu: getrunken", color: "border-purple-500 text-purple-600 bg-purple-50 dark:bg-purple-950/30 font-bold" }
+        ],
+        explanation: "Thể bị động Passiv ở thì Hiện tại: Cấu trúc werden (chia ở V2) + Tân ngữ + Partizip II (ở cuối câu)!"
+      },
+      {
+        id: "sb_07",
+        level: "B1",
+        meaning_vi: "Nếu tôi có nhiều thời gian, tôi sẽ đi du lịch đến Berlin.",
+        correctOrder: ["Wenn", "ich", "mehr", "Zeit", "hätte,", "würde", "ich", "nach", "Berlin", "reisen."],
+        chips: ["hätte,", "würde", "nach", "Wenn", "mehr", "ich", "Berlin", "reisen.", "ich", "Zeit"],
+        slots: [
+          { role: "Mệnh đề phụ giả định: hätte,", color: "border-purple-500 text-purple-600 bg-purple-50 dark:bg-purple-950/30" },
+          { role: "Vị trí 1 mệnh đề chính: würde", color: "border-rose-500 text-rose-600 bg-rose-50 dark:bg-rose-950/30 font-bold" },
+          { role: "Chủ ngữ (ich)", color: "border-blue-500 text-blue-600 bg-blue-50 dark:bg-blue-950/30" },
+          { role: "Động từ nguyên thể cuối câu: reisen.", color: "border-indigo-500 text-indigo-600 bg-indigo-50 dark:bg-indigo-950/30 font-bold" }
+        ],
+        explanation: "Thể giả định Konjunktiv II: Mệnh đề điều kiện ước muốn với 'hätte' kết hợp cấu trúc 'würde + Infinitiv'!"
       }
     ];
 
     this.currentIndex = 0;
     this.selectedChips = [];
     this.availableChips = [];
+
     this.initElements();
   }
 
   initElements() {
     const btnCheck = document.getElementById("sb-btn-check");
-    const btnReset = document.getElementById("sb-btn-reset");
     const btnSolution = document.getElementById("sb-btn-solution");
+    const btnReset = document.getElementById("sb-btn-reset");
     const btnNext = document.getElementById("sb-btn-next");
-    const btnSpeaker = document.getElementById("sb-btn-speaker");
 
     if (btnCheck) btnCheck.addEventListener("click", () => this.checkSentence());
-    if (btnReset) btnReset.addEventListener("click", () => this.resetSentence());
     if (btnSolution) btnSolution.addEventListener("click", () => this.showSolution());
+    if (btnReset) btnReset.addEventListener("click", () => this.resetSentence());
     if (btnNext) btnNext.addEventListener("click", () => this.nextSentence());
-    if (btnSpeaker) btnSpeaker.addEventListener("click", () => {
-      const cur = this.sentences[this.currentIndex];
-      if (cur && window.speechCtrl) {
-        window.speechCtrl.speak(cur.correctOrder.join(" "));
-      }
-    });
 
     this.loadSentence(this.currentIndex);
   }
@@ -95,8 +131,6 @@ class SentenceBuilderController {
       this.currentIndex = 0;
     }
     const item = this.sentences[this.currentIndex];
-    this.selectedChips = [];
-    this.availableChips = [...item.chips].sort(() => 0.5 - Math.random());
 
     const promptMeaning = document.getElementById("sb-prompt-meaning");
     const promptLevel = document.getElementById("sb-prompt-level");
@@ -108,6 +142,8 @@ class SentenceBuilderController {
     if (feedbackBox) feedbackBox.classList.add("hidden");
     if (nextBtn) nextBtn.classList.add("hidden");
 
+    this.selectedChips = [];
+    this.availableChips = [...item.chips].sort(() => 0.5 - Math.random());
     this.renderChips();
     this.renderSlotsGuide(item);
   }
@@ -119,18 +155,18 @@ class SentenceBuilderController {
     if (dropZone) {
       dropZone.innerHTML = "";
       if (this.selectedChips.length === 0) {
-        dropZone.innerHTML = `<span class="text-xs sm:text-sm text-gray-400 dark:text-gray-500 italic py-2">Nhấp vào các thẻ từ bên dưới để ghép thành câu hoàn chỉnh...</span>`;
+        dropZone.innerHTML = `<span class="text-xs text-gray-400 italic">Nhấp các thẻ từ bên dưới để đưa vào câu theo đúng thứ tự...</span>`;
       } else {
         this.selectedChips.forEach((word, idx) => {
-          const btn = document.createElement("button");
-          btn.className = "px-3.5 py-2 rounded-2xl bg-blue-600 text-white font-bold text-sm shadow-md hover:bg-blue-700 active:scale-95 transition-all flex items-center gap-1.5 animate-gentle-pulse";
-          btn.innerHTML = `<span>${word}</span> <span class="text-xs opacity-60">✕</span>`;
-          btn.addEventListener("click", () => {
+          const chip = document.createElement("button");
+          chip.className = "px-3.5 py-1.5 rounded-xl bg-blue-600 text-white font-bold text-xs sm:text-sm shadow-md hover:bg-blue-700 active:scale-95 transition-all flex items-center gap-1.5 cursor-pointer";
+          chip.innerHTML = `<span>${word}</span> <span class="text-[10px] opacity-75">✕</span>`;
+          chip.addEventListener("click", () => {
             this.selectedChips.splice(idx, 1);
             this.availableChips.push(word);
             this.renderChips();
           });
-          dropZone.appendChild(btn);
+          dropZone.appendChild(chip);
         });
       }
     }
@@ -138,15 +174,15 @@ class SentenceBuilderController {
     if (bankZone) {
       bankZone.innerHTML = "";
       this.availableChips.forEach((word, idx) => {
-        const btn = document.createElement("button");
-        btn.className = "px-3.5 py-2 rounded-2xl bg-white dark:bg-gray-800 border-2 border-gray-200 dark:border-gray-700 text-gray-800 dark:text-gray-200 font-bold text-sm hover:border-blue-500 dark:hover:border-blue-400 hover:text-blue-600 shadow-xs active:scale-95 transition-all";
-        btn.textContent = word;
-        btn.addEventListener("click", () => {
+        const chip = document.createElement("button");
+        chip.className = "px-3.5 py-1.5 rounded-xl bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 text-gray-800 dark:text-gray-100 font-bold text-xs sm:text-sm border border-gray-200 dark:border-gray-600 shadow-2xs active:scale-95 transition-all cursor-pointer";
+        chip.textContent = word;
+        chip.addEventListener("click", () => {
           this.availableChips.splice(idx, 1);
           this.selectedChips.push(word);
           this.renderChips();
         });
-        bankZone.appendChild(btn);
+        bankZone.appendChild(chip);
       });
     }
   }
@@ -191,7 +227,7 @@ class SentenceBuilderController {
         window.speechCtrl.speak(userStr);
       }
       if (window.progressCtrl) {
-        window.progressCtrl.recordActivity("grammar", 1);
+        window.progressCtrl.recordActivity("grammar", true);
       }
       if (nextBtn) nextBtn.classList.remove("hidden");
     } else {
@@ -203,6 +239,7 @@ class SentenceBuilderController {
         window.mistakesCtrl.addMistake({
           id: `sb_${item.id}`,
           type: "grammar",
+          level: item.level || "A1",
           question: `Trật tự câu: "${item.meaning_vi}"`,
           userAnswer: userStr || "(Chưa hoàn thành)",
           correctAnswer: correctStr,

@@ -1,4 +1,4 @@
-// WEB_Germany Listening Dictation & Cloze Module
+// WEB_Germany Listening Dictation & Speed Control Module
 
 class DictationController {
   constructor() {
@@ -9,17 +9,13 @@ class DictationController {
         level: "A1",
         fullText: "Ich heiße Nico und ich komme aus Spanien.",
         meaning_vi: "Tôi tên là Nico và tôi đến từ Tây Ban Nha.",
-        clozeTemplate: "Ich heiße ______ und ich komme aus ______.",
-        clozeAnswers: ["Nico", "Spanien"],
         topic: "Chào hỏi & Nguồn gốc"
       },
       {
         id: "dic_02",
         level: "A1",
         fullText: "Guten Morgen! Haben Sie heute einen Tisch frei?",
-        meaning_vi: "Chào buổi sáng! Hôm nay quý quán còn bàn trống không?",
-        clozeTemplate: "Guten ______! Haben Sie heute einen ______ frei?",
-        clozeAnswers: ["Morgen", "Tisch"],
+        meaning_vi: "Chào buổi sáng! Hôm nay quán còn bàn trống không?",
         topic: "Tại nhà hàng"
       },
       {
@@ -27,8 +23,6 @@ class DictationController {
         level: "A1",
         fullText: "Entschuldigung, wo kann ich eine Fahrkarte kaufen?",
         meaning_vi: "Xin lỗi cho hỏi, tôi có thể mua vé tàu ở đâu?",
-        clozeTemplate: "Entschuldigung, wo ______ ich eine ______ kaufen?",
-        clozeAnswers: ["kann", "Fahrkarte"],
         topic: "Đi lại & Mua vé"
       },
       {
@@ -36,9 +30,28 @@ class DictationController {
         level: "A2",
         fullText: "Gestern habe ich meine Hausaufgaben gemacht und Deutsch gelernt.",
         meaning_vi: "Hôm qua tôi đã làm bài tập về nhà và học tiếng Đức.",
-        clozeTemplate: "Gestern habe ich meine ______ gemacht und Deutsch ______.",
-        clozeAnswers: ["Hausaufgaben", "gelernt"],
         topic: "Thì quá khứ Perfekt"
+      },
+      {
+        id: "dic_05",
+        level: "A2",
+        fullText: "Ich freue mich sehr auf das Wochenende mit meinen Freunden.",
+        meaning_vi: "Tôi rất háo hức mong chờ đến cuối tuần cùng bạn bè.",
+        topic: "Động từ phản thân"
+      },
+      {
+        id: "dic_06",
+        level: "B1",
+        fullText: "Obwohl das Wetter schlecht war, haben wir einen schönen Ausflug gemacht.",
+        meaning_vi: "Mặc dù thời tiết xấu, chúng tôi vẫn có một chuyến dã ngoại tuyệt vời.",
+        topic: "Mệnh đề phụ với obwohl"
+      },
+      {
+        id: "dic_07",
+        level: "B1",
+        fullText: "Könnten Sie mir bitte sagen, wo ich das Anmeldeformular abgeben kann?",
+        meaning_vi: "Quý vị có thể vui lòng chỉ giúp tôi nơi nộp đơn đăng ký ở đâu không?",
+        topic: "Lịch sự Konjunktiv II"
       }
     ];
 
@@ -121,7 +134,7 @@ class DictationController {
       if (feedbackTitle) feedbackTitle.innerHTML = `<span class="font-extrabold text-emerald-600 dark:text-emerald-400">Chính xác 100%! 🎉 Đôi tai của bạn rất tuyệt vời.</span>`;
       if (feedbackDetail) feedbackDetail.innerHTML = `Câu chuẩn: <b>${item.fullText}</b>`;
       if (window.speechCtrl) window.speechCtrl.playCorrectSound();
-      if (window.progressCtrl) window.progressCtrl.recordActivity("lesson", 1);
+      if (window.progressCtrl) window.progressCtrl.recordActivity("lesson", true);
       if (nextBtn) nextBtn.classList.remove("hidden");
     } else {
       feedbackBox.className = "p-4 rounded-2xl border-2 border-rose-500 bg-rose-50 dark:bg-rose-950/40 text-rose-900 dark:text-rose-100";
@@ -131,12 +144,13 @@ class DictationController {
       if (window.mistakesCtrl) {
         window.mistakesCtrl.addMistake({
           id: `dic_${item.id}`,
-          type: "quiz",
+          type: "listening",
+          level: item.level || "A1",
           question: `Nghe chép chính tả: "${item.meaning_vi}"`,
           userAnswer: userText || "(Chưa gõ)",
           correctAnswer: item.fullText,
           topic: "Luyện nghe (Hören)",
-          explanation: `Nghe kỹ từng từ trong câu: "${item.fullText}"`
+          explanation: `Nghe kỹ từng từ trong câu tiếng Đức: "${item.fullText}"`
         });
       }
     }

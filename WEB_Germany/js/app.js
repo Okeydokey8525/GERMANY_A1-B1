@@ -15,12 +15,28 @@ class AppController {
     this.initSettingsModal();
     this.initOnboarding();
     await this.loadAllDatasets();
+    this.initResumeBtn();
     this.updateStats();
     
     // Check if first-time user
     const hasSeenOnboarding = localStorage.getItem("deutschmaster_onboarding_seen");
     if (!hasSeenOnboarding) {
       this.openOnboarding();
+    }
+  }
+
+  initResumeBtn() {
+    const resumeBtn = document.getElementById("dash-resume-btn");
+    if (resumeBtn) {
+      resumeBtn.addEventListener("click", () => {
+        if (window.progressCtrl && window.progressCtrl.data.lastActivity) {
+          const act = window.progressCtrl.data.lastActivity;
+          this.switchTab(act.tab || "lessons");
+          this.showToast(`Tiếp tục bài học: ${act.title || 'Nicos Weg'} 🚀`);
+        } else {
+          this.switchTab("lessons");
+        }
+      });
     }
   }
 

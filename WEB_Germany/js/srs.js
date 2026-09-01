@@ -1,17 +1,11 @@
-// WEB_Germany Spaced Repetition System (SRS) Engine based on Modified SM-2
+// WEB_Germany Spaced Repetition System (SRS) Engine based on Modified SM-2 with Timestamp Scheduling
 
 class SRSController {
   constructor() {
-    this.storageKey = "deutschmaster_srs_deck_v2";
-    this.cards = {}; // { id: { id, word, article, meaning_vi, state, interval, ease, repetitions, dueDate, wrongCount } }
+    this.storageKey = "deutschmaster_srs_deck_v3";
+    this.cards = {}; // { id: { id, word, article, meaning_vi, level, state, interval, ease, repetitions, dueAt, wrongCount, reviewCount } }
+    this.newCardsPerDayLimit = 10;
     this.loadDeck();
-  }
-
-  getLocalDateString(d = new Date()) {
-    const year = d.getFullYear();
-    const month = String(d.getMonth() + 1).padStart(2, '0');
-    const day = String(d.getDate()).padStart(2, '0');
-    return `${year}-${month}-${day}`;
   }
 
   loadDeck() {
@@ -35,7 +29,7 @@ class SRSController {
   }
 
   initCards(vocabList) {
-    const today = this.getLocalDateString();
+    const now = Date.now();
     let modified = false;
 
     vocabList.forEach(item => {
@@ -51,7 +45,7 @@ class SRSController {
           interval: 0,
           ease: 2.5,
           repetitions: 0,
-          dueDate: today,
+          dueAt: now,
           wrongCount: 0,
           reviewCount: 0
         };
@@ -65,15 +59,15 @@ class SRSController {
   }
 
   getDueCards(filterLevel = "ALL") {
-    const today = this.getLocalDateString();
+    const now = Date.now();
     return Object.values(this.cards).filter(c => {
       if (filterLevel !== "ALL" && c.level !== filterLevel) return false;
-      return c.dueDate <= today;
+      return (c.dueAt || 0) <= now;
     });
   }
 
   getCounts(filterLevel = "ALL") {
-    const today = this.getLocalDateString();
+    const now = Date.now();
     let due = 0;
     let learning = 0;
     let mastered = 0;
@@ -87,7 +81,7 @@ class SRSController {
       } else if (c.state === "learning") {
         learning++;
       }
-      if (c.dueDate <= today) {
+      if ((c.dueAt || 0) <= now) {
         due++;
       }
     });
@@ -99,41 +93,45 @@ class SRSController {
     const card = this.cards[cardId];
     if (!card) return;
 
-    const today = new Date();
+    const now = Date.now();
+    const oneDayMs = 24 * 60 * 60 * 1000;
+    const tenMinMs = 10 * 60 * 1000;
+
     card.reviewCount = (card.reviewCount || 0) + 1;
 
     switch (rating) {
-      case "again": // Wiederholen (0 days / today)
+      case "again": // Wiederholen: due in 10 minutes
         card.state = "learning";
         card.interval = 0;
         card.repetitions = 0;
         card.ease = Math.max(1.3, card.ease - 0.2);
         card.wrongCount = (card.wrongCount || 0) + 1;
-        card.dueDate = this.getLocalDateString(today);
-        // Also register in Mistake notebook
+        card.dueAt = now + tenMinMs;
+        
+        // Add to Mistake Notebook
         if (window.mistakesCtrl) {
           window.mistakesCtrl.addMistake({
             id: `vocab_${card.id}`,
             type: "vocab",
+            level: card.level || "A1",
             question: card.article ? `${card.article} ${card.word}` : card.word,
             correctAnswer: card.meaning_vi,
-            userAnswer: "Chưa nhớ / Đánh giá: Lặp lại",
+            userAnswer: "Chưa nhớ (Cần lặp lại)",
             topic: card.topic || "Từ vựng",
-            explanation: `Từ vựng "${card.word}" nghĩa là "${card.meaning_vi}". Đã tự động thêm vào danh sách cần ôn!`
+            explanation: `Từ vựng "${card.word}" nghĩa là "${card.meaning_vi}". Đã lên lịch ôn lại sau 10 phút!`
           });
         }
         break;
 
-      case "hard": // Schwer (1 day)
+      case "hard": // Schwer: due in 1 day
         card.state = "learning";
         card.interval = 1;
         card.repetitions = Math.max(1, card.repetitions);
         card.ease = Math.max(1.3, card.ease - 0.15);
-        today.setDate(today.getDate() + 1);
-        card.dueDate = this.getLocalDateString(today);
+        card.dueAt = now + oneDayMs;
         break;
 
-      case "good": // Gut (3+ days based on interval * ease)
+      case "good": // Gut: standard progression (1 -> 3 -> interval * ease)
         card.repetitions += 1;
         if (card.repetitions === 1) {
           card.interval = 1;
@@ -146,11 +144,10 @@ class SRSController {
           if (card.interval >= 21) card.state = "mastered";
           else card.state = "review";
         }
-        today.setDate(today.getDate() + card.interval);
-        card.dueDate = this.getLocalDateString(today);
+        card.dueAt = now + (card.interval * oneDayMs);
         break;
 
-      case "easy": // Leicht (Bonus interval + ease increase)
+      case "easy": // Leicht: fast-track progression (4 -> interval * ease * 1.3)
         card.repetitions += 1;
         card.ease = Math.min(3.0, card.ease + 0.15);
         if (card.repetitions === 1) {
@@ -161,14 +158,13 @@ class SRSController {
           if (card.interval >= 21) card.state = "mastered";
           else card.state = "review";
         }
-        today.setDate(today.getDate() + card.interval);
-        card.dueDate = this.getLocalDateString(today);
+        card.dueAt = now + (card.interval * oneDayMs);
         break;
     }
 
     this.saveDeck();
     if (window.progressCtrl) {
-      window.progressCtrl.recordActivity("vocab", 1);
+      window.progressCtrl.recordActivity("vocab", rating === "good" || rating === "easy");
     }
   }
 
@@ -177,16 +173,13 @@ class SRSController {
     
     // Dashboard Due Count
     const dashDue = document.getElementById("dash-srs-due-count");
-    if (dashDue) dashDue.textContent = counts.due;
+    if (dashDue) dashDue.textContent = `${counts.due} từ`;
 
-    const dashMastered = document.getElementById("dash-vocab-mastered");
-    if (dashMastered) dashMastered.textContent = `${counts.mastered} / ${counts.total} từ`;
-
-    // Flashcard Tab Due Badge
+    // Flashcard Due Badge
     const fcDueBadge = document.getElementById("fc-due-badge");
     if (fcDueBadge) {
       if (counts.due > 0) {
-        fcDueBadge.textContent = `${counts.due} từ đến hạn`;
+        fcDueBadge.textContent = `${counts.due} từ`;
         fcDueBadge.classList.remove("hidden");
       } else {
         fcDueBadge.classList.add("hidden");

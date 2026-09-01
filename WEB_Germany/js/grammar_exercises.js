@@ -199,6 +199,7 @@ class GrammarExerciseController {
               window.mistakesCtrl.addMistake({
                 id: `gram_${b.id}`,
                 type: "grammar",
+                level: unit.level || "A1",
                 question: `Điền câu: "${line.text.replace(b.placeholder, '___')}"`,
                 userAnswer: userVal || "(Để trống)",
                 correctAnswer: b.answer,
